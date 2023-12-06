@@ -1,16 +1,16 @@
-import { AoCPuzzle } from "../../puzzle";
+import AoCPuzzle from '../../puzzle';
 
-export class Puzzle extends AoCPuzzle {
+export default class Puzzle extends AoCPuzzle {
   public part1(): string | number {
-    return eval(0 + this.input)
+    return eval(0 + this.input); // eslint-disable-line no-eval
   }
 
   public part2(): string | number {
-    const operations = this.lines.map(n => parseInt(n, 10));
+    const operations = this.lines.map((n) => parseInt(n, 10));
     const frequencies: number[] = [];
     let result = 0;
     let i = 0;
-    while (true) {
+    while (!frequencies.includes(result)) {
       result += operations[i];
       if (frequencies.includes(result)) {
         return result;
@@ -24,5 +24,6 @@ export class Puzzle extends AoCPuzzle {
         i = 0;
       }
     }
+    return result;
   }
 }

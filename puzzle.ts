@@ -1,4 +1,4 @@
-export abstract class AoCPuzzle {
+export default abstract class AoCPuzzle {
   protected input: string;
 
   protected lines: string[];

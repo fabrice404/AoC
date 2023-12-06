@@ -1,19 +1,19 @@
-import { replaceAt } from "../../helpers/string";
-import { AoCPuzzle } from "../../puzzle";
+import { replaceAt } from '../../helpers/string';
+import AoCPuzzle from '../../puzzle';
 
-export class Puzzle extends AoCPuzzle {
+export default class Puzzle extends AoCPuzzle {
   private guards: any = {};
 
   public part1(): string | number {
     this.lines = this.lines.sort();
-    let lastGuard: string = "";
+    let lastGuard: string = '';
     for (let i = 0; i < this.lines.length; i += 1) {
-      let day = this.lines[i].split(" ")[0].split("-")[2];
-      if (this.lines[i].includes("Guard")) {
-        lastGuard = this.lines[i].split(" ")[3].replace("#", "");
-      } else if (this.lines[i].includes("falls asleep")) {
-        const start = parseInt(this.lines[i].split(" ")[1].split(":")[1].split("]")[0], 10);
-        const end = parseInt(this.lines[i + 1].split(" ")[1].split(":")[1].split("]")[0], 10);
+      const day = this.lines[i].split(' ')[0].split('-')[2];
+      if (this.lines[i].includes('Guard')) {
+        lastGuard = this.lines[i].split(' ')[3].replace('#', '');
+      } else if (this.lines[i].includes('falls asleep')) {
+        const start = parseInt(this.lines[i].split(' ')[1].split(':')[1].split(']')[0], 10);
+        const end = parseInt(this.lines[i + 1].split(' ')[1].split(':')[1].split(']')[0], 10);
         if (!this.guards[lastGuard]) {
           this.guards[lastGuard] = {
             duration: 0,
@@ -66,7 +66,7 @@ export class Puzzle extends AoCPuzzle {
 
     const guardKeys = Object.keys(this.guards);
     for (let i = 0; i < guardKeys.length; i += 1) {
-      let guardKey = guardKeys[i];
+      const guardKey = guardKeys[i];
       const keys = Object.keys(this.guards[guardKey].days);
       for (let j = 0; j < 60; j += 1) {
         let count = 0;

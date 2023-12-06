@@ -1,31 +1,32 @@
-import { AoCPuzzle } from "../../puzzle";
+import AoCPuzzle from '../../puzzle';
 
-export class Puzzle extends AoCPuzzle {
+export default class Puzzle extends AoCPuzzle {
   public part1(): string | number {
     const MAX: any = {
-      'red': 12,
-      'green': 13,
-      'blue': 14,
-    }
+      red: 12,
+      green: 13,
+      blue: 14,
+    };
 
     const result = this.lines.map((line) => {
-      const [game, ...rounds] = line.split(/:|;/gi)
+      const [game, ...rounds] = line.split(/:|;/gi);
 
       let possible = true;
-      rounds.map((round) => {
-        const sets = round.split(',').map((set => set.trim().split(' ')));
+      rounds.forEach((round) => {
+        const sets = round.split(',').map(((set) => set.trim().split(' ')));
         sets.forEach((set) => {
           const [number, color] = set;
           if (parseInt(number, 10) > MAX[color]) {
             possible = false;
           }
-        })
+        });
       });
       if (possible) {
         return parseInt(game.replace(/[^0-9]/gi, ''), 10);
       }
+      return null;
     })
-      .filter(x => x)
+      .filter((x) => x)
       .reduce((acc, val) => acc! + val!, 0);
 
     return result!;
@@ -33,20 +34,19 @@ export class Puzzle extends AoCPuzzle {
 
   public part2(): string | number {
     const result = this.lines.map((line) => {
-      const [game, ...rounds] = line.split(/:|;/gi);
+      const [, ...rounds] = line.split(/:|;/gi);
 
       const max: any = {
-        'red': 0,
-        'green': 0,
-        'blue': 0,
+        red: 0,
+        green: 0,
+        blue: 0,
       };
 
-      rounds.map((round) => {
-
-        const sets = round.split(',').map((set => set.trim().split(' ')));
+      rounds.forEach((round) => {
+        const sets = round.split(',').map(((set) => set.trim().split(' ')));
         sets.forEach((set) => {
           const number = parseInt(set[0], 10);
-          const color = set[1]
+          const color = set[1];
           if (number > max[color]) {
             max[color] = number;
           }

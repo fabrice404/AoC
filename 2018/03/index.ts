@@ -1,7 +1,7 @@
-import { addUniqueItem } from "../../helpers/array";
-import { AoCPuzzle } from "../../puzzle";
+import { addUniqueItem } from '../../helpers/array';
+import AoCPuzzle from '../../puzzle';
 
-export class Puzzle extends AoCPuzzle {
+export default class Puzzle extends AoCPuzzle {
   private fabric: string[][] = [];
 
   private touched: number[] = [];
@@ -16,22 +16,22 @@ export class Puzzle extends AoCPuzzle {
       for (let j = 0; j < y + h; j += 1) {
         this.fabric[j] = this.fabric[j] || [];
         for (let i = 0; i < x + w; i += 1) {
-          this.fabric[j][i] = this.fabric[j][i] || ".";
+          this.fabric[j][i] = this.fabric[j][i] || '.';
           if (i >= x && i < x + w && j >= y && j < y + h) {
-            if (this.fabric[j][i] === ".") {
+            if (this.fabric[j][i] === '.') {
               this.fabric[j][i] = `${id + 1}`;
             } else {
               addUniqueItem(this.touched, parseInt(this.fabric[j][i], 10));
               addUniqueItem(this.touched, id + 1);
-              this.fabric[j][i] = "X";
+              this.fabric[j][i] = 'X';
             }
           }
         }
       }
     });
     return this.fabric.reduce(
-      (sum, row) => sum + row.filter((cell) => cell === "X").length,
-      0
+      (sum, row) => sum + row.filter((cell) => cell === 'X').length,
+      0,
     );
   }
 

@@ -1,4 +1,4 @@
-import { AoCPuzzle } from "../../puzzle";
+import AoCPuzzle from '../../puzzle';
 
 interface Range {
   destinationRange: bigint;
@@ -6,28 +6,17 @@ interface Range {
   length: bigint;
 }
 
-interface Ranges {
-  "seed-to-soil": Range[];
-  "soil-to-fertilizer": Range[];
-  "fertilizer-to-water": Range[];
-  "water-to-light": Range[];
-  "light-to-temperature": Range[];
-  "temperature-to-humidity": Range[];
-  "humidity-to-location": Range[];
-}
-
-export class Puzzle extends AoCPuzzle {
-
+export default class Puzzle extends AoCPuzzle {
   private seeds: bigint[] = [];
 
   private ranges: any = {
-    "seed-to-soil": [],
-    "soil-to-fertilizer": [],
-    "fertilizer-to-water": [],
-    "water-to-light": [],
-    "light-to-temperature": [],
-    "temperature-to-humidity": [],
-    "humidity-to-location": [],
+    'seed-to-soil': [],
+    'soil-to-fertilizer': [],
+    'fertilizer-to-water': [],
+    'water-to-light': [],
+    'light-to-temperature': [],
+    'temperature-to-humidity': [],
+    'humidity-to-location': [],
   };
 
   private nextKey = (key: string): string => {
@@ -37,13 +26,14 @@ export class Puzzle extends AoCPuzzle {
 
   private getNextPosition(key: string, position: bigint): bigint {
     let result: bigint;
-    const range: Range = this.ranges[key].find((range: Range) => position >= range.sourceRange && position < range.sourceRange + range.length);
+    const range: Range = this.ranges[key]
+      .find((r: Range) => position >= r.sourceRange && position < r.sourceRange + r.length);
 
     if (range) {
       position = range.destinationRange - range.sourceRange + position;
     }
 
-    if (key === "humidity-to-location") {
+    if (key === 'humidity-to-location') {
       result = position;
     } else {
       result = this.getNextPosition(this.nextKey(key), position);
@@ -52,25 +42,26 @@ export class Puzzle extends AoCPuzzle {
   }
 
   private run() {
-    const results = this.seeds.map((seed) => this.getNextPosition(Object.keys(this.ranges)[0], seed));
-    return results.reduce((a, b) => a > b ? b : a, BigInt(results[0]));
+    const results = this.seeds
+      .map((seed) => this.getNextPosition(Object.keys(this.ranges)[0], seed));
+    return results.reduce((a, b) => (a > b ? b : a), BigInt(results[0]));
   }
 
   public part1(): string | number {
-    let currentMap = "";
+    let currentMap = '';
 
-    this.lines.filter(x => x).forEach((line) => {
-      if (line.startsWith("seeds")) {
-        this.seeds = line.replace("seeds: ", "")
+    this.lines.filter((x) => x).forEach((line) => {
+      if (line.startsWith('seeds')) {
+        this.seeds = line.replace('seeds: ', '')
           .trim()
-          .split(" ")
-          .filter(x => x)
-          .map(n => BigInt(n));
-      } else if (line.endsWith("map:")) {
-        currentMap = line.replace("map:", "").trim();
+          .split(' ')
+          .filter((x) => x)
+          .map((n) => BigInt(n));
+      } else if (line.endsWith('map:')) {
+        currentMap = line.replace('map:', '').trim();
       } else {
-        const [destinationRange, sourceRange, length] = line.split(" ").map(n => BigInt(n));
-        this.ranges[currentMap].push({ destinationRange, sourceRange, length })
+        const [destinationRange, sourceRange, length] = line.split(' ').map((n) => BigInt(n));
+        this.ranges[currentMap].push({ destinationRange, sourceRange, length });
       }
     });
 
@@ -79,11 +70,11 @@ export class Puzzle extends AoCPuzzle {
 
   public part2(): string | number {
     let finalResult: bigint | undefined;
-    const tmp = this.lines[0].replace("seeds: ", "")
+    const tmp = this.lines[0].replace('seeds: ', '')
       .trim()
-      .split(" ")
-      .filter(x => x)
-      .map(n => BigInt(n));
+      .split(' ')
+      .filter((x) => x)
+      .map((n) => BigInt(n));
     for (let i = 0; i < tmp.length; i += 2) {
       let j: bigint = 0n;
       while (j < tmp[i + 1]) {
