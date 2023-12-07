@@ -1,15 +1,25 @@
 /**
- * Returns true if the *input* string has the same letter *times* times
+ * Count each letter in the *input* string
  * @param input
- * @param times
- * @returns
+ * @returns Map<string, number>
  */
-export const hasSameLetterTimes = (input: string, times: number) => {
+export const countLetters = (input: string): Map<string, number> => {
   const map = new Map<string, number>();
   input.split('').forEach((char) => {
     const count = map.get(char) || 0;
     map.set(char, count + 1);
   });
+  return map;
+};
+
+/**
+ * Returns true if the *input* string has the same letter *times* times
+ * @param input
+ * @param times
+ * @returns boolean
+ */
+export const hasSameLetterTimes = (input: string, times: number) => {
+  const map = countLetters(input);
   return Array.from(map.values()).some((value) => value === times);
 };
 

@@ -1,5 +1,5 @@
 import { existsSync } from 'fs';
-import { performance, PerformanceObserver } from 'perf_hooks';
+import { performance } from 'perf_hooks';
 import { readFile, generateCodeFile } from './helpers/file';
 
 const today = new Date();
