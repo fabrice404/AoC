@@ -16,3 +16,17 @@ export const addUniqueItem = (array: any[], item: any): void => {
 export const print2d = (array: any[][]): void => {
   console.log(array.map((row) => row.join('')).join('\n'));
 };
+
+/**
+ * Count each item in the *input* array
+ * @param array
+ * @returns Map<any, number>
+ */
+export const countItems = (input: any[]): Map<any, number> => {
+  const map = new Map<any, number>();
+  input.forEach((item) => {
+    const count = map.get(item) || 0;
+    map.set(item, count + 1);
+  });
+  return map;
+};

@@ -14,6 +14,7 @@ module.exports = {
     project: './tsconfig.json'
   },
   rules: {
+    "class-methods-use-this": "off",
     "no-console": "off",
     "no-param-reassign": "off",
   },

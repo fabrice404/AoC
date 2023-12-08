@@ -28,12 +28,12 @@ import(codeFile)
     const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(Number(year), 11, Number(day)).getDay()];
     console.log(`\n${dayName} ${day} December ${year}\n`);
 
-    // const performanceObserver = new PerformanceObserver();
-
-    // part 1 - example
     console.log('+--------------------------+');
     console.log('|          PART 1          |');
     console.log('+--------------------------+');
+
+    // part 1 - example
+    const input = readFile(inputFile);
     let example = readFile(p1ExampleFile);
     let expected = readFile(p1ExpectedFile);
 
@@ -47,9 +47,7 @@ import(codeFile)
     }
     console.log(`Test case success: ${result} (${(part1ExampleEnd - part1ExampleStart).toFixed(3)} ms)`);
 
-    // // part 1 - puzzle
-    const input = readFile(inputFile);
-
+    // part 1 - puzzle
     const part1Start = performance.now();
     const puzzle = new Puzzle(input);
     result = puzzle.part1();
@@ -57,10 +55,11 @@ import(codeFile)
 
     console.log(`Result: ${result} (${(part1End - part1Start).toFixed(3)} ms)\n`);
 
-    // part 2 - example
     console.log('+--------------------------+');
     console.log('|          PART 2          |');
     console.log('+--------------------------+');
+
+    // part 2 - example
     example = readFile(p2ExampleFile);
     expected = readFile(p2ExpectedFile);
     const part2ExampleStart = performance.now();

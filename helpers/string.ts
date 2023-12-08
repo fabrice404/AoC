@@ -1,16 +1,11 @@
+import { countItems } from './array';
+
 /**
  * Count each letter in the *input* string
  * @param input
  * @returns Map<string, number>
  */
-export const countLetters = (input: string): Map<string, number> => {
-  const map = new Map<string, number>();
-  input.split('').forEach((char) => {
-    const count = map.get(char) || 0;
-    map.set(char, count + 1);
-  });
-  return map;
-};
+export const countLetters = (input: string): Map<string, number> => countItems(input.split(''));
 
 /**
  * Returns true if the *input* string has the same letter *times* times
