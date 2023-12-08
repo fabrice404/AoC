@@ -110,5 +110,4 @@ export default class Puzzle extends AoCPuzzle {
 
     return seconds;
   }
-  // 167 too low
 }
