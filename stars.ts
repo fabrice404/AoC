@@ -37,7 +37,13 @@ const main = async () => {
   const top = readme.split('<!-- auto-generated -->')[0].trim();
   const bottom = readme.split('<!-- /auto-generated -->')[1].trim();
 
-  const table = events.map((e) => `| ${e.year} | ${e.stars} | ${Array(e.stars).fill('⭐️').join('')} |`).join('\n');
+  const table: string = events
+    .map((e) => {
+      const stars = Array(e.stars + 1).fill('⭐️');
+      stars[Math.floor(stars.length / 2)] = '<br/>';
+      return `| ${e.year} | ${e.stars} | ${stars.join('')} |`;
+    })
+    .join('\n');
 
   writeFileSync('README.md', `${top}\n<!-- auto-generated -->\n| Year | Stars | |\n| --- | --- | --- |\n${table}\n<!-- /auto-generated -->\n${bottom}`);
 };
