@@ -30,3 +30,17 @@ export const countItems = (input: any[]): Map<any, number> => {
   });
   return map;
 };
+
+/**
+ * Sum all the numbers in the array
+ * @param array
+ * @returns
+ */
+export const sum = (array: number[]): number => array.reduce((acc, val) => acc + val, 0);
+
+/**
+ * Multiply all the numbers in the array
+ * @param array
+ * @returns
+ */
+export const multiply = (array: number[]): number => array.reduce((acc, val) => acc * val, 1);
