@@ -27,6 +27,7 @@ import(codeFile)
   .then(({ default: Puzzle }) => {
     const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(Number(year), 11, Number(day)).getDay()];
     console.log(`\n${dayName} ${day} December ${year}\n`);
+    let result;
 
     console.log('+--------------------------+');
     console.log('|          PART 1          |');
@@ -36,16 +37,20 @@ import(codeFile)
     const input = readFile(inputFile);
     let example = readFile(p1ExampleFile);
     let expected = readFile(p1ExpectedFile);
+    const examplePuzzle = new Puzzle(example);
 
     const part1ExampleStart = performance.now();
-    const examplePuzzle = new Puzzle(example);
-    let result = examplePuzzle.part1();
+    result = examplePuzzle.part1();
     const part1ExampleEnd = performance.now();
 
-    if (`${result}` !== `${expected}`) {
-      throw new Error(`Test case failed: ${result} != ${expected} (${(part1ExampleEnd - part1ExampleStart).toFixed(3)} ms)`);
+    if (expected === 'skip') {
+      console.log(`Test case skipped (${(part1ExampleEnd - part1ExampleStart).toFixed(3)} ms)`);
+    } else {
+      if (`${result}` !== `${expected}`) {
+        throw new Error(`Test case failed: ${result} != ${expected} (${(part1ExampleEnd - part1ExampleStart).toFixed(3)} ms)`);
+      }
+      console.log(`Test case success: ${result} (${(part1ExampleEnd - part1ExampleStart).toFixed(3)} ms)`);
     }
-    console.log(`Test case success: ${result} (${(part1ExampleEnd - part1ExampleStart).toFixed(3)} ms)`);
 
     // part 1 - puzzle
     const part1Start = performance.now();
@@ -62,6 +67,7 @@ import(codeFile)
     // part 2 - example
     example = readFile(p2ExampleFile);
     expected = readFile(p2ExpectedFile);
+
     const part2ExampleStart = performance.now();
     if (example) {
       examplePuzzle.setInput(example);
@@ -69,10 +75,14 @@ import(codeFile)
     result = examplePuzzle.part2();
     const part2ExampleEnd = performance.now();
 
-    if (`${result}` !== `${expected}`) {
-      throw new Error(`Test case failed: ${result} != ${expected} (${(part2ExampleEnd - part2ExampleStart).toFixed(3)} ms)`);
+    if (expected === 'skip') {
+      console.log(`Test case skipped (${(part2ExampleEnd - part2ExampleStart).toFixed(3)} ms)`);
+    } else {
+      if (`${result}` !== `${expected}`) {
+        throw new Error(`Test case failed: ${result} != ${expected} (${(part2ExampleEnd - part2ExampleStart).toFixed(3)} ms)`);
+      }
+      console.log(`Test case success: ${result} (${(part2ExampleEnd - part2ExampleStart).toFixed(3)} ms)`);
     }
-    console.log(`Test case success: ${result} (${(part2ExampleEnd - part2ExampleStart).toFixed(3)} ms)`);
 
     // part 2 - puzzle
     const part2Start = performance.now();

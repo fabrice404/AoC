@@ -17,6 +17,7 @@ module.exports = {
     "class-methods-use-this": "off",
     "no-console": "off",
     "no-param-reassign": "off",
+    "@typescript-eslint/no-loop-func": "off"
   },
   ignorePatterns: [
     'helpers/template.ts',
