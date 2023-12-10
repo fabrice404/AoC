@@ -14,7 +14,7 @@ export const addUniqueItem = (array: any[], item: any): void => {
  * @param array
  */
 export const print2d = (array: any[][]): void => {
-  console.log(array.map((row) => row.join('')).join('\n'));
+  console.log(`${array.map((row) => row.join('')).join('\n')}\n`);
 };
 
 /**
@@ -44,3 +44,13 @@ export const sum = (array: number[]): number => array.reduce((acc, val) => acc +
  * @returns
  */
 export const multiply = (array: number[]): number => array.reduce((acc, val) => acc * val, 1);
+
+export const isNextTo = (
+  array: any[],
+  x: number,
+  y: number,
+  value: any,
+): boolean => array[y - 1]?.[x] === value
+|| array[y + 1]?.[x] === value
+|| array[y]?.[x - 1] === value
+  || array[y]?.[x + 1] === value;
