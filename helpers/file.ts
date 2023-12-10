@@ -12,7 +12,7 @@ export const readFile = (filepath: string): string => {
   if (!existsSync(filepath)) {
     writeFileSync(filepath, '', { encoding: 'utf-8' });
   }
-  return readFileSync(filepath, 'utf8').trim();
+  return readFileSync(filepath, 'utf8').trimEnd();
 };
 
 /**

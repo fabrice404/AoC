@@ -15,6 +15,7 @@ module.exports = {
   },
   rules: {
     "class-methods-use-this": "off",
+    "max-classes-per-file": "off",
     "no-console": "off",
     "no-param-reassign": "off",
     "@typescript-eslint/no-loop-func": "off"
