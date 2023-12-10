@@ -12,15 +12,14 @@ export default class Puzzle extends AoCPuzzle {
       return { condition, value };
     });
 
-    let offset = 0;
+    const OFFSET = 4;
     let result = 0;
     let previousResult = 0;
     let previousDifference = 0;
     let sameDifferenceCount = 0;
 
-    for (let generation = 0; generation < this.generations; generation += 1) {
+    for (let generation = 1; generation <= this.generations; generation += 1) {
       this.state = `....${this.state}....`;
-      offset += 4;
       let nextState = this.state.replace(/#/g, '.');
 
       for (let i = 0; i < this.state.length - 4; i += 1) {
@@ -30,11 +29,12 @@ export default class Puzzle extends AoCPuzzle {
           }
         });
       }
+
       this.state = nextState;
 
       result = this.state.split('')
         .reduce((acc, val, i) => {
-          const potNum = i - offset;
+          const potNum = i - (OFFSET * generation);
           if (val === '#') {
             acc += potNum;
           }
@@ -48,8 +48,8 @@ export default class Puzzle extends AoCPuzzle {
         }
       } else {
         sameDifferenceCount = 0;
-        previousDifference = result - previousResult;
       }
+      previousDifference = result - previousResult;
       previousResult = result;
     }
     return result;
@@ -60,7 +60,7 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public part2(): string | number {
-    this.generations = 5000000000;
+    this.generations = 50000000000;
     return this.run();
   }
 }
