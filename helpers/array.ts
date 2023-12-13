@@ -55,6 +55,19 @@ export const isNextTo = (
 || array[y]?.[x - 1] === value
   || array[y]?.[x + 1] === value;
 
+export const isNextTo3D = (
+  array: any[][][],
+  x: number,
+  y: number,
+  z: number,
+  value: any,
+): boolean => array[z][y - 1]?.[x] === value
+|| array[z][y + 1]?.[x] === value
+|| array[z][y]?.[x - 1] === value
+|| array[z][y]?.[x + 1] === value
+|| array[z - 1]?.[y]?.[x] === value
+  || array[z + 1]?.[y]?.[x] === value;
+
 export const rotate = (array: string[]): string[] => {
   const newArray: string[] = Array(array[0].length).fill('');
 
