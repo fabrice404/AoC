@@ -54,3 +54,20 @@ export const isNextTo = (
 || array[y + 1]?.[x] === value
 || array[y]?.[x - 1] === value
   || array[y]?.[x + 1] === value;
+
+export const rotate = (array: string[]): string[] => {
+  const newArray: string[] = Array(array[0].length).fill('');
+
+  for (let i = 0; i < array.length; i += 1) {
+    for (let j = 0; j < array[i].length; j += 1) {
+      const char = array[i][j];
+      newArray[j] += char;
+      // if (i === 0) {
+      //   newArray.push(char);
+      // } else {
+      //   newArray[i] += char;
+      // }
+    }
+  }
+  return newArray;
+};
