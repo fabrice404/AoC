@@ -7,6 +7,7 @@
     "start": "nodemon ./index.ts",
     "lint": "eslint . --ext .ts --fix",
     "stars": "ts-node ./stars.ts",
+    "compile": "npx tsc --noEmit",
     "prepare": "husky install"
   },
   "author": "",

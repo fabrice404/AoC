@@ -10,8 +10,6 @@ interface Coordinates {
 export default class Puzzle extends AoCPuzzle {
   private coordinates: Coordinates[] = [];
 
-  private grid: string[][] = [];
-
   private calculateDistance(x: number, y: number, coord: Coordinates): number {
     return Math.abs(coord.x - x) + Math.abs(coord.y - y);
   }

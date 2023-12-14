@@ -8,8 +8,6 @@ interface Galaxy {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private grid: string[][] = [];
-
   private galaxies: Galaxy[] = [];
 
   private rowsWithGalaxy: number[] = [];

@@ -3,7 +3,7 @@ import AoCPuzzle from '../../puzzle';
 export default class Puzzle extends AoCPuzzle {
   private serialNumber: number = 0;
 
-  private grid: number[][] = [];
+  private gridN: number[][] = [];
 
   private findPowerLevel(x: number, y: number): number {
     const rackId = x + 10;
@@ -18,8 +18,8 @@ export default class Puzzle extends AoCPuzzle {
   public part1(): string | number {
     this.serialNumber = Number(this.input.trim());
 
-    this.grid = Array(300).fill(0).map(() => Array(300).fill(0));
-    this.grid = this.grid.map((row, y) => row.map((_, x) => this.findPowerLevel(x + 1, y + 1)));
+    this.gridN = Array(300).fill(0).map(() => Array(300).fill(0));
+    this.gridN = this.gridN.map((row, y) => row.map((_, x) => this.findPowerLevel(x + 1, y + 1)));
 
     let maxPower = -Infinity;
     let maxPowerX = 0;
@@ -29,7 +29,7 @@ export default class Puzzle extends AoCPuzzle {
         let power = 0;
         for (let dy = 0; dy < 3; dy += 1) {
           for (let dx = 0; dx < 3; dx += 1) {
-            power += this.grid[y + dy][x + dx];
+            power += this.gridN[y + dy][x + dx];
           }
         }
         if (power > maxPower) {
@@ -53,7 +53,7 @@ export default class Puzzle extends AoCPuzzle {
           let power = 0;
           for (let dy = 0; dy < size; dy += 1) {
             for (let dx = 0; dx < size; dx += 1) {
-              power += this.grid[y + dy][x + dx];
+              power += this.gridN[y + dy][x + dx];
             }
           }
           if (power > maxPower) {

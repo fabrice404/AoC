@@ -38,7 +38,7 @@ export default class Puzzle extends AoCPuzzle {
 
   private maxZ = 0;
 
-  private grid: string[][][] = [];
+  private grid3d: string[][][] = [];
 
   public part1(): string | number {
     this.cubes = this.lines.map((line) => {
@@ -83,14 +83,14 @@ export default class Puzzle extends AoCPuzzle {
         }
         yArray.push(xArray);
       }
-      this.grid.push(yArray);
+      this.grid3d.push(yArray);
     }
 
     this.cubes.forEach((cube) => {
-      this.grid[cube.z][cube.y][cube.x] = BLOCK;
+      this.grid3d[cube.z][cube.y][cube.x] = BLOCK;
     });
 
-    let count = this.grid.flat(3).filter((cell) => cell === OUTSIDE).length;
+    let count = this.grid3d.flat(3).filter((cell) => cell === OUTSIDE).length;
     let lastCount = -1;
 
     const adjacent = (
@@ -107,41 +107,41 @@ export default class Puzzle extends AoCPuzzle {
       + (array[z + 1]?.[y]?.[x] === value ? 1 : 0);
 
     while (count !== lastCount) {
-      this.grid.forEach((layer, z) => {
+      this.grid3d.forEach((layer, z) => {
         layer.forEach((line, y) => {
           line.forEach((cell, x) => {
             if (x === 0 && y === 0 && z === 0) {
-              this.grid[z][y][x] = OUTSIDE;
-            } else if (cell !== '#' && isNextTo3D(this.grid, x, y, z, OUTSIDE)) {
-              this.grid[z][y][x] = OUTSIDE;
+              this.grid3d[z][y][x] = OUTSIDE;
+            } else if (cell !== '#' && isNextTo3D(this.grid3d, x, y, z, OUTSIDE)) {
+              this.grid3d[z][y][x] = OUTSIDE;
             }
           });
         });
       });
       lastCount = count;
-      count = this.grid.flat(3).filter((cell) => cell === OUTSIDE).length;
+      count = this.grid3d.flat(3).filter((cell) => cell === OUTSIDE).length;
     }
 
     count = 0;
     lastCount = -1;
 
     while (count !== lastCount) {
-      this.grid.forEach((layer, z) => {
+      this.grid3d.forEach((layer, z) => {
         layer.forEach((line, y) => {
           line.forEach((cell, x) => {
-            const adj = adjacent(this.grid, x, y, z, BLOCK);
+            const adj = adjacent(this.grid3d, x, y, z, BLOCK);
             if (![BLOCK, EMPTY].includes(cell) && adj) {
-              this.grid[z][y][x] = `${adj}`;
+              this.grid3d[z][y][x] = `${adj}`;
             }
           });
         });
       });
       lastCount = count;
-      count = this.grid.flat(3).filter((cell) => ![EMPTY, BLOCK, OUTSIDE].includes(cell)).length;
+      count = this.grid3d.flat(3).filter((cell) => ![EMPTY, BLOCK, OUTSIDE].includes(cell)).length;
     }
 
     return sum(
-      this.grid
+      this.grid3d
         .flat(3)
         .filter((cell) => ![EMPTY, BLOCK, OUTSIDE].includes(cell))
         .map(Number),
