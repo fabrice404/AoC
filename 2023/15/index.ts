@@ -25,30 +25,22 @@ export default class Puzzle extends AoCPuzzle {
     const boxes = Array(255);
 
     this.input.split(/,/gi).forEach((sequence) => {
+      const [label, focal] = sequence.split(/=|-/gi);
+      const boxId = hash(label);
+      if (!boxes[boxId]) {
+        boxes[boxId] = [];
+      }
+      const lensIndex = boxes[boxId].findIndex((l: Lens) => l.label === label);
+
       if (sequence.match(/=/gi)) {
-        const [label, focal] = sequence.split(/=/gi);
-        const boxId = hash(label);
-        const focalLength = parseInt(focal, 10);
-        if (!boxes[boxId]) {
-          boxes[boxId] = [];
-        }
-        const lens: Lens = { label, focalLength };
-        const lensIndex = boxes[boxId].findIndex((l: Lens) => l.label === label);
+        const lens: Lens = { label, focalLength: parseInt(focal, 10) };
         if (lensIndex !== -1) {
           boxes[boxId][lensIndex] = lens;
         } else {
           boxes[boxId].push(lens);
         }
-      } else {
-        const [label] = sequence.split(/-/gi);
-        const boxId = hash(label);
-        if (!boxes[boxId]) {
-          boxes[boxId] = [];
-        }
-        const lensIndex = boxes[boxId].findIndex((l: Lens) => l.label === label);
-        if (lensIndex !== -1) {
-          boxes[boxId].splice(lensIndex, 1);
-        }
+      } else if (lensIndex !== -1) {
+        boxes[boxId].splice(lensIndex, 1);
       }
     });
 
