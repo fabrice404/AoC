@@ -11,10 +11,10 @@ const generateReadme = (folder: string) => {
     .forEach((day) => {
       const stat = stats[day];
       readme += `${day} `;
-      readme += `| ${stat.part1ExampleTime.toFixed(3)}ms <br/><small>${stat.part1ExampleResult}</smal> `;
-      readme += `| ${stat.part1Time.toFixed(3)}ms <br/><small>${stat.part1Result}</smal> `;
-      readme += `| ${stat.part2ExampleTime.toFixed(3)}ms <br/><small>${stat.part2ExampleResult}</smal> `;
-      readme += `| ${stat.part2Time.toFixed(3)}ms <br/><small>${stat.part2Result}</smal> `;
+      readme += `| ${stat.part1ExampleTime.toFixed(3)}ms <br/><sub><sup>${stat.part1ExampleResult}</sup></sub> `;
+      readme += `| ${stat.part1Time.toFixed(3)}ms <br/><sub><sup>${stat.part1Result}</sup></sub> `;
+      readme += `| ${stat.part2ExampleTime.toFixed(3)}ms <br/><sub><sup>${stat.part2ExampleResult}</sup></sub> `;
+      readme += `| ${stat.part2Time.toFixed(3)}ms <br/><sub><sup>${stat.part2Result}</sup></sub> `;
       readme += '\n';
     });
 
