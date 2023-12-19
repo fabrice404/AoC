@@ -18,6 +18,8 @@ module.exports = {
     "max-classes-per-file": "off",
     "object-curly-newline": "off",
     "no-console": "off",
+    "no-continue": "off",
+    "no-eval": "off",
     "no-param-reassign": "off",
     "@typescript-eslint/no-loop-func": "off"
   },
