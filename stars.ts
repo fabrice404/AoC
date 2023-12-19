@@ -41,7 +41,7 @@ const main = async () => {
     .map((e) => {
       const stars = Array(e.stars + 1).fill('⭐️');
       stars[Math.floor(stars.length / 2)] = '<br/>';
-      return `| [${e.year}](https://adventofcode.com/${e.year}) | ${e.stars} | ${stars.join('')} |`;
+      return `| [${e.year}](./${e.year}) | ${e.stars} | ${stars.join('')} |`;
     })
     .join('\n');
 

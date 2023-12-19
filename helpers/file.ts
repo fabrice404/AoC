@@ -23,3 +23,13 @@ export const generateCodeFile = (folder: string): void => {
   mkdirSync(folder, { recursive: true });
   copyFileSync(path.join(__dirname, 'template.ts'), path.join(folder, 'index.ts'));
 };
+
+export const generateStatFile = (filepath: string): void => {
+  writeFileSync(filepath, '{}', { encoding: 'utf-8' });
+};
+
+export const updateStatFile = (filepath: string, day: number, data: object): void => {
+  const stats = JSON.parse(readFile(filepath));
+  stats[day] = data;
+  writeFileSync(filepath, JSON.stringify(stats), { encoding: 'utf-8' });
+};
