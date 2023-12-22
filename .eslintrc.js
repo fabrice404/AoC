@@ -17,6 +17,7 @@ module.exports = {
     "class-methods-use-this": "off",
     "max-classes-per-file": "off",
     "object-curly-newline": "off",
+    "max-len": ["error", { "code": 320 }],
     "no-console": "off",
     "no-continue": "off",
     "no-eval": "off",
