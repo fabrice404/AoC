@@ -29,7 +29,7 @@ if (!existsSync(statFile)) {
 }
 
 import(codeFile)
-  .then(({ default: Puzzle }) => {
+  .then(async ({ default: Puzzle }) => {
     const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(Number(year), 11, Number(day)).getDay()];
     const date = `${dayName} ${year}-12-${day}`;
     console.log(`\n${date}\n`);
@@ -45,7 +45,7 @@ import(codeFile)
     const examplePuzzle = new Puzzle(example);
 
     const part1ExampleStart = performance.now();
-    const part1ExampleResult = examplePuzzle.part1();
+    const part1ExampleResult = await examplePuzzle.part1();
     const part1ExampleEnd = performance.now();
     const part1ExampleTime = part1ExampleEnd - part1ExampleStart;
 
@@ -61,7 +61,7 @@ import(codeFile)
     // part 1 - puzzle
     const part1Start = performance.now();
     const puzzle = new Puzzle(input);
-    const part1Result = puzzle.part1();
+    const part1Result = await puzzle.part1();
     const part1End = performance.now();
     const part1Time = part1End - part1Start;
 
@@ -79,7 +79,7 @@ import(codeFile)
     if (example) {
       examplePuzzle.setInput(example);
     }
-    const part2ExampleResult = examplePuzzle.part2();
+    const part2ExampleResult = await examplePuzzle.part2();
     const part2ExampleEnd = performance.now();
     const part2ExampleTime = part2ExampleEnd - part2ExampleStart;
 
@@ -94,7 +94,7 @@ import(codeFile)
 
     // part 2 - puzzle
     const part2Start = performance.now();
-    const part2Result = puzzle.part2();
+    const part2Result = await puzzle.part2();
     const part2End = performance.now();
     const part2Time = part2End - part2Start;
 

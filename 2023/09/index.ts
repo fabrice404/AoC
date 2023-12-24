@@ -2,7 +2,7 @@ import { sum } from '../../helpers/array';
 import AoCPuzzle from '../../puzzle';
 
 export default class Puzzle extends AoCPuzzle {
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     const results = this.lines.map((line) => {
       const suites = [];
       let suite = line.split(' ').map((word) => Number(word));
@@ -29,7 +29,7 @@ export default class Puzzle extends AoCPuzzle {
     return sum(results);
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const results = this.lines.map((line) => {
       const suites = [];
       let suite = line.split(' ').map((word) => Number(word));

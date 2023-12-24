@@ -45,7 +45,7 @@ export default class Puzzle extends AoCPuzzle {
     this.puzzles.push(puzzle);
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.init();
 
     this.results = this.puzzles.map((puzzle, index) => {
@@ -62,7 +62,7 @@ export default class Puzzle extends AoCPuzzle {
     return sum(this.results.map((r) => r.result));
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const results = this.puzzles.map((puzzle, index) => {
       let result = 0;
       for (let i = 0; i < puzzle.length; i += 1) {

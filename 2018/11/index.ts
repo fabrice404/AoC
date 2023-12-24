@@ -15,7 +15,7 @@ export default class Puzzle extends AoCPuzzle {
     return powerLevel;
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.serialNumber = Number(this.input.trim());
 
     this.gridN = Array(300).fill(0).map(() => Array(300).fill(0));
@@ -42,7 +42,7 @@ export default class Puzzle extends AoCPuzzle {
     return `${maxPowerX},${maxPowerY}`;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     let maxPower = -Infinity;
     let maxPowerX = 0;
     let maxPowerY = 0;

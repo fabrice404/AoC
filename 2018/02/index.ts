@@ -2,7 +2,7 @@ import { hasDifferentLetterTimes, hasSameLetterTimes } from '../../helpers/strin
 import AoCPuzzle from '../../puzzle';
 
 export default class Puzzle extends AoCPuzzle {
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     let two = 0;
     let three = 0;
     this.lines.forEach((line) => {
@@ -12,7 +12,7 @@ export default class Puzzle extends AoCPuzzle {
     return two * three;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     for (let i = 0; i < this.lines.length; i += 1) {
       const line = this.lines[i];
       for (let j = i + 1; j < this.lines.length; j += 1) {

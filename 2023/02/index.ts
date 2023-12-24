@@ -1,7 +1,7 @@
 import AoCPuzzle from '../../puzzle';
 
 export default class Puzzle extends AoCPuzzle {
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     const MAX: any = {
       red: 12,
       green: 13,
@@ -32,7 +32,7 @@ export default class Puzzle extends AoCPuzzle {
     return result!;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const result = this.lines.map((line) => {
       const [, ...rounds] = line.split(/:|;/gi);
 

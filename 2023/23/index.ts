@@ -116,7 +116,7 @@ export default class Puzzle extends AoCPuzzle {
     this.intersections.push({ x: this.lines[this.lines.length - 1].indexOf('.'), y: this.lines.length - 1 });
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     const startX = this.lines[0].indexOf('.');
     const startY = 0;
 
@@ -126,7 +126,7 @@ export default class Puzzle extends AoCPuzzle {
     return this.findPaths(startX, startY)[0].history.length - 1;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.setInput(this.input.replace(/\^|v|<|>/gi, '.'));
     this.findIntersections();
 

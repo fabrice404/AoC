@@ -61,7 +61,7 @@ export default class Puzzle extends AoCPuzzle {
     this.pieces.push(piece);
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.lines.filter((x) => x).forEach((line) => {
       if (line.startsWith('{')) {
         this.parsePiece(line);
@@ -77,10 +77,10 @@ export default class Puzzle extends AoCPuzzle {
       .reduce((acc, { x, m, a, s }) => acc + x + m + a + s, 0);
   }
 
-  public part2(
+  public async part2(
     src: Ranges = { x: [1, 4000], m: [1, 4000], a: [1, 4000], s: [1, 4000] },
     workflowKey = 'in',
-  ): number {
+  ): Promise<number> {
     let ranges: Ranges = { x: [...src.x], m: [...src.m], a: [...src.a], s: [...src.s] };
     if (workflowKey === 'R') {
       return 0;
@@ -101,27 +101,27 @@ export default class Puzzle extends AoCPuzzle {
       const max = ranges[step.letter][1];
       if (step.operand === '<') {
         if (max < step.value) {
-          result += this.part2(ranges, step.result);
+          result += await this.part2(ranges, step.result);
           return result;
         }
         if (min < step.value) {
-          result += this.part2({ ...ranges, [step.letter]: [min, step.value - 1] }, step.result);
+          result += await this.part2({ ...ranges, [step.letter]: [min, step.value - 1] }, step.result);
           ranges = { ...ranges, [step.letter]: [step.value, max] };
           continue;
         }
       } else if (step.operand === '>') {
         if (min > step.value) {
-          result += this.part2(ranges, step.result);
+          result += await this.part2(ranges, step.result);
           return result;
         }
         if (max > step.value) {
-          result += this.part2({ ...ranges, [step.letter]: [step.value + 1, max] }, step.result);
+          result += await this.part2({ ...ranges, [step.letter]: [step.value + 1, max] }, step.result);
           ranges = { ...ranges, [step.letter]: [min, step.value] };
           continue;
         }
       }
     }
-    result += this.part2(ranges, workflow.finalStep!);
+    result += await this.part2(ranges, workflow.finalStep!);
     return result;
   }
 }

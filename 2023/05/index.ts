@@ -47,7 +47,7 @@ export default class Puzzle extends AoCPuzzle {
     return results.reduce((a, b) => (a > b ? b : a), BigInt(results[0]));
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     let currentMap = '';
 
     this.lines.filter((x) => x).forEach((line) => {
@@ -68,7 +68,7 @@ export default class Puzzle extends AoCPuzzle {
     return this.run().toString();
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     let finalResult: bigint | undefined;
     const tmp = this.lines[0].replace('seeds: ', '')
       .trim()

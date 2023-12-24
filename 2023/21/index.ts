@@ -40,7 +40,7 @@ export default class Puzzle extends AoCPuzzle {
     return this.grid.flat(3).filter((cell) => cell === 'O').length;
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.steps = this.lines.length === 11 ? 6 : 64;
     return this.run();
   }
@@ -55,7 +55,7 @@ export default class Puzzle extends AoCPuzzle {
       this.mod(x, this.grid.length)];
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     if (this.lines.length === 11) {
       return 'skip';
     }

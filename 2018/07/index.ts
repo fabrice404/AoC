@@ -26,7 +26,7 @@ export default class Puzzle extends AoCPuzzle {
     return result!;
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.lines.forEach((line) => {
       const [, a, b] = line.match(/Step (\w) must be finished before step (\w) can begin./)!;
       const nodeA = this.findNode(a);
@@ -75,7 +75,7 @@ export default class Puzzle extends AoCPuzzle {
     }
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.workers = this.lines.length === 7 ? 2 : 5;
     this.nodes = [];
     this.lines.forEach((line) => {

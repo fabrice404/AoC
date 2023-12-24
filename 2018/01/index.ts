@@ -1,11 +1,11 @@
 import AoCPuzzle from '../../puzzle';
 
 export default class Puzzle extends AoCPuzzle {
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     return eval(0 + this.input); // eslint-disable-line no-eval
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const operations = this.lines.map((n) => parseInt(n, 10));
     const frequencies: number[] = [];
     let result = 0;

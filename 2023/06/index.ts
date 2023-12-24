@@ -23,14 +23,14 @@ export default class Puzzle extends AoCPuzzle {
       .reduce((a, b) => a * b, 1);
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     const [times, distances] = this.lines.map((line) => line.split(':')[1].trim().split(' ').filter((x) => x).map((n) => parseInt(n, 10)));
     this.times = times;
     this.distances = distances;
     return this.waysToWin();
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const [times, distances] = this.lines.map((line) => line.split(':')[1].trim().replace(/ /gi, '')).map((n) => parseInt(n, 10));
     this.times = [times];
     this.distances = [distances];

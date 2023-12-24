@@ -14,7 +14,7 @@ interface Part {
 export default class Puzzle extends AoCPuzzle {
   private parts: Part[] = [];
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.lines.forEach((line, row) => {
       let currentNum = '';
       let posStart = -1;
@@ -80,7 +80,7 @@ export default class Puzzle extends AoCPuzzle {
     return this.parts.reduce((acc, cur) => acc + cur.value, 0);
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const potentialGearParts = this.parts
       .filter((part) => part.symbols.some((symbol) => symbol.symbol === '*'));
 

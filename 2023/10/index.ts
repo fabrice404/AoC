@@ -11,7 +11,7 @@ interface Point {
 export default class Puzzle extends AoCPuzzle {
   private points: Point[] = [];
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.points = [];
     this.lines.forEach((line, y) => {
       line.split('')
@@ -67,7 +67,7 @@ export default class Puzzle extends AoCPuzzle {
     return i / 2;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.part1();
 
     const INSIDE = 'I';

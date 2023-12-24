@@ -93,14 +93,14 @@ export default class Puzzle extends AoCPuzzle {
     return direction + this.grid.map((line) => line.join('')).join('');
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.grid = moveNorth(this.grid);
     // this.printGrid();
 
     return this.grid.reduce((acc, line, i) => acc + line.filter((rock) => rock === 'O').length * (this.lines.length - i), 0);
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     for (let i = 0; i < 1000000000; i += 1) {
       const key = this.gridKey('before');
       if (this.cache.has(key)) {

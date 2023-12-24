@@ -23,6 +23,6 @@ export default abstract class AoCPuzzle {
     print2d(this.grid);
   }
 
-  public abstract part1(): string | number;
-  public abstract part2(): string | number;
+  public abstract part1(): Promise<string | number>;
+  public abstract part2(): Promise<string | number>;
 }

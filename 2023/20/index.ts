@@ -152,7 +152,7 @@ export default class Puzzle extends AoCPuzzle {
     });
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.init();
 
     for (let i = 0; i < 1000; i += 1) {
@@ -162,7 +162,7 @@ export default class Puzzle extends AoCPuzzle {
     return this.lowPulses * this.highPulses;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.init();
 
     if (!this.rxExists) {

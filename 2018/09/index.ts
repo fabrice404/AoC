@@ -64,11 +64,11 @@ export default class Puzzle extends AoCPuzzle {
     return Math.max(...scores);
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     return this.play();
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.multiplier = 100;
     return this.play();
   }

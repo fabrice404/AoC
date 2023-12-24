@@ -2,7 +2,7 @@ import { replaceAt } from '../../helpers/string';
 import AoCPuzzle from '../../puzzle';
 
 export default class Puzzle extends AoCPuzzle {
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     return this.lines.reduce((acc, line) => {
       const digits = line.replace(/[^0-9]/g, '').split('');
       acc += parseInt(`${digits[0]}${digits.pop()}`, 10);
@@ -10,7 +10,7 @@ export default class Puzzle extends AoCPuzzle {
     }, 0);
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const numbers = {
       one: 1,
       two: 2,

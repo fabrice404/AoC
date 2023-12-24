@@ -69,7 +69,7 @@ const sortHands = (a: Hand, b: Hand, reference: string[]) => {
 export default class Puzzle extends AoCPuzzle {
   private hands: Hand[] = [];
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.hands = this.lines.map((line) => {
       const [cards, bid] = line.split(' ');
       const typeStrength = findTypeStrength(cards);
@@ -90,7 +90,7 @@ export default class Puzzle extends AoCPuzzle {
     return this.hands.reduce((acc, hand) => acc + (hand.bid * hand.rank!), 0);
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.hands.forEach((hand) => {
       hand.typeStrength = findTypeStrengthWithJoker(hand.cards);
     });

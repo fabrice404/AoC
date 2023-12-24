@@ -4,7 +4,7 @@ import AoCPuzzle from '../../puzzle';
 export default class Puzzle extends AoCPuzzle {
   private guards: any = {};
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.lines = this.lines.sort();
     let lastGuard: string = '';
     for (let i = 0; i < this.lines.length; i += 1) {
@@ -59,7 +59,7 @@ export default class Puzzle extends AoCPuzzle {
     return guardId * minute;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     let minute = 0;
     let guardId = 0;
     let minuteCount = 0;

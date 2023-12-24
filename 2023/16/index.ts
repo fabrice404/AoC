@@ -109,12 +109,12 @@ const run = (initialBeam: Beam, grid: string[][]): number => {
 };
 
 export default class Puzzle extends AoCPuzzle {
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     const initialBeam: Beam = { x: 0, y: 0, active: true, direction: '>' };
     return run(initialBeam, this.grid);
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const results = [];
     for (let y = 0; y < this.grid.length; y += 1) {
       results.push(run({ x: 0, y, active: true, direction: '>' }, this.grid));

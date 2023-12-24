@@ -127,11 +127,11 @@ export default class Puzzle extends AoCPuzzle {
     return area + perimeter / 2 + 1;
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     return this.run(this.lines);
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const instructions = this.lines.map((line) => {
       const [, hexa] = line.split(/\(|\)/gi).filter((x) => x);
       const distance = parseInt(hexa.substring(1, 6), 16);

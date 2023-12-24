@@ -3,7 +3,7 @@ import AoCPuzzle from '../../puzzle';
 export default class Puzzle extends AoCPuzzle {
   private numbers: number[] = [];
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.numbers = this.input.split(/ /gi).map((n) => parseInt(n, 10));
 
     const tree = [...this.numbers];
@@ -26,7 +26,7 @@ export default class Puzzle extends AoCPuzzle {
     return recurse();
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const tree = [...this.numbers];
     const recurse = (): number => {
       const count = tree.shift()!;

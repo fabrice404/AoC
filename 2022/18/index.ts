@@ -40,7 +40,7 @@ export default class Puzzle extends AoCPuzzle {
 
   private grid3d: string[][][] = [];
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.cubes = this.lines.map((line) => {
       const [x, y, z] = line.split(/,/gi).map((n) => parseInt(n, 10));
       this.maxX = Math.max(this.maxX, x);
@@ -59,7 +59,7 @@ export default class Puzzle extends AoCPuzzle {
     }, 0);
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.cubes = this.lines.map((line) => {
       const [x, y, z] = line.split(/,/gi).map((n) => parseInt(n, 10) + 1);
       this.maxX = Math.max(this.maxX, x);

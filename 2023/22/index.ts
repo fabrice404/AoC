@@ -35,7 +35,7 @@ export default class Puzzle extends AoCPuzzle {
     }
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.lines.forEach((line, i) => {
       let [xA, yA, zA, xB, yB, zB] = line.split(/,|~/gi).map((x) => parseInt(x, 10));
       [xA, xB] = [xA, xB].sort((a, b) => (a > b ? 1 : -1));
@@ -100,7 +100,7 @@ export default class Puzzle extends AoCPuzzle {
     return disintegratableBricks.length;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const result = this.bricks
       .sort((a, b) => (a.zA > b.zA ? 1 : -1))
       .map((b) => {

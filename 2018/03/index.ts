@@ -6,7 +6,7 @@ export default class Puzzle extends AoCPuzzle {
 
   private touched: number[] = [];
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.lines = this.input.split(/\n/gi);
     this.lines.forEach((line, id) => {
       const [, , x, y, w, h] = line
@@ -35,7 +35,7 @@ export default class Puzzle extends AoCPuzzle {
     );
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     for (let i = 0; i < this.lines.length; i += 1) {
       if (!this.touched.includes(i + 1)) {
         return i + 1;

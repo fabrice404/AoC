@@ -9,7 +9,7 @@ interface Card {
 export default class Puzzle extends AoCPuzzle {
   private cards: Card[] = [];
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.cards = this.lines.map((line) => {
       let [winning, numbers] = line.split(/:/)[1]
         .split(/\|/)
@@ -40,7 +40,7 @@ export default class Puzzle extends AoCPuzzle {
     }, 0);
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.cards.forEach((card, i) => {
       if (card.matching > 0) {
         card.cards = [];

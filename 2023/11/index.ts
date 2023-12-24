@@ -86,7 +86,7 @@ export default class Puzzle extends AoCPuzzle {
     }
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.grid = this.lines.map((line, y) => line.split('').map((char, x) => {
       if (char === '#') {
         addUniqueItem(this.rowsWithGalaxy, y);
@@ -103,7 +103,7 @@ export default class Puzzle extends AoCPuzzle {
     return this.totalDistance;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.expansion = this.galaxies.length === 9 ? 10 : 1000000;
     this.calculateDistances();
     return this.totalDistance;

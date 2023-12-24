@@ -27,7 +27,7 @@ export default class Puzzle extends AoCPuzzle {
     return distances[0].coord;
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.coordinates = this.lines.map((line, i) => {
       const [x, y] = line.split(', ').map((coord) => parseInt(coord, 10));
       return { name: i.toString(), x, y };
@@ -59,7 +59,7 @@ export default class Puzzle extends AoCPuzzle {
     return Array.from(count.values()).sort((a, b) => b - a)[0];
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     let points: number = 0;
     for (let y = 0; y < this.grid.length; y += 1) {
       for (let x = 0; x < this.grid[y].length; x += 1) {

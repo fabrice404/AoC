@@ -17,11 +17,11 @@ const hash = (sequence: string): number => {
 };
 
 export default class Puzzle extends AoCPuzzle {
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     return sum(this.input.split(/,/gi).map(hash));
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     const boxes = Array(255);
 
     this.input.split(/,/gi).forEach((sequence) => {

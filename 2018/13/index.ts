@@ -99,7 +99,7 @@ export default class Puzzle extends AoCPuzzle {
     return this.carts;
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.carts = [];
     this.tracks = [];
     this.crashes = [];
@@ -145,7 +145,7 @@ export default class Puzzle extends AoCPuzzle {
     return `${this.crashes[0].x},${this.crashes[0].y}`;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.part1(); // call part 1 to recalculate carts for example part 2
     const lastCart = this.carts.find((c) => !c.crashed);
     return `${lastCart!.x},${lastCart!.y}`;

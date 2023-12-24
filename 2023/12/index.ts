@@ -39,7 +39,7 @@ const countPermutations = memoize((condition: string, damaged: number[]): number
 export default class Puzzle extends AoCPuzzle {
   private permutations: number = 0;
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     this.lines.forEach((line) => {
       const [condition, damaged] = line.split(/ /gi);
       this.permutations += countPermutations(condition, damaged.split(',').map((x) => +x));
@@ -47,7 +47,7 @@ export default class Puzzle extends AoCPuzzle {
     return this.permutations;
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     this.permutations = 0;
     this.lines.forEach((line) => {
       const [condition, damaged] = line.split(/ /gi);

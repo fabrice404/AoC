@@ -109,11 +109,11 @@ export default class Puzzle extends AoCPuzzle {
     return 'ERROR';
   }
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     return this.run();
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     return this.run(true);
   }
 }

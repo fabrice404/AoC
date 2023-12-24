@@ -6,7 +6,7 @@ export default class Puzzle extends AoCPuzzle {
 
   private skippedTime: number = 0;
 
-  public part1(): string | number {
+  public async part1(): Promise<string | number> {
     let minX = 0;
     let maxX = 0;
     let minY = 0;
@@ -75,7 +75,7 @@ export default class Puzzle extends AoCPuzzle {
     return '';
   }
 
-  public part2(): string | number {
+  public async part2(): Promise<string | number> {
     return this.elaspedTime - 1 + this.skippedTime;
   }
 }
