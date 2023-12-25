@@ -4,11 +4,14 @@ import { readFile, generateCodeFile, updateStatFile, generateStatFile } from './
 
 const today = new Date();
 let year = today.getFullYear().toString();
-let day = today.getDate().toString().padStart(2, '0');
+let day = today.getDate().toString();
 
 if (process.argv.length > 2) {
   [year, day] = process.argv[2].split(/\//gi);
 }
+
+year = year.padStart(4, '0');
+day = day.padStart(2, '0');
 
 const folder = `${__dirname}/${year}/${day}`;
 const codeFile = `${folder}/index.ts`;
@@ -42,7 +45,7 @@ import(codeFile)
     const input = readFile(inputFile);
     let example = readFile(p1ExampleFile);
     let expected = readFile(p1ExpectedFile);
-    const examplePuzzle = new Puzzle(example);
+    const examplePuzzle = new Puzzle(example, true);
 
     const part1ExampleStart = performance.now();
     const part1ExampleResult = await examplePuzzle.part1();

@@ -7,10 +7,13 @@ export default abstract class AoCPuzzle {
 
   protected grid: string[][] = [];
 
-  constructor(input: string) {
+  protected isExample: boolean;
+
+  constructor(input: string, isExample = false) {
     this.input = input;
     this.lines = this.input.split(/\n/gi);
     this.grid = this.lines.map((line) => line.split(''));
+    this.isExample = isExample;
   }
 
   public setInput(input: string) {
