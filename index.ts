@@ -6,6 +6,10 @@ const today = new Date();
 let year = today.getFullYear().toString();
 let day = today.getDate().toString();
 
+if (today.getMonth() < 11) {
+  day = '1';
+}
+
 if (process.argv.length > 2) {
   [year, day] = process.argv[2].split(/\//gi);
 }
