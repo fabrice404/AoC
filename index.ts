@@ -1,6 +1,10 @@
+import axios from 'axios';
+import dotenv from 'dotenv';
 import { existsSync } from 'fs';
 import { performance } from 'perf_hooks';
-import { readFile, generateCodeFile, updateStatFile, generateStatFile } from './helpers/file';
+import { readFile, generateCodeFile, updateStatFile, generateStatFile, writeFile } from './helpers/file';
+
+dotenv.config();
 
 const today = new Date();
 let year = today.getFullYear().toString();
@@ -35,6 +39,20 @@ if (!existsSync(statFile)) {
   generateStatFile(statFile);
 }
 
+const downloadInput = async () => {
+  if (!existsSync(inputFile)) {
+    const response = await axios.get(
+      `https://adventofcode.com/${+year}/day/${+day}/input`,
+      {
+        headers: {
+          Cookie: `session=${process.env.SESSION_TOKEN}`,
+        },
+      },
+    );
+    writeFile(inputFile, response.data);
+  }
+};
+
 import(codeFile)
   .then(async ({ default: Puzzle }) => {
     const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(Number(year), 11, Number(day)).getDay()];
@@ -46,6 +64,7 @@ import(codeFile)
     console.log('+--------------------------+');
 
     // part 1 - example
+    await downloadInput();
     const input = readFile(inputFile);
     let example = readFile(p1ExampleFile);
     let expected = readFile(p1ExpectedFile);

@@ -16,6 +16,15 @@ export const readFile = (filepath: string): string => {
 };
 
 /**
+ *
+ * @param filepath string
+ * @param content string
+ */
+export const writeFile = (filepath: string, content: string): void => {
+  writeFileSync(filepath, content, { encoding: 'utf-8' });
+};
+
+/**
  * Copy code template file to the specified folder
  * @param folder
  */
