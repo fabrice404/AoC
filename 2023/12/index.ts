@@ -32,8 +32,8 @@ const countPermutations = memoize((condition: string, damaged: number[]): number
     return countPermutations(condition.slice(damagedFirstSeries + 1), damagedRest);
   }
 
-  return countPermutations(`.${condition.slice(1)}`, damaged)
-    + countPermutations(`#${condition.slice(1)}`, damaged);
+  return countPermutations(`.${condition.slice(1)}`, damaged) +
+    countPermutations(`#${condition.slice(1)}`, damaged);
 });
 
 export default class Puzzle extends AoCPuzzle {

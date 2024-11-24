@@ -130,10 +130,10 @@ export default class Puzzle extends AoCPuzzle {
           cart.move();
           cart.rotate(this.tracks[`${cart.x},${cart.y}`]);
 
-          const collision = this.carts.find((c) => c !== cart
-            && c.x === cart.x
-            && c.y === cart.y
-            && !c.crashed);
+          const collision = this.carts.find((c) => c !== cart &&
+            c.x === cart.x &&
+            c.y === cart.y &&
+            !c.crashed);
           if (collision) {
             cart.crashed = true;
             collision.crashed = true;

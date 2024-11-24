@@ -89,10 +89,10 @@ export default class Puzzle extends AoCPuzzle {
           }
           return path.straight > 2 ? move.direction !== path.direction : true;
         })
-        .filter((move) => (move.x >= 0
-          && move.x < this.grid[0].length
-          && move.y >= 0
-          && move.y < this.grid.length))
+        .filter((move) => (move.x >= 0 &&
+          move.x < this.grid[0].length &&
+          move.y >= 0 &&
+          move.y < this.grid.length))
         .forEach((move) => {
           const { direction, x, y } = move;
           const heatLoss = path.heatLoss + this.getHeatLoss(x, y);

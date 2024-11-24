@@ -86,10 +86,10 @@ export default class Puzzle extends AoCPuzzle {
       return 0;
     }
     if (workflowKey === 'A') {
-      return (ranges.x[1] - ranges.x[0] + 1)
-        * (ranges.m[1] - ranges.m[0] + 1)
-        * (ranges.a[1] - ranges.a[0] + 1)
-        * (ranges.s[1] - ranges.s[0] + 1);
+      return (ranges.x[1] - ranges.x[0] + 1) *
+        (ranges.m[1] - ranges.m[0] + 1) *
+        (ranges.a[1] - ranges.a[0] + 1) *
+        (ranges.s[1] - ranges.s[0] + 1);
     }
 
     let result = 0;

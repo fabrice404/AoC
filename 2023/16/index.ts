@@ -91,9 +91,9 @@ const run = (initialBeam: Beam, grid: string[][]): number => {
       .forEach((beam) => {
         interact(beam);
         move(beam);
-        if (alreadyVisited.find((b) => b.x === beam.x
-          && b.y === beam.y
-          && b.direction === beam.direction)
+        if (alreadyVisited.find((b) => b.x === beam.x &&
+          b.y === beam.y &&
+          b.direction === beam.direction)
         ) {
           beam.active = false;
         } else {

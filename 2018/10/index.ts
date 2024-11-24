@@ -44,10 +44,10 @@ export default class Puzzle extends AoCPuzzle {
       let biggerY = -Infinity;
       grid = new Array(yOffset + maxY + 1).fill(0).map(() => new Array(xOffset + maxX + 1).fill(' '));
       points.forEach((point) => {
-        if (point.posX + xOffset > 0
-          && point.posX + xOffset < grid[0].length
-          && point.posY + yOffset > 0
-          && point.posY + yOffset < grid.length
+        if (point.posX + xOffset > 0 &&
+          point.posX + xOffset < grid[0].length &&
+          point.posY + yOffset > 0 &&
+          point.posY + yOffset < grid.length
         ) {
           grid[point.posY + yOffset][point.posX + xOffset] = '#';
         }

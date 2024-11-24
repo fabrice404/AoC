@@ -50,10 +50,10 @@ export const isNextTo = (
   x: number,
   y: number,
   value: any,
-): boolean => array[y - 1]?.[x] === value
-|| array[y + 1]?.[x] === value
-|| array[y]?.[x - 1] === value
-  || array[y]?.[x + 1] === value;
+): boolean => array[y - 1]?.[x] === value ||
+array[y + 1]?.[x] === value ||
+array[y]?.[x - 1] === value ||
+  array[y]?.[x + 1] === value;
 
 export const isNextTo3D = (
   array: any[][][],
@@ -61,12 +61,12 @@ export const isNextTo3D = (
   y: number,
   z: number,
   value: any,
-): boolean => array[z][y - 1]?.[x] === value
-|| array[z][y + 1]?.[x] === value
-|| array[z][y]?.[x - 1] === value
-|| array[z][y]?.[x + 1] === value
-|| array[z - 1]?.[y]?.[x] === value
-  || array[z + 1]?.[y]?.[x] === value;
+): boolean => array[z][y - 1]?.[x] === value ||
+array[z][y + 1]?.[x] === value ||
+array[z][y]?.[x - 1] === value ||
+array[z][y]?.[x + 1] === value ||
+array[z - 1]?.[y]?.[x] === value ||
+  array[z + 1]?.[y]?.[x] === value;
 
 export const rotate = (array: string[]): string[] => {
   const newArray: string[] = Array(array[0].length).fill('');

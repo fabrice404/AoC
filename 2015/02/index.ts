@@ -5,10 +5,10 @@ export default class Puzzle extends AoCPuzzle {
     let totalSize = 0;
     for (const line of this.lines) {
       const [x, y, z] = line.split(/x/gi).map(Number).sort((a, b) => a - b);
-      totalSize += 2 * x * y
-        + 2 * x * z
-        + 2 * y * z
-        + x * y;
+      totalSize += 2 * x * y +
+        2 * x * z +
+        2 * y * z +
+        x * y;
     }
     return totalSize;
   }

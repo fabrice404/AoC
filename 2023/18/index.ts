@@ -118,8 +118,8 @@ export default class Puzzle extends AoCPuzzle {
     // https://www.theoremoftheday.org/GeometryAndTrigonometry/Shoelace/TotDShoelace.pdf
     let area = 0;
     for (let i = 0; i < this.points.length; i += 1) {
-      area += this.points[i].x * this.points[(i + 1) % this.points.length].y
-        - this.points[i].y * this.points[(i + 1) % this.points.length].x;
+      area += this.points[i].x * this.points[(i + 1) % this.points.length].y -
+        this.points[i].y * this.points[(i + 1) % this.points.length].x;
     }
     area = Math.abs(area) / 2;
 

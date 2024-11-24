@@ -38,11 +38,11 @@ export default class Puzzle extends AoCPuzzle {
     const xB = x3 > x4 ? x3 > xCollision : x3 < xCollision;
     const yB = y3 > y4 ? y3 > yCollision : y3 < yCollision;
 
-    return (xCollision > this.testArea[0]
-      && xCollision < this.testArea[1]
-      && yCollision > this.testArea[0]
-      && yCollision < this.testArea[1]
-      && xA && yA && xB && yB
+    return (xCollision > this.testArea[0] &&
+      xCollision < this.testArea[1] &&
+      yCollision > this.testArea[0] &&
+      yCollision < this.testArea[1] &&
+      xA && yA && xB && yB
     );
   }
 

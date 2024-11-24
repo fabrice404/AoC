@@ -99,12 +99,12 @@ export default class Puzzle extends AoCPuzzle {
       y: number,
       z: number,
       value: any,
-    ): number => (array[z][y - 1]?.[x] === value ? 1 : 0)
-    + (array[z][y + 1]?.[x] === value ? 1 : 0)
-    + (array[z][y]?.[x - 1] === value ? 1 : 0)
-    + (array[z][y]?.[x + 1] === value ? 1 : 0)
-    + (array[z - 1]?.[y]?.[x] === value ? 1 : 0)
-      + (array[z + 1]?.[y]?.[x] === value ? 1 : 0);
+    ): number => (array[z][y - 1]?.[x] === value ? 1 : 0) +
+    (array[z][y + 1]?.[x] === value ? 1 : 0) +
+    (array[z][y]?.[x - 1] === value ? 1 : 0) +
+    (array[z][y]?.[x + 1] === value ? 1 : 0) +
+    (array[z - 1]?.[y]?.[x] === value ? 1 : 0) +
+      (array[z + 1]?.[y]?.[x] === value ? 1 : 0);
 
     while (count !== lastCount) {
       this.grid3d.forEach((layer, z) => {

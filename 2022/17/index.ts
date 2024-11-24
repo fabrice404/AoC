@@ -39,9 +39,9 @@ export default class Puzzle extends AoCPuzzle {
         const movedX = tetromino.map(([x, y]) => ([x + moveX, y]));
 
         if (movedX.every(([x, y]) => (
-          (!this.cave[y] || !this.cave[y][x])
-          && x >= 0
-          && x < 7
+          (!this.cave[y] || !this.cave[y][x]) &&
+          x >= 0 &&
+          x < 7
         ))) {
           tetromino = movedX;
         }

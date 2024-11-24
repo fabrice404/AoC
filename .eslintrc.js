@@ -19,6 +19,7 @@ module.exports = {
     "default-case": "off",
     "max-classes-per-file": "off",
     "object-curly-newline": "off",
+    "operator-linebreak": ["error", "after"],
     "max-len": ["error", { "code": 320 }],
     "no-await-in-loop": "off",
     "no-console": "off",

@@ -53,10 +53,10 @@ export default class Puzzle extends AoCPuzzle {
 
     // slopes
     if (
-      (this.getAt(path.x, path.y) === '>' && direction !== 'right')
-      || (this.getAt(path.x, path.y) === '<' && direction !== 'left')
-      || (this.getAt(path.x, path.y) === '^' && direction !== 'up')
-      || (this.getAt(path.x, path.y) === 'v' && direction !== 'down')
+      (this.getAt(path.x, path.y) === '>' && direction !== 'right') ||
+      (this.getAt(path.x, path.y) === '<' && direction !== 'left') ||
+      (this.getAt(path.x, path.y) === '^' && direction !== 'up') ||
+      (this.getAt(path.x, path.y) === 'v' && direction !== 'down')
     ) {
       return;
     }
