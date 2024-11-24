@@ -16,6 +16,7 @@ module.exports = {
   rules: {
     "class-methods-use-this": "off",
     "consistent-return": "off",
+    "default-case": "off",
     "max-classes-per-file": "off",
     "object-curly-newline": "off",
     "max-len": ["error", { "code": 320 }],
