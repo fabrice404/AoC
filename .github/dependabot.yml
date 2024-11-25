@@ -9,8 +9,7 @@ updates:
     prefix: "npm"
     include: "scope"
   groups:
-    dev-dependencies-patch-and-minor:
-      dependency-type: development
+    dependencies-patch-and-minor:
       update-types:
         - minor
         - patch
