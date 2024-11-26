@@ -26,6 +26,7 @@ module.exports = {
     "no-continue": "off",
     "no-eval": "off",
     "no-param-reassign": "off",
+    "no-underscore-dangle": "off",
     "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
     "@typescript-eslint/no-loop-func": "off"
   },
