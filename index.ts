@@ -79,7 +79,7 @@ import(codeFile)
       console.log(`Test case skipped (${(part1ExampleTime).toFixed(3)} ms)`);
     } else {
       if (`${part1ExampleResult}` !== `${expected}`) {
-        throw new Error(`Test case failed: ${part1ExampleResult} != ${expected} (${(part1ExampleTime).toFixed(3)} ms)`);
+        throw new Error(`Test case failed: ${part1ExampleResult} != ${expected} expected (${(part1ExampleTime).toFixed(3)} ms)`);
       }
       console.log(`Test case success: ${part1ExampleResult} (${(part1ExampleTime).toFixed(3)} ms)`);
     }
@@ -113,7 +113,7 @@ import(codeFile)
       console.log(`Test case skipped (${(part2ExampleTime).toFixed(3)} ms)`);
     } else {
       if (`${part2ExampleResult}` !== `${expected}`) {
-        throw new Error(`Test case failed: ${part2ExampleResult} != ${expected} (${(part2ExampleTime).toFixed(3)} ms)`);
+        throw new Error(`Test case failed: ${part2ExampleResult} != ${expected} expected (${(part2ExampleTime).toFixed(3)} ms)`);
       }
       console.log(`Test case success: ${part2ExampleResult} (${(part2ExampleTime).toFixed(3)} ms)`);
     }
