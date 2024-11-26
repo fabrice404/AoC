@@ -84,3 +84,11 @@ export const rotate = (array: string[]): string[] => {
   }
   return newArray;
 };
+
+export const create2DArray = (width: number, height: number, defaultValue: any = null): any[][] => {
+  const array: any[][] = [];
+  for (let i = 0; i < height; i += 1) {
+    array.push(Array(width).fill(defaultValue));
+  }
+  return array;
+};
