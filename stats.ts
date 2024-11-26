@@ -10,6 +10,11 @@ const generateReadme = (folder: string) => {
   Object.keys(stats).sort((a, b) => (+a > +b ? 1 : -1))
     .forEach((day) => {
       const stat = stats[day];
+      if (`${stat.part1ExampleResult}`.match(/[\n]/)) { stat.part1ExampleResult = '...'; }
+      if (`${stat.part1Result}`.match(/[\n]/)) { stat.part1Result = '...'; }
+      if (`${stat.part2ExampleResult}`.match(/[\n]/)) { stat.part2ExampleResult = '...'; }
+      if (`${stat.part2Result}`.match(/[\n]/)) { stat.part2Result = '...'; }
+
       readme += `${day} `;
       readme += `| ${stat.part1ExampleTime.toFixed(3)}ms <br/><sub><sup>${stat.part1ExampleResult}</sup></sub> `;
       readme += `| ${stat.part1Time.toFixed(3)}ms <br/><sub><sup>${stat.part1Result}</sup></sub> `;
