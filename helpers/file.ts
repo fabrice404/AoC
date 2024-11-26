@@ -21,7 +21,11 @@ export const readFile = (filepath: string): string => {
  * @param content string
  */
 export const writeFile = (filepath: string, content: string): void => {
-  writeFileSync(filepath, JSON.stringify(content), { encoding: 'utf-8' });
+  try {
+    writeFileSync(filepath, content, { encoding: 'utf-8' });
+  } catch (e) {
+    writeFileSync(filepath, JSON.stringify(content), { encoding: 'utf-8' });
+  }
 };
 
 /**
