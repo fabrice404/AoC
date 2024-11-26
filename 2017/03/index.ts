@@ -1,4 +1,4 @@
-import { create2DArray, print2d } from '../../helpers/array';
+import { create2DArray } from '../../helpers/array';
 import AoCPuzzle from '../../puzzle';
 
 export default class Puzzle extends AoCPuzzle {
