@@ -79,9 +79,9 @@ import(codeFile)
       console.log(`Test case skipped (${(part1ExampleTime).toFixed(3)} ms)`);
     } else {
       if (`${part1ExampleResult}` !== `${expected}`) {
-        throw new Error(`Test case failed: ${part1ExampleResult} != ${expected} expected (${(part1ExampleTime).toFixed(3)} ms)`);
+        throw new Error(`Test case failed: \x1b[31m${part1ExampleResult} \x1b[0m!= \x1b[33m${expected} \x1b[0m(${(part1ExampleTime).toFixed(3)} ms)`);
       }
-      console.log(`Test case success: ${part1ExampleResult} (${(part1ExampleTime).toFixed(3)} ms)`);
+      console.log(`Test case success: \x1b[42m${part1ExampleResult}\x1b[0m (${(part1ExampleTime).toFixed(3)} ms)`);
     }
 
     // part 1 - puzzle
@@ -113,9 +113,9 @@ import(codeFile)
       console.log(`Test case skipped (${(part2ExampleTime).toFixed(3)} ms)`);
     } else {
       if (`${part2ExampleResult}` !== `${expected}`) {
-        throw new Error(`Test case failed: ${part2ExampleResult} != ${expected} expected (${(part2ExampleTime).toFixed(3)} ms)`);
+        throw new Error(`Test case failed: \x1b[41m${part2ExampleResult}\x1b[0m != \x1b[42m${expected}\x1b[0m (${(part2ExampleTime).toFixed(3)} ms)`);
       }
-      console.log(`Test case success: ${part2ExampleResult} (${(part2ExampleTime).toFixed(3)} ms)`);
+      console.log(`Test case success: \x1b[42m${part2ExampleResult}\x1b[0m (${(part2ExampleTime).toFixed(3)} ms)`);
     }
 
     // part 2 - puzzle
