@@ -1,4 +1,3 @@
-import { print2d } from '../../helpers/array';
 import AoCPuzzle from '../../puzzle';
 
 interface Step {
