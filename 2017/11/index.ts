@@ -1,16 +1,5 @@
 import AoCPuzzle from '../../puzzle';
 
-interface Step {
-  x: number;
-  y: number;
-}
-
-interface Move {
-  x: number;
-  y: number;
-  steps: Step[];
-}
-
 export default class Puzzle extends AoCPuzzle {
   private targetX: number = 0;
 
@@ -39,9 +28,6 @@ export default class Puzzle extends AoCPuzzle {
       }
       this.furthestDistance = Math.max(this.furthestDistance, Math.abs(this.targetX - startX) / 2 + Math.abs(this.targetY - startY) / 2);
     }
-
-    // console.log(`Start: ${startX}, ${startY}`);
-    // console.log(`Target: ${this.targetX}, ${this.targetY}`);
 
     return Math.abs(this.targetX - startX) / 2 + Math.abs(this.targetY - startY) / 2;
   }
