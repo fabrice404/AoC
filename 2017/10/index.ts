@@ -29,9 +29,9 @@ export default class Puzzle extends AoCPuzzle {
     return input.split('').map((char) => char.charCodeAt(0));
   }
 
-  public async part2(): Promise<string | number> {
+  public knotHash(str: string): string {
     this.list = Array.from({ length: 256 }, (_, i) => i);
-    const input = [...this.convertInputToAsciiCodes(this.input), ...[17, 31, 73, 47, 23]];
+    const input = [...this.convertInputToAsciiCodes(str), ...[17, 31, 73, 47, 23]];
 
     let position = 0;
     let skipSize = 0;
@@ -58,5 +58,9 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     return result.join('');
+  }
+
+  public async part2(): Promise<string | number> {
+    return this.knotHash(this.input);
   }
 }
