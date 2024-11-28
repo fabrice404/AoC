@@ -10,7 +10,7 @@ export default class Puzzle extends AoCPuzzle {
     const frequencies: number[] = [];
     let result = 0;
     let i = 0;
-    while (!frequencies.includes(result)) {
+    while (true) {
       result += operations[i];
       if (frequencies.includes(result)) {
         return result;
@@ -24,6 +24,5 @@ export default class Puzzle extends AoCPuzzle {
         i = 0;
       }
     }
-    return result;
   }
 }
