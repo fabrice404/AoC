@@ -40,7 +40,6 @@ export default class Puzzle extends AoCPuzzle {
       .sort((a, b) => (a.name > b.name ? 1 : -1))
       .find((n) => !n.finished && n.previous.length === 0)!;
 
-    /* eslint-disable @typescript-eslint/no-loop-func */
     while (currentNode) {
       response += currentNode.name;
       currentNode.finished = true;
@@ -52,7 +51,6 @@ export default class Puzzle extends AoCPuzzle {
         .sort((a, b) => (a.name > b.name ? 1 : -1))
         .find((n) => !n.finished && n.previous.length === 0)!;
     }
-    /* eslint-enable @typescript-eslint/no-loop-func */
 
     return response;
   }

@@ -1,4 +1,4 @@
-/* eslint-disable no-bitwise */
+ 
 
 import AoCPuzzle from '../../puzzle';
 
@@ -43,7 +43,7 @@ export default class Puzzle extends AoCPuzzle {
     borr: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] | registers[instruction[2]]); },
     bori: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] | instruction[2]); },
     setr: (instruction: number[], registers: number[]) => { registers[instruction[3]] = registers[instruction[1]]; },
-    seti: (instruction: number[], registers: number[]) => { registers[instruction[3]] = instruction[1]; }, // eslint-disable-line prefer-destructuring
+    seti: (instruction: number[], registers: number[]) => { registers[instruction[3]] = instruction[1]; },  
     gtir: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (instruction[1] > registers[instruction[2]] ? 1 : 0); },
     gtri: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] > instruction[2] ? 1 : 0); },
     gtrr: (instruction: number[], registers: number[]) => { registers[instruction[3]] = ((registers[instruction[1]] > registers[instruction[2]]) ? 1 : 0); },

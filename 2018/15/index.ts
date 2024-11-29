@@ -237,8 +237,8 @@ export default class Puzzle extends AoCPuzzle {
     this.playgrid = grid.split('\n').map((line) => line.split('').map((char) => {
       switch (char) {
         case '#': return { type: 'wall' } as Cell;
-        case 'E': return { type: 'unit', unit: { id: unitId++, type: 'elf', hp: 200, round: -1 } } as Cell; // eslint-disable-line no-plusplus
-        case 'G': return { type: 'unit', unit: { id: unitId++, type: 'goblin', hp: 200, round: -1 } } as Cell; // eslint-disable-line no-plusplus
+        case 'E': return { type: 'unit', unit: { id: unitId++, type: 'elf', hp: 200, round: -1 } } as Cell;  
+        case 'G': return { type: 'unit', unit: { id: unitId++, type: 'goblin', hp: 200, round: -1 } } as Cell;  
         default: return { type: 'open' } as Cell;
       }
     }));

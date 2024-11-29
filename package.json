@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --ext .ts,.txt ./index.ts",
-    "lint": "eslint . --ext .ts --fix",
+    "lint": "eslint . --fix",
     "stars": "ts-node ./stars.ts",
     "stats": "ts-node ./stats.ts",
     "compile": "npx tsc --noEmit",
@@ -14,18 +14,16 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.15.0",
     "@types/node": "^20.17.7",
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-airbnb-typescript": "^17.1.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.6.0",
+    "eslint": "^9.15.0",
+    "globals": "^15.12.0",
     "husky": "^8.0.3",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.16.0"
   },
   "dependencies": {
     "axios": "^1.7.7",

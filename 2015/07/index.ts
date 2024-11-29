@@ -1,4 +1,4 @@
-/* eslint-disable no-bitwise, prefer-const */
+/* eslint-disable prefer-const */
 
 import AoCPuzzle from '../../puzzle';
 

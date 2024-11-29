@@ -1,4 +1,4 @@
-// import { init } from 'z3-solver';
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 import AoCPuzzle from '../../puzzle';
 
@@ -102,7 +102,7 @@ export default class Puzzle extends AoCPuzzle {
     await solver.check();
 
     const result = solver.model().eval(x.add(y).add(z)).value();
-    setTimeout(() => { process.exit(); }, 3000);
+    setTimeout(() => { process.exit(); }, 30000);
     return `${result}`;
   }
 }

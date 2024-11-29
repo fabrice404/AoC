@@ -1,5 +1,3 @@
-/* eslint-disable no-bitwise */
-
 import AoCPuzzle from '../../puzzle';
 
 export default class Puzzle extends AoCPuzzle {

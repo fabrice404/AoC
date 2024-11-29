@@ -28,7 +28,7 @@ export default class Puzzle extends AoCPuzzle {
     let i = 1;
 
     do {
-      const entry = prevPoint.x === point.x ? (prevPoint.y > point.y ? 'bottom' : 'top') : (prevPoint.x > point.x ? 'right' : 'left'); // eslint-disable-line
+      const entry = prevPoint.x === point.x ? (prevPoint.y > point.y ? 'bottom' : 'top') : (prevPoint.x > point.x ? 'right' : 'left');  
 
       let exit: 'top' | 'bottom' | 'left' | 'right' | undefined;
       switch (point.value) {

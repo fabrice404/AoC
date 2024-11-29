@@ -27,7 +27,7 @@ export default class Puzzle extends AoCPuzzle {
       for (let i = 0; i < line.length; i += 1) {
         const ss = line.substring(i);
 
-        /* eslint-disable @typescript-eslint/no-loop-func */
+         
         Object.entries(numbers)
           .forEach(([key, value]) => {
             const rxp = new RegExp(`^${key}`, 'gi');
@@ -35,7 +35,7 @@ export default class Puzzle extends AoCPuzzle {
               line = replaceAt(line, i, value.toString());
             }
           });
-        /* eslint-enable @typescript-eslint/no-loop-func */
+         
       }
 
       const digits = line.replace(/[^0-9]/g, '').split('');
