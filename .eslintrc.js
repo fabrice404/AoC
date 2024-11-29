@@ -22,6 +22,7 @@ module.exports = {
     "operator-linebreak": ["error", "after"],
     "max-len": ["error", { "code": 320 }],
     "no-await-in-loop": "off",
+    "no-case-declarations": "off",
     "no-console": "off",
     "no-continue": "off",
     "no-eval": "off",
