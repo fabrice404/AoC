@@ -53,15 +53,46 @@ const downloadInput = async () => {
   }
 };
 
+const readableTime = (ms: number) => {
+  if (ms < 1) {
+    return `${(ms * 1000).toFixed(0)} ns`;
+  }
+  if (ms < 1000) {
+    return `${ms.toFixed(0)} ms`;
+  }
+  return `${(ms / 1000).toFixed(0)} s`
+}
+
+const resultMessage = (label: string, value: string, time: number, color: number = 0) => {
+  const message = [
+    label.padEnd(25, ' '),
+    `\x1b[${`${color}`.padStart(2, '0')}m${value}\x1b[0m`.padStart(30, ' '),
+    `(${readableTime(time)})`
+  ]
+
+  console.log(message.join(' '));
+}
+
+const failedMessage = (label: string, value: string, expected: string, time: number) => {
+
+  const message = [
+    label.padEnd(25, ' '),
+    ` `.padStart(21, ' '),
+    `(${readableTime(time)})`,
+    `\n\x1b[41m${value}\x1b[0m\n\x1b[42m${expected}\x1b[0m`,
+  ];
+  throw message.join(' ');
+};
+
 import(codeFile)
   .then(async ({ default: Puzzle }) => {
     const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(Number(year), 11, Number(day)).getDay()];
     const date = `${dayName} ${year}-12-${day}`;
     console.log(`\n${date}\n`);
 
-    console.log('+--------------------------+');
-    console.log('|          PART 1          |');
-    console.log('+--------------------------+');
+    console.log('+------------------------------------------------------+');
+    console.log('|                        PART 1                        |');
+    console.log('+------------------------------------------------------+');
 
     // part 1 - example
     await downloadInput();
@@ -76,12 +107,11 @@ import(codeFile)
     const part1ExampleTime = part1ExampleEnd - part1ExampleStart;
 
     if (expected === 'skip') {
-      console.log(`Test case skipped (${(part1ExampleTime).toFixed(3)} ms)`);
+      resultMessage('Test case skipped', '', part1ExampleTime)
+    } else if (`${part1ExampleResult}` !== `${expected}`) {
+      failedMessage('Test case failed:', part1ExampleResult, expected, part1ExampleTime);
     } else {
-      if (`${part1ExampleResult}` !== `${expected}`) {
-        throw new Error(`Test case failed: \x1b[31m${part1ExampleResult} \x1b[0m!= \x1b[32m${expected} \x1b[0m(${(part1ExampleTime).toFixed(3)} ms)`);
-      }
-      console.log(`Test case success: \x1b[42m${part1ExampleResult}\x1b[0m (${(part1ExampleTime).toFixed(3)} ms)`);
+      resultMessage('Test case success:', part1ExampleResult, part1ExampleTime, 42);
     }
 
     // part 1 - puzzle
@@ -91,11 +121,12 @@ import(codeFile)
     const part1End = performance.now();
     const part1Time = part1End - part1Start;
 
-    console.log(`Result: ${part1Result} (${(part1Time).toFixed(3)} ms)\n`);
+    resultMessage('Result:', part1Result, part1Time);
 
-    console.log('+--------------------------+');
-    console.log('|          PART 2          |');
-    console.log('+--------------------------+');
+    console.log('');
+    console.log('+------------------------------------------------------+');
+    console.log('|                        PART 2                        |');
+    console.log('+------------------------------------------------------+');
 
     // part 2 - example
     example = readFile(p2ExampleFile);
@@ -110,12 +141,11 @@ import(codeFile)
     const part2ExampleTime = part2ExampleEnd - part2ExampleStart;
 
     if (expected === 'skip') {
-      console.log(`Test case skipped (${(part2ExampleTime).toFixed(3)} ms)`);
+      resultMessage('Test case skipped', '', part2ExampleTime)
+    } else if (`${part2ExampleResult}` !== `${expected}`) {
+      failedMessage('Test case failed:', part2ExampleResult, expected, part2ExampleTime);
     } else {
-      if (`${part2ExampleResult}` !== `${expected}`) {
-        throw new Error(`Test case failed: \x1b[31m${part2ExampleResult}\x1b[0m != \x1b[32m${expected}\x1b[0m (${(part2ExampleTime).toFixed(3)} ms)`);
-      }
-      console.log(`Test case success: \x1b[42m${part2ExampleResult}\x1b[0m (${(part2ExampleTime).toFixed(3)} ms)`);
+      resultMessage('Test case success:', part2ExampleResult, part2ExampleTime, 42);
     }
 
     // part 2 - puzzle
@@ -124,8 +154,9 @@ import(codeFile)
     const part2End = performance.now();
     const part2Time = part2End - part2Start;
 
-    console.log(`Result: ${part2Result} (${(part2Time).toFixed(3)} ms)\n`);
+    resultMessage('Result:', part2Result, part2Time);
 
+    console.log('');
     updateStatFile(statFile, +day, {
       part1ExampleResult,
       part1ExampleTime,
