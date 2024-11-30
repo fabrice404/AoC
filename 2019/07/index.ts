@@ -1,4 +1,4 @@
-import { IntCodeComputer } from './int-code-computer';
+import { IntCodeComputer } from '../int-code-computer';
 
 import { permutations } from '../../helpers/string';
 import AoCPuzzle from '../../puzzle';
