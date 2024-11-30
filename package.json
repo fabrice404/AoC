@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --ext .ts,.txt ./index.ts",
-    "start": "ts-node ./index.ts",
+    "start": "nodemon --ext .ts,.txt ./index.ts",
     "lint": "eslint . --fix",
     "stars": "ts-node ./stars.ts",
     "stats": "ts-node ./stats.ts",

@@ -136,4 +136,5 @@ import(codeFile)
       part2Result,
       part2Time,
     });
-  });
+  })
+  .catch(console.log);
