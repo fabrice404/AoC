@@ -36,3 +36,22 @@ export const hasDifferentLetterTimes = (a: string, b: string, times: number) => 
 };
 
 export const replaceAt = (a: string, index: number, replacement: string) => `${a.substring(0, index)}${replacement}${a.substring(index + replacement.length)}`;
+
+export const permutations = (s: string): string[] => {
+  if (s.length < 2) {
+    return [s];
+  }
+  const result: string[] = [];
+  for (let i = 0; i < s.length; i += 1) {
+    const c = s[i];
+
+    if (s.indexOf(c) !== i) {
+      continue;
+    }
+
+    for (const sub of permutations(`${s.slice(0, i)}${s.slice(i + 1, s.length)}`)) {
+      result.push(`${c}${sub}`);
+    }
+  }
+  return result;
+}
