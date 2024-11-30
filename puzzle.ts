@@ -5,7 +5,7 @@ export default abstract class AoCPuzzle {
 
   protected lines: string[];
 
-  protected grid: string[][] = [];
+  protected grid: any[][] = [];
 
   protected isExample: boolean;
 
@@ -23,7 +23,13 @@ export default abstract class AoCPuzzle {
   }
 
   public printGrid() {
-    print2d(this.grid);
+    if (typeof this.grid[0][0] === "string" || typeof this.grid[0][0] === "number") {
+      print2d(this.grid);
+    } else if (this.grid[0][0].value != null) {
+      print2d(this.grid.map((row) => row.map((cell) => cell.value)));
+    } else {
+      console.log(`Unable to print grid`);
+    }
   }
 
   public abstract part1(): Promise<string | number>;

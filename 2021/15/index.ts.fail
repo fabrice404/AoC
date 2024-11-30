@@ -1,0 +1,164 @@
+import AoCPuzzle from '../../puzzle';
+
+// interface Cell {
+//   x: number;
+//   y: number;
+//   risk: number;
+// }
+
+interface Route {
+  x: number;
+  y: number;
+  risk: number;
+  steps: Set<string>;
+}
+
+interface Cell {
+  x: number;
+  y: number;
+  risk: number;
+  lowestRiskToReach: number;
+  lowestRiskRoute?: string[];
+}
+
+export default class Puzzle extends AoCPuzzle {
+  private cells: Map<string, Cell> = new Map<string, Cell>();
+
+  private targetX: number = -1;
+
+  private targetY: number = -1;
+
+  private queue: Route[] = [];
+
+  private moveAround(route: Route): void {
+    const cell = this.cells.get(`${route.x}-${route.y}`);
+    if (!cell) { return; }
+    if (route.risk > cell.lowestRiskToReach) { return; }
+
+    cell.lowestRiskToReach = route.risk;
+    cell.lowestRiskRoute = [...route.steps];
+
+    if (route.x === this.targetX && route.y === this.targetY) {
+      return;
+    }
+
+    [[route.y + 1, route.x], [route.y, route.x + 1], [route.y - 1, route.x], [route.y, route.x - 1]]
+      .filter((([y, x]) => (y !== route.y || x !== route.x)))
+      .forEach(([y, x]) => {
+        const key = `${x}-${y}`;
+        const newCell = this.cells.get(key)
+        if (newCell && !route.steps.has(key)) {
+          this.queue.push({ x, y, risk: route.risk + newCell.risk, steps: new Set([...route.steps, key]) });
+        }
+      });
+
+  }
+
+  private print(): void {
+    let lastY = -1;
+    const route = this.cells.get(`${this.targetX}-${this.targetY}`)!.lowestRiskRoute!;
+
+    const output: string[] = [];
+
+    for (const cell of this.cells.values()) {
+      if (lastY !== cell.y) { output.push('\n'); }
+
+      const key = `${cell.x}-${cell.y}`;
+      if (route.includes(key)) {
+        output.push(`\x1b[42m${cell.risk}\x1b[0m`);
+      } else {
+        output.push(`${cell.risk}`);
+      }
+
+      lastY = cell.y;
+    }
+    if (this.cells.size <= 10000) {
+      console.log(output.join(''));
+    }
+  }
+
+  private run() {
+    for (let y = 0; y < this.grid.length; y += 1) {
+      for (let x = 0; x < this.grid[y].length; x += 1) {
+
+        const risk = +this.grid[y][x]
+        let lowestRiskToReach: number = 0;
+        if (x > 0 && y > 0) {
+          lowestRiskToReach = risk + Math.min(
+            this.cells.get(`${x - 1}-${y}`)!.lowestRiskToReach,
+            this.cells.get(`${x}-${y - 1}`)!.lowestRiskToReach,
+          );
+        }
+        if (x > 0 && y === 0) {
+          lowestRiskToReach = risk + this.cells.get(`${x - 1}-${y}`)!.lowestRiskToReach;
+        }
+        if (x === 0 && y > 0) {
+          lowestRiskToReach = risk + this.cells.get(`${x}-${y - 1}`)!.lowestRiskToReach;
+        }
+
+        this.cells.set(`${x}-${y}`, {
+          x,
+          y,
+          risk,
+          lowestRiskToReach,
+          lowestRiskRoute: [],
+        });
+        this.targetX = x;
+      }
+      this.targetY = y
+    }
+
+    this.queue = [{ x: 0, y: 0, risk: 0, steps: new Set(['0-0']) }];
+
+    while (this.queue.length) {
+      const next = this.queue.pop()!;
+      this.moveAround({ ...next })
+      this.queue.sort((a, b) => a.risk > b.risk ? 1 : -1);
+    }
+    this.print();
+
+    return this.cells.get(`${this.targetX}-${this.targetY}`)!.lowestRiskToReach;
+  }
+
+  public async part1(): Promise<string | number> {
+    return this.run();
+  }
+
+  private valuate(value: number): string {
+    if (value < 10) {
+      return `${value}`;
+    }
+    return `${value % 9 + Math.floor(value / 9) - 1}`;
+  }
+
+  public async part2(): Promise<string | number> {
+    this.setInput(this.input);
+    this.queue = [];
+    this.cells = new Map<string, Cell>();
+
+    const originalRows = this.lines.length;
+    const rows = originalRows * 5;
+    const originalColumns = this.lines[0].length;
+    const columns = originalColumns * 5;
+
+    for (let y = 0; y < rows; y += 1) {
+      if (y >= originalRows) {
+        this.grid[y] = [];
+      }
+      for (let x = 0; x < columns; x += 1) {
+        let add = 0;
+        let value = +this.grid[y % originalRows][x % originalColumns];
+        if (x >= originalColumns) {
+          add += Math.floor(x / originalColumns)
+          value = +this.grid[y][x % originalColumns];
+        }
+        if (y >= originalRows && x < originalColumns) {
+          add += Math.floor(y / originalRows)
+        }
+        this.grid[y][x] = this.valuate(value + add);
+      }
+    }
+
+    return this.run();
+  }
+}
