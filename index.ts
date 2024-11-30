@@ -101,17 +101,22 @@ import(codeFile)
     let expected = readFile(p1ExpectedFile);
     const examplePuzzle = new Puzzle(example, true);
 
-    const part1ExampleStart = performance.now();
-    const part1ExampleResult = await examplePuzzle.part1();
-    const part1ExampleEnd = performance.now();
-    const part1ExampleTime = part1ExampleEnd - part1ExampleStart;
+    let part1ExampleResult = 'skip';
+    let part1ExampleTime = 0;
 
     if (expected === 'skip') {
       resultMessage('Test case skipped', '', part1ExampleTime)
-    } else if (`${part1ExampleResult}` !== `${expected}`) {
-      failedMessage('Test case failed:', part1ExampleResult, expected, part1ExampleTime);
     } else {
-      resultMessage('Test case success:', part1ExampleResult, part1ExampleTime, 42);
+      const part1ExampleStart = performance.now();
+      part1ExampleResult = await examplePuzzle.part1();
+      const part1ExampleEnd = performance.now();
+      part1ExampleTime = part1ExampleEnd - part1ExampleStart;
+
+      if (`${part1ExampleResult}` !== `${expected}`) {
+        failedMessage('Test case failed:', part1ExampleResult, expected, part1ExampleTime);
+      } else {
+        resultMessage('Test case success:', part1ExampleResult, part1ExampleTime, 42);
+      }
     }
 
     // part 1 - puzzle
@@ -132,20 +137,25 @@ import(codeFile)
     example = readFile(p2ExampleFile);
     expected = readFile(p2ExpectedFile);
 
-    const part2ExampleStart = performance.now();
-    if (example) {
-      examplePuzzle.setInput(example);
-    }
-    const part2ExampleResult = await examplePuzzle.part2();
-    const part2ExampleEnd = performance.now();
-    const part2ExampleTime = part2ExampleEnd - part2ExampleStart;
+    let part2ExampleResult = 'skip';
+    let part2ExampleTime = 0;
 
     if (expected === 'skip') {
       resultMessage('Test case skipped', '', part2ExampleTime)
-    } else if (`${part2ExampleResult}` !== `${expected}`) {
-      failedMessage('Test case failed:', part2ExampleResult, expected, part2ExampleTime);
     } else {
-      resultMessage('Test case success:', part2ExampleResult, part2ExampleTime, 42);
+      const part2ExampleStart = performance.now();
+      if (example) {
+        examplePuzzle.setInput(example);
+      }
+      part2ExampleResult = await examplePuzzle.part2();
+      const part2ExampleEnd = performance.now();
+      part2ExampleTime = part2ExampleEnd - part2ExampleStart;
+
+      if (`${part2ExampleResult}` !== `${expected}`) {
+        failedMessage('Test case failed:', part2ExampleResult, expected, part2ExampleTime);
+      } else {
+        resultMessage('Test case success:', part2ExampleResult, part2ExampleTime, 42);
+      }
     }
 
     // part 2 - puzzle
