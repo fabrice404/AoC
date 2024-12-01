@@ -1,3 +1,5 @@
+import { Point } from "../types";
+
 export const gcd = (a: number, b: number): number => {
   if (b === 0) {
     return a;
@@ -16,3 +18,10 @@ export const decimalToBinary = (n: number, length?: number): string => {
 export const binaryToDecimal = (s: string): number => parseInt(s, 2);
 
 export const manhattanDistance = (x1: number, y1: number, x2: number, y2: number): number => Math.abs(x2 - x1) + Math.abs(y2 - y1);
+
+export const pointToKey = (p: Point): string => `${p.x},${p.y}`;
+
+export const keyToPoint = (key: string): Point => {
+  const [x, y] = key.split(',').map(Number);
+  return { x, y };
+}
