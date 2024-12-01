@@ -19,9 +19,17 @@ export const binaryToDecimal = (s: string): number => parseInt(s, 2);
 
 export const manhattanDistance = (x1: number, y1: number, x2: number, y2: number): number => Math.abs(x2 - x1) + Math.abs(y2 - y1);
 
-export const pointToKey = (p: Point): string => `${p.x},${p.y}`;
+export const pointToKey = (p: Point): string => {
+  if (p.z != null) {
+    return `${p.x},${p.y},${p.z}`;
+  }
+  return `${p.x},${p.y}`
+};
 
 export const keyToPoint = (key: string): Point => {
-  const [x, y] = key.split(',').map(Number);
+  const [x, y, z] = key.split(',').map(Number);
+  if (z != null) {
+    return { x, y, z };
+  }
   return { x, y };
 }

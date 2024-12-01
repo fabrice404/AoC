@@ -1,6 +1,7 @@
 export interface Point {
   x: number;
   y: number;
+  z?: number;
 }
 
 export type Direction = 'U' | 'R' | 'D' | 'L';
