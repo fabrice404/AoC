@@ -14,3 +14,5 @@ export const decimalToBinary = (n: number, length?: number): string => {
 };
 
 export const binaryToDecimal = (s: string): number => parseInt(s, 2);
+
+export const manhattanDistance = (x1: number, y1: number, x2: number, y2: number): number => Math.abs(x2 - x1) + Math.abs(y2 - y1);
