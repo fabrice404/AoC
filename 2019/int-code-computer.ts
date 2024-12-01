@@ -8,11 +8,14 @@ export class IntCodeComputer {
 
   private inputs: number[];
 
+  private relativeBase: number;
+
   constructor(code: string, inputs: number[] = []) {
     this.code = code.split(',').map(Number);
     this.lastIndex = 0;
     this.output = 0;
     this.inputs = inputs;
+    this.relativeBase = 0;
   }
 
   public addInputs(inputs: number[]) {
@@ -23,17 +26,17 @@ export class IntCodeComputer {
     for (let i = restart ? 0 : this.lastIndex; i < this.code.length; i += 1) {
       this.lastIndex = i;
       const code = this.code[i];
-      const [, b, c, ...opcodes] = code.toString().padStart(5, '0').split('').map(Number);
+      const [a, b, c, ...opcodes] = code.toString().padStart(5, '0').split('').map(Number);
       const opcode = +opcodes.join('');
 
-      const index1 = c === 0 ? this.code[i + 1] : i + 1;
-      const index2 = b === 0 ? this.code[i + 2] : i + 2;
-      const index3 = this.code[i + 3];
+      const index1 = c === 0 ? this.code[i + 1] : (c === 1 ? i + 1 : this.code[i + 1] + this.relativeBase);
+      const index2 = b === 0 ? this.code[i + 2] : (b === 1 ? i + 2 : this.code[i + 2] + this.relativeBase);
+      const index3 = a === 0 ? this.code[i + 3] : (a === 1 ? i + 3 : this.code[i + 3] + this.relativeBase);
 
       const param1 = this.code[index1];
       const param2 = this.code[index2];
 
-      // console.log(JSON.stringify({ i, code, opcode, index1, index2, index3, param1, param2, inputs }));
+      // console.log(JSON.stringify({ i, code, opcode, index1, index2, index3, param1, param2, inputs: this.inputs }));
 
       switch (opcode) {
         case 1:
@@ -73,6 +76,9 @@ export class IntCodeComputer {
         case 8:
           this.code[index3] = (param1 === param2 ? 1 : 0)
           i += 3; break;
+        case 9:
+          this.relativeBase += param1;
+          i += 1; break;
         case 99:
           return true;
         default:
