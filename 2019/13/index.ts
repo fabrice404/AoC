@@ -1,5 +1,4 @@
-import { waitSync } from '../../helpers/helpers';
-import { pointToKey } from '../../helpers/numbers';
+import { waitSync, pointToKey } from '../../helpers/helpers';
 import AoCPuzzle from '../../puzzle';
 import { IntCodeComputer } from '../int-code-computer';
 

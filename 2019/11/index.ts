@@ -1,4 +1,4 @@
-import { pointToKey } from '../../helpers/numbers';
+import { pointToKey } from '../../helpers/helpers';
 import AoCPuzzle from '../../puzzle';
 import { Direction, Point } from '../../types';
 import { IntCodeComputer } from '../int-code-computer';
