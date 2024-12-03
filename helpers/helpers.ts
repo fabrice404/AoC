@@ -1,4 +1,4 @@
-import { Point } from "../types";
+import { Direction, Point } from "../types";
 
 export const waitSync = (ms: number) => {
   const start = Date.now();
@@ -22,3 +22,5 @@ export const keyToPoint = (key: string): Point => {
   }
   return { x, y };
 }
+
+export const DIRECTIONS: Direction[] = ['U', 'R', 'D', 'L'];

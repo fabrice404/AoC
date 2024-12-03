@@ -1,3 +1,5 @@
+import { Point } from "../types";
+
 /**
  * Add an item to an array if it doesn't already exist
  * @param array
@@ -75,11 +77,6 @@ export const rotate = (array: string[]): string[] => {
     for (let j = 0; j < array[i].length; j += 1) {
       const char = array[i][j];
       newArray[j] += char;
-      // if (i === 0) {
-      //   newArray.push(char);
-      // } else {
-      //   newArray[i] += char;
-      // }
     }
   }
   return newArray;
@@ -92,3 +89,5 @@ export const create2DArray = (width: number, height: number, defaultValue: any =
   }
   return array;
 };
+
+export const getUpRightLeftDownCoordinates = ({ x, y }: Point): Point[] => [[0, -1], [+1, 0], [0, +1], [-1, 0]].map(([mx, my]) => ({ x: x + mx, y: y + my }));

@@ -23,6 +23,8 @@ export default abstract class AoCPuzzle {
   }
 
   public printGrid() {
+    // console.clear();
+    // process.stdout.cursorTo(0, 0);
     if (typeof this.grid[0][0] === "string" || typeof this.grid[0][0] === "number") {
       print2d(this.grid);
     } else if (this.grid[0][0].value != null) {
