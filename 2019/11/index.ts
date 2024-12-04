@@ -11,13 +11,13 @@ const DIRECTIONS: Direction[] = ["U", "R", "D", "L"];
 export default class Puzzle extends AoCPuzzle {
   private hull: { [key: string]: number } = {};
 
-  private minX: number = Number.MAX_SAFE_INTEGER;
-
   private maxX: number = Number.MIN_SAFE_INTEGER;
 
-  private minY: number = Number.MAX_SAFE_INTEGER;
-
   private maxY: number = Number.MIN_SAFE_INTEGER;
+
+  private minX: number = Number.MAX_SAFE_INTEGER;
+
+  private minY: number = Number.MAX_SAFE_INTEGER;
 
   private move(location: Point, direction: Direction): Point {
     switch (direction) {

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 
-import AoCPuzzle from "../../puzzle";
-
 const { init } = require("z3-solver");
+
+import AoCPuzzle from "../../puzzle";
 
 interface Line {
   x1: number;

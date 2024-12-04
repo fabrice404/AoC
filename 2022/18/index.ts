@@ -50,13 +50,13 @@ const neighbors = ({ x, y, z }: { x: number; y: number; z: number }) => [
 export default class Puzzle extends AoCPuzzle {
   private cubes: Cube[] = [];
 
+  private grid3d: string[][][] = [];
+
   private maxX = 0;
 
   private maxY = 0;
 
   private maxZ = 0;
-
-  private grid3d: string[][][] = [];
 
   public async part1(): Promise<string | number> {
     this.cubes = this.lines.map((line) => {

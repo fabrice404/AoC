@@ -1,9 +1,12 @@
 import { BinaryHeap } from "../../helpers/structures";
-
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private target: any = {};
+
+  private heuristic(x1: number, y1: number, x2: number, y2: number) {
+    return Math.abs(x2 - x1) + Math.abs(y2 - y1);
+  }
 
   private neighbours(node: any) {
     const neighbours = [];
@@ -20,10 +23,6 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     return neighbours;
-  }
-
-  private heuristic(x1: number, y1: number, x2: number, y2: number) {
-    return Math.abs(x2 - x1) + Math.abs(y2 - y1);
   }
 
   private search(scoreFunction: Function) {
@@ -97,16 +96,16 @@ export default class Puzzle extends AoCPuzzle {
     return [];
   }
 
-  public async part1(): Promise<string | number> {
-    const result = this.search((n: any) => n.f);
-    return result.pop().f;
-  }
-
   private valuate(value: number): string {
     if (value < 10) {
       return `${value}`;
     }
     return `${(value % 9) + Math.floor(value / 9) - 1}`;
+  }
+
+  public async part1(): Promise<string | number> {
+    const result = this.search((n: any) => n.f);
+    return result.pop().f;
   }
 
   public async part2(): Promise<string | number> {

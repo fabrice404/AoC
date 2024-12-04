@@ -1,11 +1,11 @@
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
+  private furthestDistance: number = 0;
+
   private targetX: number = 0;
 
   private targetY: number = 0;
-
-  private furthestDistance: number = 0;
 
   public async part1(): Promise<string | number> {
     const input = this.input.split(",");

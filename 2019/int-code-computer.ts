@@ -1,13 +1,13 @@
 export class IntCodeComputer {
   private code: number[];
 
-  private lastIndex: number;
-
-  public output: number;
-
   private inputs: number[];
 
+  private lastIndex: number;
+
   private relativeBase: number;
+
+  public output: number;
 
   constructor(code: string, inputs: number[] = []) {
     this.code = code.split(",").map(Number);

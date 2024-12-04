@@ -12,6 +12,13 @@ export default class Puzzle extends AoCPuzzle {
     return !!vowels && vowels.length >= 3 && doubleLetter !== null;
   }
 
+  private static isNiceString2(str: string): boolean {
+    const doubleLetter = str.match(/(..).*\1/);
+    const middleLetter = str.match(/(.).\1/);
+
+    return !!doubleLetter && !!middleLetter;
+  }
+
   public async part1(): Promise<string | number> {
     let niceStrings = 0;
     for (const line of this.lines) {
@@ -20,13 +27,6 @@ export default class Puzzle extends AoCPuzzle {
       }
     }
     return niceStrings;
-  }
-
-  private static isNiceString2(str: string): boolean {
-    const doubleLetter = str.match(/(..).*\1/);
-    const middleLetter = str.match(/(.).\1/);
-
-    return !!doubleLetter && !!middleLetter;
   }
 
   public async part2(): Promise<string | number> {

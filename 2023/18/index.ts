@@ -7,15 +7,15 @@ interface Point {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private width: number = 0;
-
   private height: number = 0;
+
+  private points: Point[] = [];
+
+  private width: number = 0;
 
   private x: number = 0;
 
   private y: number = 0;
-
-  private points: Point[] = [];
 
   private bruteForce(instructions: string[]): number {
     this.grid = [];

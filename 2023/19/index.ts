@@ -28,9 +28,21 @@ interface Ranges {
 }
 
 export default class Puzzle extends AoCPuzzle {
+  private pieces: Piece[] = [];
+
   private workflows: Map<string, Workflow> = new Map();
 
-  private pieces: Piece[] = [];
+  private parsePiece(line: string): void {
+    const piece = {} as Piece;
+    line
+      .replace(/{|}/gi, "")
+      .split(",")
+      .forEach((x) => {
+        const [key, value] = x.split("=");
+        piece[key as "x" | "m" | "a" | "s"] = +value;
+      });
+    this.pieces.push(piece);
+  }
 
   private parseWorkflow(line: string): void {
     const [key, functions] = line.split(/{|}/gi);
@@ -55,18 +67,6 @@ export default class Puzzle extends AoCPuzzle {
     });
     code += "}\n";
     this.workflows.set(key, { code: eval(code), steps, finalStep });
-  }
-
-  private parsePiece(line: string): void {
-    const piece = {} as Piece;
-    line
-      .replace(/{|}/gi, "")
-      .split(",")
-      .forEach((x) => {
-        const [key, value] = x.split("=");
-        piece[key as "x" | "m" | "a" | "s"] = +value;
-      });
-    this.pieces.push(piece);
   }
 
   public async part1(): Promise<string | number> {

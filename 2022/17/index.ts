@@ -41,13 +41,13 @@ interface CacheItem {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private jets: string[] = [];
+  private cache: { [key: string]: CacheItem } = {};
 
   private cave: string[][] = [];
 
   private iterations = 2022;
 
-  private cache: { [key: string]: CacheItem } = {};
+  private jets: string[] = [];
 
   private run(): number {
     this.cache = {};

@@ -7,9 +7,17 @@ interface Marble {
 }
 
 export default class Puzzle extends AoCPuzzle {
+  private multiplier: number = 1;
+
   private nodes: { [key: number]: Marble } = {};
 
-  private multiplier: number = 1;
+  private getMarble7Before(marble: Marble): Marble {
+    let currentMarble = marble;
+    for (let i = 0; i < 7; i += 1) {
+      currentMarble = this.nodes[currentMarble.left];
+    }
+    return currentMarble;
+  }
 
   private insertMarble(marbleBefore: number, value: number): void {
     const rightMarble = this.nodes[marbleBefore].right;
@@ -21,21 +29,6 @@ export default class Puzzle extends AoCPuzzle {
 
     this.nodes[marbleBefore].right = value;
     this.nodes[rightMarble].left = value;
-  }
-
-  private removeMarble(value: number): void {
-    this.nodes[this.nodes[value].left].right = this.nodes[value].right;
-    this.nodes[this.nodes[value].right].left = this.nodes[value].left;
-
-    delete this.nodes[value];
-  }
-
-  private getMarble7Before(marble: Marble): Marble {
-    let currentMarble = marble;
-    for (let i = 0; i < 7; i += 1) {
-      currentMarble = this.nodes[currentMarble.left];
-    }
-    return currentMarble;
   }
 
   private play() {
@@ -66,6 +59,13 @@ export default class Puzzle extends AoCPuzzle {
       currentPlayer = (currentPlayer + 1) % players;
     }
     return Math.max(...scores);
+  }
+
+  private removeMarble(value: number): void {
+    this.nodes[this.nodes[value].left].right = this.nodes[value].right;
+    this.nodes[this.nodes[value].right].left = this.nodes[value].left;
+
+    delete this.nodes[value];
   }
 
   public async part1(): Promise<string | number> {

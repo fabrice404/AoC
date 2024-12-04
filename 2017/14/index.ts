@@ -1,6 +1,19 @@
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
+  private group(x: number, y: number): void {
+    if (x < 0 || x >= 128 || y < 0 || y >= 128 || this.grid[y][x] !== "1") {
+      return;
+    }
+
+    this.grid[y][x] = " ";
+
+    this.group(x, y - 1);
+    this.group(x + 1, y);
+    this.group(x, y + 1);
+    this.group(x - 1, y);
+  }
+
   public async part1(): Promise<string | number> {
     const { default: KnotHasher } = await import("../10");
 
@@ -17,19 +30,6 @@ export default class Puzzle extends AoCPuzzle {
       this.grid.push(bits);
     }
     return this.grid.map((row) => row.filter((c) => c === "1").length).reduce((acc, val) => acc + val, 0);
-  }
-
-  private group(x: number, y: number): void {
-    if (x < 0 || x >= 128 || y < 0 || y >= 128 || this.grid[y][x] !== "1") {
-      return;
-    }
-
-    this.grid[y][x] = " ";
-
-    this.group(x, y - 1);
-    this.group(x + 1, y);
-    this.group(x, y + 1);
-    this.group(x - 1, y);
   }
 
   public async part2(): Promise<string | number> {

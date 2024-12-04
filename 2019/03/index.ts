@@ -8,13 +8,9 @@ interface Position {
 type Direction = "U" | "R" | "D" | "L";
 
 export default class Puzzle extends AoCPuzzle {
-  private paths: string[][] = [[], []];
-
   private intersections: Set<string> = new Set<string>();
 
-  private positionToKey(position: Position): string {
-    return `${position.x},${position.y}`;
-  }
+  private paths: string[][] = [[], []];
 
   private keyToPosition(key: string): Position {
     const [x, y] = key.split(",").map(Number);
@@ -43,6 +39,10 @@ export default class Puzzle extends AoCPuzzle {
       path.push(this.positionToKey(position));
     }
     return path;
+  }
+
+  private positionToKey(position: Position): string {
+    return `${position.x},${position.y}`;
   }
 
   public async part1(): Promise<string | number> {

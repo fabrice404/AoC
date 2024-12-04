@@ -16,9 +16,9 @@ interface Route {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private persons: Person[] = [];
-
   private max: number = Number.MIN_SAFE_INTEGER;
+
+  private persons: Person[] = [];
 
   private getPerson(name: string): Person {
     let person = this.persons.find((p) => p.name === name);

@@ -2,7 +2,34 @@ import AoCPuzzle from "../../puzzle";
 import { Point } from "../../types";
 
 export default class Puzzle extends AoCPuzzle {
+  private masXShapedWords = 0;
+
   private xmasWords = 0;
+
+  private findMasXShapedWords(p: Point): void {
+    if (p.y >= 1 && p.y < this.grid.length - 1 && p.x >= 1 && p.x < this.grid[0].length - 1) {
+      const tl = this.grid[p.y - 1][p.x - 1];
+      const tr = this.grid[p.y - 1][p.x + 1];
+      const bl = this.grid[p.y + 1][p.x - 1];
+      const br = this.grid[p.y + 1][p.x + 1];
+
+      if (
+        ((tl.includes("M") && br.includes("S")) || (tl.includes("S") && br.includes("M"))) &&
+        ((tr.includes("M") && bl.includes("S")) || (tr.includes("S") && bl.includes("M")))
+      ) {
+        this.masXShapedWords += 1;
+        [
+          { x: p.x, y: p.y },
+          { x: p.x - 1, y: p.y - 1 },
+          { x: p.x + 1, y: p.y - 1 },
+          { x: p.x - 1, y: p.y + 1 },
+          { x: p.x + 1, y: p.y + 1 },
+        ].forEach((cell) => {
+          this.highlightCell(cell!);
+        });
+      }
+    }
+  }
 
   private findXmas(p: Point): void {
     for (let y = -1; y <= 1; y += 1) {
@@ -46,33 +73,6 @@ export default class Puzzle extends AoCPuzzle {
       this.printGrid();
     }
     return this.xmasWords;
-  }
-
-  private masXShapedWords = 0;
-
-  private findMasXShapedWords(p: Point): void {
-    if (p.y >= 1 && p.y < this.grid.length - 1 && p.x >= 1 && p.x < this.grid[0].length - 1) {
-      const tl = this.grid[p.y - 1][p.x - 1];
-      const tr = this.grid[p.y - 1][p.x + 1];
-      const bl = this.grid[p.y + 1][p.x - 1];
-      const br = this.grid[p.y + 1][p.x + 1];
-
-      if (
-        ((tl.includes("M") && br.includes("S")) || (tl.includes("S") && br.includes("M"))) &&
-        ((tr.includes("M") && bl.includes("S")) || (tr.includes("S") && bl.includes("M")))
-      ) {
-        this.masXShapedWords += 1;
-        [
-          { x: p.x, y: p.y },
-          { x: p.x - 1, y: p.y - 1 },
-          { x: p.x + 1, y: p.y - 1 },
-          { x: p.x - 1, y: p.y + 1 },
-          { x: p.x + 1, y: p.y + 1 },
-        ].forEach((cell) => {
-          this.highlightCell(cell!);
-        });
-      }
-    }
   }
 
   public async part2(): Promise<string | number> {

@@ -1,9 +1,9 @@
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
-  private blocksHistory: string[] = [];
-
   private blocks: number[] = [];
+
+  private blocksHistory: string[] = [];
 
   private addHistory(blocks: number[]): boolean {
     const key = blocks.join(",");

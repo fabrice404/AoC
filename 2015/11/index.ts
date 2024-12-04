@@ -5,6 +5,22 @@ export default class Puzzle extends AoCPuzzle {
 
   private password: string = "";
 
+  private incrementPassword(password: string): string {
+    let i = password.length - 1;
+    const newPass = password.split("");
+    while (i >= 0) {
+      const index = this.alphabet.indexOf(password[i]);
+      if (index === this.alphabet.length - 1) {
+        [newPass[i]] = this.alphabet;
+        i -= 1;
+      } else {
+        newPass[i] = this.alphabet[index + 1];
+        break;
+      }
+    }
+    return newPass.join("");
+  }
+
   private isValidPassword(password: string): boolean {
     // check for invalid characters
     if (password.match(/[iol]/)) {
@@ -33,22 +49,6 @@ export default class Puzzle extends AoCPuzzle {
       i += 1;
     }
     return foundPairs >= 2;
-  }
-
-  private incrementPassword(password: string): string {
-    let i = password.length - 1;
-    const newPass = password.split("");
-    while (i >= 0) {
-      const index = this.alphabet.indexOf(password[i]);
-      if (index === this.alphabet.length - 1) {
-        [newPass[i]] = this.alphabet;
-        i -= 1;
-      } else {
-        newPass[i] = this.alphabet[index + 1];
-        break;
-      }
-    }
-    return newPass.join("");
   }
 
   public async part1(): Promise<string | number> {

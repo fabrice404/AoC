@@ -8,13 +8,6 @@ interface Program {
 export default class Puzzle extends AoCPuzzle {
   private programs: Program[] = [];
 
-  private getProgram(id: number): Program {
-    if (!this.programs[id]) {
-      this.programs[id] = { id, linked: [] };
-    }
-    return this.programs[id];
-  }
-
   private addLink(l: number, r: number): void {
     const left = this.getProgram(l);
     const right = this.getProgram(r);
@@ -24,6 +17,13 @@ export default class Puzzle extends AoCPuzzle {
     if (!right.linked.includes(left.id)) {
       right.linked.push(left.id);
     }
+  }
+
+  private getProgram(id: number): Program {
+    if (!this.programs[id]) {
+      this.programs[id] = { id, linked: [] };
+    }
+    return this.programs[id];
   }
 
   public async part1(): Promise<string | number> {

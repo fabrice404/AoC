@@ -1,15 +1,15 @@
 import AoCPuzzle from "../../puzzle";
 
 class Cart {
-  public x: number;
-
-  public y: number;
+  public crashed: boolean = false;
 
   public direction: "^" | "v" | "<" | ">";
 
   public turns: number = 0;
 
-  public crashed: boolean = false;
+  public x: number;
+
+  public y: number;
 
   constructor(x: number, y: number, direction: "^" | "v" | "<" | ">") {
     this.x = x;
@@ -129,8 +129,6 @@ class Cart {
 export default class Puzzle extends AoCPuzzle {
   private carts: Cart[] = [];
 
-  private tracks: any = {};
-
   private crashes: { x: number; y: number; tick: number }[] = [];
 
   private maxX: number = 0;
@@ -138,6 +136,8 @@ export default class Puzzle extends AoCPuzzle {
   private maxY: number = 0;
 
   private ticks: number = 0;
+
+  private tracks: any = {};
 
   private sortCarts(): Cart[] {
     this.carts.sort((a, b) => a.y - b.y || a.x - b.x);

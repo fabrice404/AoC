@@ -7,8 +7,6 @@ interface Range {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private seeds: bigint[] = [];
-
   private ranges: any = {
     "seed-to-soil": [],
     "soil-to-fertilizer": [],
@@ -19,10 +17,7 @@ export default class Puzzle extends AoCPuzzle {
     "humidity-to-location": [],
   };
 
-  private nextKey = (key: string): string => {
-    const keys = Object.keys(this.ranges);
-    return keys[keys.indexOf(key) + 1];
-  };
+  private seeds: bigint[] = [];
 
   private getNextPosition(key: string, position: bigint): bigint {
     let result: bigint;
@@ -39,6 +34,11 @@ export default class Puzzle extends AoCPuzzle {
     }
     return result;
   }
+
+  private nextKey = (key: string): string => {
+    const keys = Object.keys(this.ranges);
+    return keys[keys.indexOf(key) + 1];
+  };
 
   private run() {
     const results = this.seeds.map((seed) => this.getNextPosition(Object.keys(this.ranges)[0], seed));

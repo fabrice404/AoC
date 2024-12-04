@@ -1,9 +1,9 @@
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
-  private registers: Map<string, number> = new Map<string, number>();
-
   private maxValue: number = Number.MIN_SAFE_INTEGER;
+
+  private registers: Map<string, number> = new Map<string, number>();
 
   public async part1(): Promise<string | number> {
     this.registers = new Map<string, number>();

@@ -3,15 +3,15 @@ import AoCPuzzle from "../../puzzle";
 import { IntCodeComputer } from "../int-code-computer";
 
 export default class Puzzle extends AoCPuzzle {
-  private tiles: Map<string, number> = new Map<string, number>();
+  private maxX: number = Number.MIN_SAFE_INTEGER;
+
+  private maxY: number = Number.MIN_SAFE_INTEGER;
 
   private minX: number = Number.MAX_SAFE_INTEGER;
 
-  private maxX: number = Number.MIN_SAFE_INTEGER;
-
   private minY: number = Number.MAX_SAFE_INTEGER;
 
-  private maxY: number = Number.MIN_SAFE_INTEGER;
+  private tiles: Map<string, number> = new Map<string, number>();
 
   private printScreen(): void {
     for (let y = this.minY; y <= this.maxY; y += 1) {

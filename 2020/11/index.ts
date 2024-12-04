@@ -1,6 +1,12 @@
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
+  private addWallsToGrid() {
+    const width = this.grid[0].length;
+    const horizontal = ["+", ...Array.from({ length: width }, () => "-"), "+"];
+    this.grid = [horizontal, ...this.grid.map((row) => ["|", ...row, "|"]), horizontal];
+  }
+
   private countOccupiedSeatsAround(x: number, y: number): number {
     return [
       [x - 1, y - 1],
@@ -64,12 +70,6 @@ export default class Puzzle extends AoCPuzzle {
       }
     }
     return count;
-  }
-
-  private addWallsToGrid() {
-    const width = this.grid[0].length;
-    const horizontal = ["+", ...Array.from({ length: width }, () => "-"), "+"];
-    this.grid = [horizontal, ...this.grid.map((row) => ["|", ...row, "|"]), horizontal];
   }
 
   private run(part: 1 | 2): number {

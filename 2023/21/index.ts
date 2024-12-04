@@ -3,6 +3,14 @@ import AoCPuzzle from "../../puzzle";
 export default class Puzzle extends AoCPuzzle {
   private steps: number = 0;
 
+  private getAt(x: number, y: number) {
+    return this.grid[this.mod(y, this.grid.length)][this.mod(x, this.grid.length)];
+  }
+
+  private mod(n: number, m: number) {
+    return ((n % m) + m) % m;
+  }
+
   private oize(x: number, y: number) {
     if (this.grid[y][x] !== "#") {
       this.grid[y][x] = "O";
@@ -43,14 +51,6 @@ export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
     this.steps = this.lines.length === 11 ? 6 : 64;
     return this.run();
-  }
-
-  private mod(n: number, m: number) {
-    return ((n % m) + m) % m;
-  }
-
-  private getAt(x: number, y: number) {
-    return this.grid[this.mod(y, this.grid.length)][this.mod(x, this.grid.length)];
   }
 
   public async part2(): Promise<string | number> {

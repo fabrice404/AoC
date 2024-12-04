@@ -17,6 +17,13 @@ export default class Puzzle extends AoCPuzzle {
 
   private outputs: Output[] = [];
 
+  private findBotOrOutput(id: number): Bot | Output {
+    if (Object.is(Math.abs(id), id)) {
+      return this.bots.find((b) => b.id === id)!;
+    }
+    return this.findOuput(id);
+  }
+
   private findOuput(id: number): Output {
     const found = this.outputs.find((o) => o.id === id);
     if (found) {
@@ -24,13 +31,6 @@ export default class Puzzle extends AoCPuzzle {
     }
     this.outputs.push({ id, chips: [] });
     return this.outputs.find((o) => o.id === id)!;
-  }
-
-  private findBotOrOutput(id: number): Bot | Output {
-    if (Object.is(Math.abs(id), id)) {
-      return this.bots.find((b) => b.id === id)!;
-    }
-    return this.findOuput(id);
   }
 
   public async part1(): Promise<string | number> {

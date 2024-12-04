@@ -8,29 +8,6 @@ interface Sample {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private samples: Sample[] = [];
-
-  private program: number[][] = [];
-
-  private operations: { [key: string]: Function } = {
-    addr: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] + before[instruction[2]],
-    addi: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] + instruction[2],
-    mulr: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] * before[instruction[2]],
-    muli: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] * instruction[2],
-    banr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] & before[instruction[2]]),
-    bani: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] & instruction[2]),
-    borr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] | before[instruction[2]]),
-    bori: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] | instruction[2]),
-    setr: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]],
-    seti: ({ instruction, after }: Sample) => after[instruction[3]] === instruction[1],
-    gtir: ({ before, instruction, after }: Sample) => after[instruction[3]] === (instruction[1] > before[instruction[2]] ? 1 : 0),
-    gtri: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] > instruction[2] ? 1 : 0),
-    gtrr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] > before[instruction[2]] ? 1 : 0),
-    eqir: ({ before, instruction, after }: Sample) => after[instruction[3]] === (instruction[1] === before[instruction[2]] ? 1 : 0),
-    eqri: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] === instruction[2] ? 1 : 0),
-    eqrr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] === before[instruction[2]] ? 1 : 0),
-  };
-
   private execute: { [key: string]: Function } = {
     addr: (instruction: number[], registers: number[]) => {
       registers[instruction[3]] = registers[instruction[1]] + registers[instruction[2]];
@@ -81,6 +58,29 @@ export default class Puzzle extends AoCPuzzle {
       registers[instruction[3]] = registers[instruction[1]] === registers[instruction[2]] ? 1 : 0;
     },
   };
+
+  private operations: { [key: string]: Function } = {
+    addr: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] + before[instruction[2]],
+    addi: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] + instruction[2],
+    mulr: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] * before[instruction[2]],
+    muli: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] * instruction[2],
+    banr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] & before[instruction[2]]),
+    bani: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] & instruction[2]),
+    borr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] | before[instruction[2]]),
+    bori: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] | instruction[2]),
+    setr: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]],
+    seti: ({ instruction, after }: Sample) => after[instruction[3]] === instruction[1],
+    gtir: ({ before, instruction, after }: Sample) => after[instruction[3]] === (instruction[1] > before[instruction[2]] ? 1 : 0),
+    gtri: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] > instruction[2] ? 1 : 0),
+    gtrr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] > before[instruction[2]] ? 1 : 0),
+    eqir: ({ before, instruction, after }: Sample) => after[instruction[3]] === (instruction[1] === before[instruction[2]] ? 1 : 0),
+    eqri: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] === instruction[2] ? 1 : 0),
+    eqrr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] === before[instruction[2]] ? 1 : 0),
+  };
+
+  private program: number[][] = [];
+
+  private samples: Sample[] = [];
 
   public async part1(): Promise<string | number> {
     for (let i = 0; i < this.lines.length; i += 1) {

@@ -7,6 +7,22 @@ export default class Puzzle extends AoCPuzzle {
 
   private divisor = 2147483647;
 
+  private nextA(a: number): number {
+    let next = (a * this.aUses) % this.divisor;
+    while (next % 4 !== 0) {
+      next = (next * this.aUses) % this.divisor;
+    }
+    return next;
+  }
+
+  private nextB(b: number): number {
+    let next = (b * this.bUses) % this.divisor;
+    while (next % 8 !== 0) {
+      next = (next * this.bUses) % this.divisor;
+    }
+    return next;
+  }
+
   public async part1(): Promise<string | number> {
     let [a, b] = this.lines.map((line) => line.replace(/[^0-9]/g, "")).map(Number);
 
@@ -22,22 +38,6 @@ export default class Puzzle extends AoCPuzzle {
       }
     }
     return pairMatching;
-  }
-
-  private nextA(a: number): number {
-    let next = (a * this.aUses) % this.divisor;
-    while (next % 4 !== 0) {
-      next = (next * this.aUses) % this.divisor;
-    }
-    return next;
-  }
-
-  private nextB(b: number): number {
-    let next = (b * this.bUses) % this.divisor;
-    while (next % 8 !== 0) {
-      next = (next * this.bUses) % this.divisor;
-    }
-    return next;
   }
 
   public async part2(): Promise<string | number> {

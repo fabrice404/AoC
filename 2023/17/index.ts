@@ -20,17 +20,17 @@ interface Move {
 class Queue {
   protected q: Path[] = [];
 
-  public enqueue(path: Path) {
-    this.q.push(path);
-    this.q.sort((a, b) => (a.heatLoss < b.heatLoss ? -1 : 1));
+  public get length() {
+    return this.q.length;
   }
 
   public dequeue(): Path | undefined {
     return this.q.shift();
   }
 
-  public get length() {
-    return this.q.length;
+  public enqueue(path: Path) {
+    this.q.push(path);
+    this.q.sort((a, b) => (a.heatLoss < b.heatLoss ? -1 : 1));
   }
 }
 

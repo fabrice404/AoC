@@ -34,47 +34,25 @@ interface Highlight {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private playgrid: Cell[][] = [];
-
   private currentRound: number = 0;
 
-  private hasElves(): boolean {
-    return this.playgrid.flat().some((cell) => cell.type === "unit" && cell.unit?.type === "elf");
-  }
-
-  private hasGoblins(): boolean {
-    return this.playgrid.flat().some((cell) => cell.type === "unit" && cell.unit?.type === "goblin");
-  }
-
-  private isFreeCell({ x, y }: Coordinates): boolean {
-    return this.playgrid[y][x].type === "open";
-  }
-
-  private checkEnemyInRange(x: number, y: number, enemyType: Type): Coordinates | null {
-    const around = [
-      [x, y - 1],
-      [x - 1, y],
-      [x + 1, y],
-      [x, y + 1],
-    ];
-
-    let result = null;
-    let minHP = 300;
-    for (const [xE, yE] of around) {
-      if (this.playgrid[yE][xE].type === "unit" && this.playgrid[yE][xE].unit?.type === enemyType) {
-        const enemy = this.playgrid[yE][xE].unit!;
-        if (enemy.hp < minHP) {
-          minHP = enemy.hp;
-          result = { x: xE, y: yE };
-        }
-      }
-    }
-    return result;
-  }
+  private playgrid: Cell[][] = [];
 
   private shortestDistance: number = Number.MAX_SAFE_INTEGER;
 
   private shortestPath: Coordinates[] = [];
+
+  private attackEnemy(x: number, y: number, enemy: Coordinates): void {
+    const enemyUnit = this.playgrid[enemy.y][enemy.x].unit!;
+    enemyUnit.hp -= 3;
+    if (enemyUnit.hp <= 0) {
+      this.playgrid[enemy.y][enemy.x] = { type: "open", unit: null };
+    }
+    this.print([
+      { x, y, color: 44 },
+      { x: enemy.x, y: enemy.y, color: 41 },
+    ]);
+  }
 
   private calculateShortestDistance(fromX: number, fromY: number, toX: number, toY: number, steps: Coordinates[] = []): CalculateShortestDistanceParams[] {
     if (fromX === toX && fromY === toY) {
@@ -101,6 +79,40 @@ export default class Puzzle extends AoCPuzzle {
         return null;
       })
       .filter(Boolean) as CalculateShortestDistanceParams[];
+  }
+
+  private checkEnemyInRange(x: number, y: number, enemyType: Type): Coordinates | null {
+    const around = [
+      [x, y - 1],
+      [x - 1, y],
+      [x + 1, y],
+      [x, y + 1],
+    ];
+
+    let result = null;
+    let minHP = 300;
+    for (const [xE, yE] of around) {
+      if (this.playgrid[yE][xE].type === "unit" && this.playgrid[yE][xE].unit?.type === enemyType) {
+        const enemy = this.playgrid[yE][xE].unit!;
+        if (enemy.hp < minHP) {
+          minHP = enemy.hp;
+          result = { x: xE, y: yE };
+        }
+      }
+    }
+    return result;
+  }
+
+  private hasElves(): boolean {
+    return this.playgrid.flat().some((cell) => cell.type === "unit" && cell.unit?.type === "elf");
+  }
+
+  private hasGoblins(): boolean {
+    return this.playgrid.flat().some((cell) => cell.type === "unit" && cell.unit?.type === "goblin");
+  }
+
+  private isFreeCell({ x, y }: Coordinates): boolean {
+    return this.playgrid[y][x].type === "open";
   }
 
   private moveToClosestEnemy(x: number, y: number, enemyType: Type): Coordinates | null {
@@ -193,85 +205,6 @@ export default class Puzzle extends AoCPuzzle {
     return null;
   }
 
-  private attackEnemy(x: number, y: number, enemy: Coordinates): void {
-    const enemyUnit = this.playgrid[enemy.y][enemy.x].unit!;
-    enemyUnit.hp -= 3;
-    if (enemyUnit.hp <= 0) {
-      this.playgrid[enemy.y][enemy.x] = { type: "open", unit: null };
-    }
-    this.print([
-      { x, y, color: 44 },
-      { x: enemy.x, y: enemy.y, color: 41 },
-    ]);
-  }
-
-  private takeTurn(x: number, y: number, enemyType: Type): void {
-    if (this.playgrid[y][x].unit!.round < this.currentRound) {
-      this.playgrid[y][x].unit!.round = this.currentRound;
-
-      const enemies = this.playgrid.flat().filter((cell) => cell.type === "unit" && cell.unit?.type === enemyType);
-      if (enemies.length === 0) {
-        return;
-      }
-
-      let enemy = this.checkEnemyInRange(x, y, enemyType);
-
-      if (!enemy) {
-        const newCoordinates = this.moveToClosestEnemy(x, y, enemyType);
-        if (newCoordinates) {
-          x = newCoordinates.x;
-          y = newCoordinates.y;
-        }
-        enemy = this.checkEnemyInRange(x, y, enemyType);
-      }
-
-      if (enemy) {
-        this.attackEnemy(x, y, enemy);
-      }
-    }
-  }
-
-  private print(highlights: Highlight[] = []): void {
-    if (!this.isExample) {
-      return;
-    }
-    console.log(
-      this.playgrid
-        .map((row, y) => {
-          const line = row
-            .map((cell, x) => {
-              let output = "";
-              switch (cell.type) {
-                case "wall":
-                  output = "#";
-                  break;
-                case "open":
-                  output = ".";
-                  break;
-                case "unit":
-                  output = cell.unit?.type === "elf" ? "E" : "G";
-                  break;
-                default:
-                  output = "?";
-                  break;
-              }
-              const highlight = highlights.find((h) => h.x === x && h.y === y);
-              if (highlight) {
-                output = `\x1b[${highlight.color}m${output}\x1b[0m`;
-              }
-              return output;
-            })
-            .join("");
-
-          return `${line}   ${row
-            .filter((cell) => cell.type === "unit")
-            .map((cell) => `${cell.unit?.type === "elf" ? "E" : "G"}(${cell.unit?.hp})`)
-            .join(", ")}`;
-        })
-        .join("\n"),
-    );
-  }
-
   private play(grid: string) {
     let unitId = 1;
     this.playgrid = grid.split("\n").map((line) =>
@@ -319,6 +252,73 @@ export default class Puzzle extends AoCPuzzle {
     // console.log(this.currentRound, totalHP);
 
     return totalHP * this.currentRound;
+  }
+
+  private print(highlights: Highlight[] = []): void {
+    if (!this.isExample) {
+      return;
+    }
+    console.log(
+      this.playgrid
+        .map((row, y) => {
+          const line = row
+            .map((cell, x) => {
+              let output = "";
+              switch (cell.type) {
+                case "wall":
+                  output = "#";
+                  break;
+                case "open":
+                  output = ".";
+                  break;
+                case "unit":
+                  output = cell.unit?.type === "elf" ? "E" : "G";
+                  break;
+                default:
+                  output = "?";
+                  break;
+              }
+              const highlight = highlights.find((h) => h.x === x && h.y === y);
+              if (highlight) {
+                output = `\x1b[${highlight.color}m${output}\x1b[0m`;
+              }
+              return output;
+            })
+            .join("");
+
+          return `${line}   ${row
+            .filter((cell) => cell.type === "unit")
+            .map((cell) => `${cell.unit?.type === "elf" ? "E" : "G"}(${cell.unit?.hp})`)
+            .join(", ")}`;
+        })
+        .join("\n"),
+    );
+  }
+
+  private takeTurn(x: number, y: number, enemyType: Type): void {
+    if (this.playgrid[y][x].unit!.round < this.currentRound) {
+      this.playgrid[y][x].unit!.round = this.currentRound;
+
+      const enemies = this.playgrid.flat().filter((cell) => cell.type === "unit" && cell.unit?.type === enemyType);
+      if (enemies.length === 0) {
+        return;
+      }
+
+      let enemy = this.checkEnemyInRange(x, y, enemyType);
+
+      if (!enemy) {
+        const newCoordinates = this.moveToClosestEnemy(x, y, enemyType);
+        if (newCoordinates) {
+          x = newCoordinates.x;
+          y = newCoordinates.y;
+        }
+        enemy = this.checkEnemyInRange(x, y, enemyType);
+      }
+
+      if (enemy) {
+        this.attackEnemy(x, y, enemy);
+      }
+    }
   }
 
   public async part1(): Promise<string | number> {

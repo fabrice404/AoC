@@ -11,6 +11,22 @@ interface Node {
 export default class Puzzle extends AoCPuzzle {
   private nodes: Node[] = [];
 
+  private running: Node[] = [];
+
+  private workers = 0;
+
+  private assignAvailableWorkers(): void {
+    const runnable = this.nodes.filter((n) => !n.finished && !n.running && n.previous.length === 0).sort((a, b) => (a.name > b.name ? 1 : -1));
+    const available = this.workers - this.running.length;
+    for (let i = 0; i < available; i += 1) {
+      const job = runnable.shift();
+      if (job) {
+        job.running = true;
+        this.running.push(job);
+      }
+    }
+  }
+
   private findNode(name: string): Node {
     let result = this.nodes.find((node) => node.name === name);
     if (!result) {
@@ -50,22 +66,6 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     return response;
-  }
-
-  private running: Node[] = [];
-
-  private workers = 0;
-
-  private assignAvailableWorkers(): void {
-    const runnable = this.nodes.filter((n) => !n.finished && !n.running && n.previous.length === 0).sort((a, b) => (a.name > b.name ? 1 : -1));
-    const available = this.workers - this.running.length;
-    for (let i = 0; i < available; i += 1) {
-      const job = runnable.shift();
-      if (job) {
-        job.running = true;
-        this.running.push(job);
-      }
-    }
   }
 
   public async part2(): Promise<string | number> {

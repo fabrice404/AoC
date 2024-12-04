@@ -1,14 +1,6 @@
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
-  public async part1(): Promise<string | number> {
-    return this.input
-      .replace(/[^-0-9]/g, " ")
-      .split(" ")
-      .map(Number)
-      .reduce((acc, val) => acc + val, 0);
-  }
-
   private removeRed(obj: any): any {
     if (Array.isArray(obj)) {
       return obj.map((o) => this.removeRed(o));
@@ -26,6 +18,14 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     return obj;
+  }
+
+  public async part1(): Promise<string | number> {
+    return this.input
+      .replace(/[^-0-9]/g, " ")
+      .split(" ")
+      .map(Number)
+      .reduce((acc, val) => acc + val, 0);
   }
 
   public async part2(): Promise<string | number> {

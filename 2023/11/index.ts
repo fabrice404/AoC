@@ -8,19 +8,49 @@ interface Galaxy {
 }
 
 export default class Puzzle extends AoCPuzzle {
+  private columnsWithGalaxy: number[] = [];
+
+  private columnsWithoutGalaxy: number[] = [];
+
+  private expansion: number = 2;
+
   private galaxies: Galaxy[] = [];
 
   private rowsWithGalaxy: number[] = [];
 
   private rowsWithoutGalaxy: number[] = [];
 
-  private columnsWithGalaxy: number[] = [];
-
-  private columnsWithoutGalaxy: number[] = [];
-
   private totalDistance: number = 0;
 
-  private expansion: number = 2;
+  private calculateDistances(): void {
+    this.totalDistance = 0;
+    let totalPairs = 0;
+    for (let i = 0; i < this.galaxies.length; i += 1) {
+      const galaxyA = this.galaxies[i];
+      for (let j = i + 1; j < this.galaxies.length; j += 1) {
+        const galaxyB = this.galaxies[j];
+        let distance: number = Math.abs(galaxyB.x - galaxyA.x) + Math.abs(galaxyB.y - galaxyA.y);
+
+        totalPairs += 1;
+        for (let x = Math.min(galaxyA.x, galaxyB.x); x < Math.max(galaxyA.x, galaxyB.x); x += 1) {
+          if (this.columnsWithoutGalaxy.includes(x)) {
+            distance += this.expansion - 1;
+          }
+        }
+        for (let y = Math.min(galaxyA.y, galaxyB.y); y < Math.max(galaxyA.y, galaxyB.y); y += 1) {
+          if (this.rowsWithoutGalaxy.includes(y)) {
+            distance += this.expansion - 1;
+          }
+        }
+
+        this.totalDistance += distance;
+      }
+    }
+
+    if (totalPairs !== (this.galaxies.length * (this.galaxies.length - 1)) / 2) {
+      throw new Error("Pairs count is wrong");
+    }
+  }
 
   private expandUniverse(): void {
     this.rowsWithoutGalaxy = Array(this.grid.length)
@@ -54,36 +84,6 @@ export default class Puzzle extends AoCPuzzle {
         }
       });
     });
-  }
-
-  private calculateDistances(): void {
-    this.totalDistance = 0;
-    let totalPairs = 0;
-    for (let i = 0; i < this.galaxies.length; i += 1) {
-      const galaxyA = this.galaxies[i];
-      for (let j = i + 1; j < this.galaxies.length; j += 1) {
-        const galaxyB = this.galaxies[j];
-        let distance: number = Math.abs(galaxyB.x - galaxyA.x) + Math.abs(galaxyB.y - galaxyA.y);
-
-        totalPairs += 1;
-        for (let x = Math.min(galaxyA.x, galaxyB.x); x < Math.max(galaxyA.x, galaxyB.x); x += 1) {
-          if (this.columnsWithoutGalaxy.includes(x)) {
-            distance += this.expansion - 1;
-          }
-        }
-        for (let y = Math.min(galaxyA.y, galaxyB.y); y < Math.max(galaxyA.y, galaxyB.y); y += 1) {
-          if (this.rowsWithoutGalaxy.includes(y)) {
-            distance += this.expansion - 1;
-          }
-        }
-
-        this.totalDistance += distance;
-      }
-    }
-
-    if (totalPairs !== (this.galaxies.length * (this.galaxies.length - 1)) / 2) {
-      throw new Error("Pairs count is wrong");
-    }
   }
 
   public async part1(): Promise<string | number> {

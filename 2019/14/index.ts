@@ -17,18 +17,9 @@ interface Ingredient {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private resources: Resource[] = [];
-
-  private getResource(name: string): Resource {
-    let found = this.resources.find((r) => r.name === name);
-    if (!found) {
-      this.resources.push({ name });
-      found = this.resources.find((r) => r.name === name);
-    }
-    return found!;
-  }
-
   private leftovers: Map<string, number> = new Map<string, number>();
+
+  private resources: Resource[] = [];
 
   private getOreRequired(name: string, quantity: number): number {
     const quantityNeeded = quantity - (this.leftovers.get(name) || 0);
@@ -47,6 +38,15 @@ export default class Puzzle extends AoCPuzzle {
         .reduce(sum);
     }
     return 0;
+  }
+
+  private getResource(name: string): Resource {
+    let found = this.resources.find((r) => r.name === name);
+    if (!found) {
+      this.resources.push({ name });
+      found = this.resources.find((r) => r.name === name);
+    }
+    return found!;
   }
 
   public async part1(): Promise<string | number> {

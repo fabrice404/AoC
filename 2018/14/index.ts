@@ -1,22 +1,6 @@
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
-  public async part1(): Promise<string | number> {
-    let indexA = 0;
-    let indexB = 1;
-
-    let scores = "37";
-    while (scores.length < +this.input + 10) {
-      const scoreA = +scores[indexA];
-      const scoreB = +scores[indexB];
-      scores += (scoreA + scoreB).toString();
-      indexA = (indexA + scoreA + 1) % scores.length;
-      indexB = (indexB + scoreB + 1) % scores.length;
-    }
-
-    return scores.substring(scores.length - 10);
-  }
-
   private lastLookedPosition: number = 0;
 
   private ninput: number[] = [];
@@ -37,6 +21,22 @@ export default class Puzzle extends AoCPuzzle {
         return loc;
       }
     }
+  }
+
+  public async part1(): Promise<string | number> {
+    let indexA = 0;
+    let indexB = 1;
+
+    let scores = "37";
+    while (scores.length < +this.input + 10) {
+      const scoreA = +scores[indexA];
+      const scoreB = +scores[indexB];
+      scores += (scoreA + scoreB).toString();
+      indexA = (indexA + scoreA + 1) % scores.length;
+      indexB = (indexB + scoreB + 1) % scores.length;
+    }
+
+    return scores.substring(scores.length - 10);
   }
 
   public async part2(): Promise<string | number> {

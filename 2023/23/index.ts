@@ -19,17 +19,13 @@ interface Distance {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private paths: Path[] = [];
-
   private finishedPaths: Path[] = [];
 
   private intersections: Point[] = [];
 
-  private visitedIntersections: Point[] = [];
+  private paths: Path[] = [];
 
-  private getAt(x: number, y: number): string {
-    return this.lines[y]?.[x];
-  }
+  private visitedIntersections: Point[] = [];
 
   private canMove(path: Path, direction: "up" | "down" | "left" | "right"): Path | undefined {
     let { x, y } = path;
@@ -85,6 +81,22 @@ export default class Puzzle extends AoCPuzzle {
     return newPath;
   }
 
+  private findIntersections(): void {
+    this.intersections = [];
+    this.intersections.push({ x: this.lines[0].indexOf("."), y: 0 });
+    this.grid.forEach((line, y) => {
+      line.forEach((cell, x) => {
+        if (this.isIntersection(x, y)) {
+          this.intersections.push({ x, y });
+        }
+      });
+    });
+    this.intersections.push({
+      x: this.lines[this.lines.length - 1].indexOf("."),
+      y: this.lines.length - 1,
+    });
+  }
+
   private findPaths(startX: number, startY: number): Path[] {
     this.paths = [
       {
@@ -115,6 +127,10 @@ export default class Puzzle extends AoCPuzzle {
     return results;
   }
 
+  private getAt(x: number, y: number): string {
+    return this.lines[y]?.[x];
+  }
+
   private isIntersection(x: number, y: number): boolean {
     let paths = 0;
     if (this.getAt(x, y) === ".") {
@@ -132,22 +148,6 @@ export default class Puzzle extends AoCPuzzle {
       }
     }
     return paths > 2;
-  }
-
-  private findIntersections(): void {
-    this.intersections = [];
-    this.intersections.push({ x: this.lines[0].indexOf("."), y: 0 });
-    this.grid.forEach((line, y) => {
-      line.forEach((cell, x) => {
-        if (this.isIntersection(x, y)) {
-          this.intersections.push({ x, y });
-        }
-      });
-    });
-    this.intersections.push({
-      x: this.lines[this.lines.length - 1].indexOf("."),
-      y: this.lines.length - 1,
-    });
   }
 
   public async part1(): Promise<string | number> {

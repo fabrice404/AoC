@@ -1,9 +1,9 @@
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
-  private serialNumber: number = 0;
-
   private gridN: number[][] = [];
+
+  private serialNumber: number = 0;
 
   private findPowerLevel(x: number, y: number): number {
     const rackId = x + 10;

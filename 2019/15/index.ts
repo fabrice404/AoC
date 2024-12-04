@@ -20,19 +20,92 @@ interface Route {
 export default class Puzzle extends AoCPuzzle {
   private currentPosition: Point = { x: 0, y: 0 };
 
-  private map: Map<string, number> = new Map<string, number>();
+  private fullRoutes: Route[] = [];
 
-  private minX: number = -25;
+  private map: Map<string, number> = new Map<string, number>();
 
   private maxX: number = 25;
 
-  private minY: number = -25;
-
   private maxY: number = 25;
+
+  private minX: number = -25;
+
+  private minY: number = -25;
 
   private queue: Route[] = [{ position: { x: 0, y: 0 }, steps: [] }];
 
-  private fullRoutes: Route[] = [];
+  private expandOxygen() {
+    const nextMap = new Map(this.map);
+    for (const key of this.map.keys()) {
+      const value = this.map.get(key);
+      if (value === 2) {
+        const { x, y } = keyToPoint(key);
+        [
+          [0, -1],
+          [+1, 0],
+          [0, +1],
+          [-1, 0],
+        ].forEach(([mx, my]) => {
+          const newPoint = { x: x + mx, y: y + my };
+          const newPointKey = pointToKey(newPoint);
+          if (this.map.has(newPointKey)) {
+            const newValue = this.map.get(newPointKey);
+            if (newValue === 1) {
+              nextMap.set(newPointKey, 2);
+            }
+          }
+        });
+      }
+    }
+    this.map = new Map(nextMap);
+  }
+
+  private isFullyWalled(): boolean {
+    for (const key of this.map.keys()) {
+      const { x, y } = keyToPoint(key);
+      if (
+        ![
+          [0, -1],
+          [+1, 0],
+          [0, +1],
+          [-1, 0],
+        ]
+          .map(([mx, my]) => {
+            return this.map.has(pointToKey({ x: x + mx, y: y + my }));
+          })
+          .reduce((acc, val) => acc && val, true)
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private nextMove() {
+    const { x, y } = this.currentPosition;
+
+    return [
+      [0, -1],
+      [+1, 0],
+      [0, +1],
+      [-1, 0],
+    ]
+      .map(([mx, my], i) => {
+        const position = { x: x + mx, y: y + my };
+        const value = this.map.get(pointToKey(position)) ?? -1;
+        if (value !== 0) {
+          return {
+            direction: DIRECTIONS[i],
+            position,
+            value,
+          };
+        }
+        return;
+      })
+      .filter(Boolean)
+      .sort((a, b) => (a!.value > b!.value ? Math.random() - 0.25 : Math.random() - 0.5))
+      .find((x) => x)!;
+  }
 
   private printMap(): void {
     // console.clear();
@@ -67,32 +140,6 @@ export default class Puzzle extends AoCPuzzle {
     }
   }
 
-  private nextMove() {
-    const { x, y } = this.currentPosition;
-
-    return [
-      [0, -1],
-      [+1, 0],
-      [0, +1],
-      [-1, 0],
-    ]
-      .map(([mx, my], i) => {
-        const position = { x: x + mx, y: y + my };
-        const value = this.map.get(pointToKey(position)) ?? -1;
-        if (value !== 0) {
-          return {
-            direction: DIRECTIONS[i],
-            position,
-            value,
-          };
-        }
-        return;
-      })
-      .filter(Boolean)
-      .sort((a, b) => (a!.value > b!.value ? Math.random() - 0.25 : Math.random() - 0.5))
-      .find((x) => x)!;
-  }
-
   private run() {
     const computer = new IntCodeComputer(this.input);
 
@@ -122,27 +169,6 @@ export default class Puzzle extends AoCPuzzle {
       // this.minY = Math.min(this.minY, nextMove.position.y);
       // this.maxY = Math.max(this.maxY, nextMove.position.y);
     }
-  }
-
-  private isFullyWalled(): boolean {
-    for (const key of this.map.keys()) {
-      const { x, y } = keyToPoint(key);
-      if (
-        ![
-          [0, -1],
-          [+1, 0],
-          [0, +1],
-          [-1, 0],
-        ]
-          .map(([mx, my]) => {
-            return this.map.has(pointToKey({ x: x + mx, y: y + my }));
-          })
-          .reduce((acc, val) => acc && val, true)
-      ) {
-        return false;
-      }
-    }
-    return true;
   }
 
   private step(route: Route): Route[] {
@@ -196,32 +222,6 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     return this.fullRoutes.sort((a, b) => (a.steps.length > b.steps.length ? 1 : -1))[0].steps.length;
-  }
-
-  private expandOxygen() {
-    const nextMap = new Map(this.map);
-    for (const key of this.map.keys()) {
-      const value = this.map.get(key);
-      if (value === 2) {
-        const { x, y } = keyToPoint(key);
-        [
-          [0, -1],
-          [+1, 0],
-          [0, +1],
-          [-1, 0],
-        ].forEach(([mx, my]) => {
-          const newPoint = { x: x + mx, y: y + my };
-          const newPointKey = pointToKey(newPoint);
-          if (this.map.has(newPointKey)) {
-            const newValue = this.map.get(newPointKey);
-            if (newValue === 1) {
-              nextMap.set(newPointKey, 2);
-            }
-          }
-        });
-      }
-    }
-    this.map = new Map(nextMap);
   }
 
   public async part2(): Promise<string | number> {

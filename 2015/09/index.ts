@@ -13,9 +13,9 @@ interface City {
 export default class Puzzle extends AoCPuzzle {
   private cities: City[] = [];
 
-  private min: number = Number.MAX_SAFE_INTEGER;
-
   private max: number = Number.MIN_SAFE_INTEGER;
+
+  private min: number = Number.MAX_SAFE_INTEGER;
 
   private getCity(name: string): City {
     let city = this.cities.find((c) => c.name === name);

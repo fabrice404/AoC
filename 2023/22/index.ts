@@ -17,15 +17,15 @@ interface Brick {
 export default class Puzzle extends AoCPuzzle {
   private bricks: Brick[] = [];
 
-  private minX: number = 0;
+  private grid3d: string[][][] = []; // y, z, x
 
   private maxX: number = 0;
 
-  private minY: number = 0;
-
   private maxY: number = 0;
 
-  private grid3d: string[][][] = []; // y, z, x
+  private minX: number = 0;
+
+  private minY: number = 0;
 
   private getLayer(i: number): void {
     const gridLayer = Array(this.maxY - this.minY + 1)

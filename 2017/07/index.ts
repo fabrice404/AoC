@@ -29,6 +29,12 @@ export default class Puzzle extends AoCPuzzle {
 
   private root?: Node;
 
+  private computeBranchesWeight(node: Node): number {
+    node.childrenWeight = node.children.reduce((acc, child) => acc + this.computeBranchesWeight(child), 0);
+    node.totalWeight = node.weight + node.childrenWeight;
+    return node.totalWeight;
+  }
+
   private findNode(name: string): Node {
     const found = this.nodes.find((n) => n.name === name);
     if (!found) {
@@ -36,6 +42,22 @@ export default class Puzzle extends AoCPuzzle {
       return this.nodes.find((n) => n.name === name) as Node;
     }
     return found;
+  }
+
+  private findUnbalancedNode(node: Node): Node | undefined {
+    if (node.children.length === 0) {
+      return;
+    }
+
+    const weights = node.children.map((child) => this.computeBranchesWeight(child));
+    const uniqueWeights = Array.from(new Set(weights));
+    if (uniqueWeights.length === 1) {
+      return;
+    }
+
+    const [unbalancedWeight] = uniqueWeights.filter((weight) => weights.filter((w) => w === weight).length === 1);
+    const unbalancedNode = node.children.find((child) => this.computeBranchesWeight(child) === unbalancedWeight)!;
+    return this.findUnbalancedNode(unbalancedNode) || unbalancedNode;
   }
 
   public async part1(): Promise<string | number> {
@@ -56,28 +78,6 @@ export default class Puzzle extends AoCPuzzle {
     }
     this.root = this.nodes.find((n) => !n.parent)!;
     return this.root.name;
-  }
-
-  private computeBranchesWeight(node: Node): number {
-    node.childrenWeight = node.children.reduce((acc, child) => acc + this.computeBranchesWeight(child), 0);
-    node.totalWeight = node.weight + node.childrenWeight;
-    return node.totalWeight;
-  }
-
-  private findUnbalancedNode(node: Node): Node | undefined {
-    if (node.children.length === 0) {
-      return;
-    }
-
-    const weights = node.children.map((child) => this.computeBranchesWeight(child));
-    const uniqueWeights = Array.from(new Set(weights));
-    if (uniqueWeights.length === 1) {
-      return;
-    }
-
-    const [unbalancedWeight] = uniqueWeights.filter((weight) => weights.filter((w) => w === weight).length === 1);
-    const unbalancedNode = node.children.find((child) => this.computeBranchesWeight(child) === unbalancedWeight)!;
-    return this.findUnbalancedNode(unbalancedNode) || unbalancedNode;
   }
 
   public async part2(): Promise<string | number> {

@@ -3,26 +3,6 @@ import AoCPuzzle from "../../puzzle";
 export default class Puzzle extends AoCPuzzle {
   private list: number[] = [];
 
-  public async part1(): Promise<string | number> {
-    this.list = Array.from({ length: this.isExample ? 5 : 256 }, (_, i) => i);
-    let position = 0;
-    let skipSize = 0;
-
-    for (const length of this.input.split(/,/gi).map(Number)) {
-      for (let i = 0; i < length / 2; i += 1) {
-        const a = (position + i) % this.list.length;
-        const b = (position + length - i - 1) % this.list.length;
-        const temp = this.list[a];
-        this.list[a] = this.list[b];
-        this.list[b] = temp;
-      }
-
-      position += length + skipSize;
-      skipSize += 1;
-    }
-    return this.list.slice(0, 2).reduce((acc, val) => acc * val, 1);
-  }
-
   private convertInputToAsciiCodes(input: string): number[] {
     return input.split("").map((char) => char.charCodeAt(0));
   }
@@ -56,6 +36,26 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     return result.join("");
+  }
+
+  public async part1(): Promise<string | number> {
+    this.list = Array.from({ length: this.isExample ? 5 : 256 }, (_, i) => i);
+    let position = 0;
+    let skipSize = 0;
+
+    for (const length of this.input.split(/,/gi).map(Number)) {
+      for (let i = 0; i < length / 2; i += 1) {
+        const a = (position + i) % this.list.length;
+        const b = (position + length - i - 1) % this.list.length;
+        const temp = this.list[a];
+        this.list[a] = this.list[b];
+        this.list[b] = temp;
+      }
+
+      position += length + skipSize;
+      skipSize += 1;
+    }
+    return this.list.slice(0, 2).reduce((acc, val) => acc * val, 1);
   }
 
   public async part2(): Promise<string | number> {

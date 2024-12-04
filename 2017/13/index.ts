@@ -9,10 +9,6 @@ export default class Puzzle extends AoCPuzzle {
     }
   }
 
-  private scannerPosition(t: number, range: number): number {
-    return range - 1 - Math.abs((t % (range * 2 - 2)) - (range - 1));
-  }
-
   private run(delay: number, earlyExit: boolean = false): number[] {
     this.debug(`\n\nDELAY ${delay}`);
 
@@ -37,6 +33,10 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     return caughts;
+  }
+
+  private scannerPosition(t: number, range: number): number {
+    return range - 1 - Math.abs((t % (range * 2 - 2)) - (range - 1));
   }
 
   public async part1(): Promise<string | number> {

@@ -5,13 +5,13 @@ type Direction = "N" | "E" | "S" | "W";
 export default class Puzzle extends AoCPuzzle {
   private direction: Direction = "E";
 
-  private x: number = 0;
-
-  private y: number = 0;
-
   private waypointX: number = 10;
 
   private waypointY: number = 1;
+
+  private x: number = 0;
+
+  private y: number = 0;
 
   private turn(angle: number) {
     if (angle % 360 === 0) {

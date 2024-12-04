@@ -2,13 +2,13 @@ import { print2d } from "./helpers/array";
 import { Point } from "./types";
 
 export default abstract class AoCPuzzle {
-  protected input: string;
-
-  protected lines: string[];
-
   protected grid: any[][] = [];
 
+  protected input: string;
+
   protected isExample: boolean;
+
+  protected lines: string[];
 
   constructor(input: string, isExample = false) {
     this.input = input;
@@ -17,11 +17,27 @@ export default abstract class AoCPuzzle {
     this.isExample = isExample;
   }
 
-  public setInput(input: string) {
-    this.input = input;
-    this.lines = this.input.split(/\n/gi);
-    this.grid = this.lines.map((line) => line.split(""));
+  public getGridLoopXY(): Point[] {
+    const result = [];
+    for (let y = 0; y < this.grid.length; y += 1) {
+      for (let x = 0; x < this.grid[y].length; x += 1) {
+        result.push({ x, y });
+      }
+    }
+    return result;
   }
+
+  public highlightCell(p: Point): void {
+    this.grid[p.y][p.x] = `\x1b[42m${this.grid[p.y][p.x]}\x1b[0m`;
+  }
+
+  public isInGrid(p: Point): boolean {
+    return p.y > 0 && p.y < this.grid.length && p.x > 0 && p.x < this.grid[p.y].length;
+  }
+
+  public abstract part1(): Promise<string | number>;
+
+  public abstract part2(): Promise<string | number>;
 
   public printGrid() {
     // console.clear();
@@ -34,11 +50,9 @@ export default abstract class AoCPuzzle {
       console.log(`Unable to print grid`);
     }
   }
-
-  public highlightCell(p: Point): void {
-    this.grid[p.y][p.x] = `\x1b[42m${this.grid[p.y][p.x]}\x1b[0m`;
+  public setInput(input: string) {
+    this.input = input;
+    this.lines = this.input.split(/\n/gi);
+    this.grid = this.lines.map((line) => line.split(""));
   }
-
-  public abstract part1(): Promise<string | number>;
-  public abstract part2(): Promise<string | number>;
 }

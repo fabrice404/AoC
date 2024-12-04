@@ -72,49 +72,15 @@ class Conjunction extends Module {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private modules: Map<string, Module> = new Map<string, Module>();
-
-  private lowPulses: number = 0;
-
   private highPulses: number = 0;
-
-  private rxExists: boolean = false;
 
   private jqCycles: Map<string, number> = new Map<string, number>();
 
-  private pushButton(i: number): boolean {
-    const pulses: { emitter: string; receiver: string; pulse: Pulse }[] = this.modules.get("button")!.targets.map((target) => ({
-      emitter: "button",
-      receiver: target,
-      pulse: LOW,
-    }));
+  private lowPulses: number = 0;
 
-    while (pulses.length > 0) {
-      const { emitter, receiver, pulse } = pulses.shift()!;
-      if (pulse === HIGH) {
-        this.highPulses += 1;
-      } else {
-        this.lowPulses += 1;
-      }
-      if (receiver === "jq" && pulse === HIGH) {
-        this.jqCycles.set(emitter, i);
-      }
-      // if (receiver === 'rx') {
-      //   console.log({ emitter, receiver, pulse });
-      //   if (pulse === LOW) {
-      //     return true;
-      //   }
-      // }
-      if (this.modules.has(receiver)) {
-        const mod = this.modules.get(receiver)!;
-        const result = mod.receive(pulse, emitter);
-        result.targets.forEach((t) => {
-          pulses.push({ emitter: receiver, receiver: t, pulse: result.pulse });
-        });
-      }
-    }
-    return false;
-  }
+  private modules: Map<string, Module> = new Map<string, Module>();
+
+  private rxExists: boolean = false;
 
   private init(): void {
     this.modules = new Map<string, Module>();
@@ -156,6 +122,40 @@ export default class Puzzle extends AoCPuzzle {
         }
       });
     });
+  }
+
+  private pushButton(i: number): boolean {
+    const pulses: { emitter: string; receiver: string; pulse: Pulse }[] = this.modules.get("button")!.targets.map((target) => ({
+      emitter: "button",
+      receiver: target,
+      pulse: LOW,
+    }));
+
+    while (pulses.length > 0) {
+      const { emitter, receiver, pulse } = pulses.shift()!;
+      if (pulse === HIGH) {
+        this.highPulses += 1;
+      } else {
+        this.lowPulses += 1;
+      }
+      if (receiver === "jq" && pulse === HIGH) {
+        this.jqCycles.set(emitter, i);
+      }
+      // if (receiver === 'rx') {
+      //   console.log({ emitter, receiver, pulse });
+      //   if (pulse === LOW) {
+      //     return true;
+      //   }
+      // }
+      if (this.modules.has(receiver)) {
+        const mod = this.modules.get(receiver)!;
+        const result = mod.receive(pulse, emitter);
+        result.targets.forEach((t) => {
+          pulses.push({ emitter: receiver, receiver: t, pulse: result.pulse });
+        });
+      }
+    }
+    return false;
   }
 
   public async part1(): Promise<string | number> {

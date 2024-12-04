@@ -9,9 +9,9 @@ interface Reeindeer {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private seconds = 0;
-
   private reeindeers: Reeindeer[] = [];
+
+  private seconds = 0;
 
   private getDistance(reeindeer: Reeindeer, time: number): number {
     const cycle = reeindeer.duration + reeindeer.rest;

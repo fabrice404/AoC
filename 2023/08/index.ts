@@ -8,15 +8,28 @@ interface Node {
 }
 
 export default class Puzzle extends AoCPuzzle {
-  private moves: string[] = [];
+  private currentNode: string = "AAA";
 
   private movePosition: number = 0;
 
+  private moves: string[] = [];
+
   private nodes: Node[] = [];
 
-  private currentNode: string = "AAA";
-
   private steps: number = 0;
+
+  private moveNext() {
+    const nextMove = this.moves[this.movePosition] === "L" ? "left" : "right";
+
+    const node = this.nodes.find((n) => n.name === this.currentNode);
+    this.currentNode = node![nextMove];
+
+    this.steps += 1;
+    this.movePosition += 1;
+    if (this.movePosition >= this.moves.length) {
+      this.movePosition = 0;
+    }
+  }
 
   private reset() {
     this.currentNode = "AAA";
@@ -38,19 +51,6 @@ export default class Puzzle extends AoCPuzzle {
           .filter((x) => x);
         return { name, left, right };
       });
-  }
-
-  private moveNext() {
-    const nextMove = this.moves[this.movePosition] === "L" ? "left" : "right";
-
-    const node = this.nodes.find((n) => n.name === this.currentNode);
-    this.currentNode = node![nextMove];
-
-    this.steps += 1;
-    this.movePosition += 1;
-    if (this.movePosition >= this.moves.length) {
-      this.movePosition = 0;
-    }
   }
 
   public async part1(): Promise<string | number> {

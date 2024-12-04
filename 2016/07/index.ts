@@ -1,17 +1,6 @@
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
-  private has4LettersPalindrome(str: string): boolean {
-    let hasPalindrome = false;
-    for (let i = 0; i < str.length - 3; i += 1) {
-      const s = str.slice(i, i + 4);
-      if (s[0] === s[3] && s[1] === s[2] && s[0] !== s[1]) {
-        hasPalindrome = true;
-      }
-    }
-    return hasPalindrome;
-  }
-
   private get3LettersPalindrome(str: string): string[] {
     const palindromes: string[] = [];
     for (let i = 0; i < str.length - 2; i += 1) {
@@ -21,6 +10,17 @@ export default class Puzzle extends AoCPuzzle {
       }
     }
     return palindromes;
+  }
+
+  private has4LettersPalindrome(str: string): boolean {
+    let hasPalindrome = false;
+    for (let i = 0; i < str.length - 3; i += 1) {
+      const s = str.slice(i, i + 4);
+      if (s[0] === s[3] && s[1] === s[2] && s[0] !== s[1]) {
+        hasPalindrome = true;
+      }
+    }
+    return hasPalindrome;
   }
 
   public async part1(): Promise<string | number> {

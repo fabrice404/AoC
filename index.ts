@@ -2,6 +2,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import { existsSync } from "fs";
 import { performance } from "perf_hooks";
+
 import { generateCodeFile, generateStatFile, readFile, updateStatFile, writeFile } from "./helpers/file";
 
 dotenv.config();

@@ -1,9 +1,9 @@
 import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
-  private times: number[] = [];
-
   private distances: number[] = [];
+
+  private times: number[] = [];
 
   private waysToWin() {
     return this.times

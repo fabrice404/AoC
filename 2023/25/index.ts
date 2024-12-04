@@ -1,7 +1,8 @@
-import { existsSync, writeFileSync } from "fs";
 import { execSync } from "child_process";
-import AoCPuzzle from "../../puzzle";
+import { existsSync, writeFileSync } from "fs";
+
 import { addUniqueItem } from "../../helpers/array";
+import AoCPuzzle from "../../puzzle";
 
 interface Component {
   name: string;

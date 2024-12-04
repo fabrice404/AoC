@@ -1,7 +1,6 @@
-import { IntCodeComputer } from "../int-code-computer";
-
 import { permutations } from "../../helpers/string";
 import AoCPuzzle from "../../puzzle";
+import { IntCodeComputer } from "../int-code-computer";
 
 export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
