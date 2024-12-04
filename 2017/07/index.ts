@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 class Node {
   private _parent?: Node;
@@ -9,8 +9,10 @@ class Node {
 
   public totalWeight: number = 0;
 
-  constructor(public name: string, public weight: number) {
-  }
+  constructor(
+    public name: string,
+    public weight: number,
+  ) {}
 
   set parent(parent: Node) {
     this._parent = parent;
@@ -40,12 +42,12 @@ export default class Puzzle extends AoCPuzzle {
     for (const line of this.lines) {
       const [name, weight] = line.split(/\s/gi);
       const parent = this.findNode(name);
-      parent.weight = parseInt(weight.replace(/[()]/gi, ''), 10);
+      parent.weight = parseInt(weight.replace(/[()]/gi, ""), 10);
 
-      if (line.match(' -> ')) {
+      if (line.match(" -> ")) {
         line
-          .split(' -> ')[1]
-          .split(', ')
+          .split(" -> ")[1]
+          .split(", ")
           .forEach((childName) => {
             const child = this.findNode(childName);
             child.parent = parent;

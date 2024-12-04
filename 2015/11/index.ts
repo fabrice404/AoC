@@ -1,9 +1,9 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
-  private alphabet: string = 'abcdefghjkmnpqrstuvwxyz';
+  private alphabet: string = "abcdefghjkmnpqrstuvwxyz";
 
-  private password: string = '';
+  private password: string = "";
 
   private isValidPassword(password: string): boolean {
     // check for invalid characters
@@ -37,7 +37,7 @@ export default class Puzzle extends AoCPuzzle {
 
   private incrementPassword(password: string): string {
     let i = password.length - 1;
-    const newPass = password.split('');
+    const newPass = password.split("");
     while (i >= 0) {
       const index = this.alphabet.indexOf(password[i]);
       if (index === this.alphabet.length - 1) {
@@ -48,7 +48,7 @@ export default class Puzzle extends AoCPuzzle {
         break;
       }
     }
-    return newPass.join('');
+    return newPass.join("");
   }
 
   public async part1(): Promise<string | number> {

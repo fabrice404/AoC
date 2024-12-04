@@ -1,4 +1,5 @@
-import { print2d } from './helpers/array';
+import { print2d } from "./helpers/array";
+import { Point } from "./types";
 
 export default abstract class AoCPuzzle {
   protected input: string;
@@ -12,14 +13,14 @@ export default abstract class AoCPuzzle {
   constructor(input: string, isExample = false) {
     this.input = input;
     this.lines = this.input.split(/\n/gi);
-    this.grid = this.lines.map((line) => line.split(''));
+    this.grid = this.lines.map((line) => line.split(""));
     this.isExample = isExample;
   }
 
   public setInput(input: string) {
     this.input = input;
     this.lines = this.input.split(/\n/gi);
-    this.grid = this.lines.map((line) => line.split(''));
+    this.grid = this.lines.map((line) => line.split(""));
   }
 
   public printGrid() {
@@ -32,6 +33,10 @@ export default abstract class AoCPuzzle {
     } else {
       console.log(`Unable to print grid`);
     }
+  }
+
+  public highlightCell(p: Point): void {
+    this.grid[p.y][p.x] = `\x1b[42m${this.grid[p.y][p.x]}\x1b[0m`;
   }
 
   public abstract part1(): Promise<string | number>;

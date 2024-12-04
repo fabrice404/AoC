@@ -1,14 +1,14 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private generations: number = 20;
 
-  private state: string = '';
+  private state: string = "";
 
   private run() {
-    this.state = this.lines[0].split(': ')[1].trim();
+    this.state = this.lines[0].split(": ")[1].trim();
     const rules = this.lines.slice(2).map((rule) => {
-      const [condition, value] = rule.split(' => ');
+      const [condition, value] = rule.split(" => ");
       return { condition, value };
     });
 
@@ -20,7 +20,7 @@ export default class Puzzle extends AoCPuzzle {
 
     for (let generation = 1; generation <= this.generations; generation += 1) {
       this.state = `....${this.state}....`;
-      let nextState = this.state.replace(/#/g, '.');
+      let nextState = this.state.replace(/#/g, ".");
 
       for (let i = 0; i < this.state.length - 4; i += 1) {
         rules.forEach((rule) => {
@@ -32,14 +32,13 @@ export default class Puzzle extends AoCPuzzle {
 
       this.state = nextState;
 
-      result = this.state.split('')
-        .reduce((acc, val, i) => {
-          const potNum = i - (OFFSET * generation);
-          if (val === '#') {
-            acc += potNum;
-          }
-          return acc;
-        }, 0);
+      result = this.state.split("").reduce((acc, val, i) => {
+        const potNum = i - OFFSET * generation;
+        if (val === "#") {
+          acc += potNum;
+        }
+        return acc;
+      }, 0);
 
       if (result - previousResult === previousDifference) {
         sameDifferenceCount += 1;

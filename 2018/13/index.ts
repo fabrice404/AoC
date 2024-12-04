@@ -1,17 +1,17 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 class Cart {
   public x: number;
 
   public y: number;
 
-  public direction: '^' | 'v' | '<' | '>';
+  public direction: "^" | "v" | "<" | ">";
 
   public turns: number = 0;
 
   public crashed: boolean = false;
 
-  constructor(x: number, y: number, direction: '^' | 'v' | '<' | '>') {
+  constructor(x: number, y: number, direction: "^" | "v" | "<" | ">") {
     this.x = x;
     this.y = y;
     this.direction = direction;
@@ -19,10 +19,18 @@ class Cart {
 
   public move(): void {
     switch (this.direction) {
-      case '^': this.y -= 1; break;
-      case 'v': this.y += 1; break;
-      case '<': this.x -= 1; break;
-      case '>': this.x += 1; break;
+      case "^":
+        this.y -= 1;
+        break;
+      case "v":
+        this.y += 1;
+        break;
+      case "<":
+        this.x -= 1;
+        break;
+      case ">":
+        this.x += 1;
+        break;
       default:
         throw new Error(`Unknown direction ${this.direction}`);
     }
@@ -30,33 +38,60 @@ class Cart {
 
   public rotate(track: string): void {
     switch (track) {
-      case '\\':
+      case "\\":
         switch (this.direction) {
-          case '^': this.direction = '<'; break;
-          case '>': this.direction = 'v'; break;
-          case 'v': this.direction = '>'; break;
-          case '<': this.direction = '^'; break;
-          default: throw new Error(`Impossible direction for \\: ${this.direction}`);
+          case "^":
+            this.direction = "<";
+            break;
+          case ">":
+            this.direction = "v";
+            break;
+          case "v":
+            this.direction = ">";
+            break;
+          case "<":
+            this.direction = "^";
+            break;
+          default:
+            throw new Error(`Impossible direction for \\: ${this.direction}`);
         }
         break;
-      case '/':
+      case "/":
         switch (this.direction) {
-          case '^': this.direction = '>'; break;
-          case '>': this.direction = '^'; break;
-          case 'v': this.direction = '<'; break;
-          case '<': this.direction = 'v'; break;
-          default: throw new Error(`Impossible direction for /: ${this.direction}`);
+          case "^":
+            this.direction = ">";
+            break;
+          case ">":
+            this.direction = "^";
+            break;
+          case "v":
+            this.direction = "<";
+            break;
+          case "<":
+            this.direction = "v";
+            break;
+          default:
+            throw new Error(`Impossible direction for /: ${this.direction}`);
         }
         break;
-      case '+':
+      case "+":
         switch (this.turns % 3) {
           case 0:
             switch (this.direction) {
-              case '^': this.direction = '<'; break;
-              case '>': this.direction = '^'; break;
-              case 'v': this.direction = '>'; break;
-              case '<': this.direction = 'v'; break;
-              default: throw new Error(`Impossible direction for +: ${this.direction}`);
+              case "^":
+                this.direction = "<";
+                break;
+              case ">":
+                this.direction = "^";
+                break;
+              case "v":
+                this.direction = ">";
+                break;
+              case "<":
+                this.direction = "v";
+                break;
+              default:
+                throw new Error(`Impossible direction for +: ${this.direction}`);
             }
             break;
           case 1:
@@ -64,14 +99,24 @@ class Cart {
             break;
           case 2:
             switch (this.direction) {
-              case '^': this.direction = '>'; break;
-              case '>': this.direction = 'v'; break;
-              case 'v': this.direction = '<'; break;
-              case '<': this.direction = '^'; break;
-              default: throw new Error(`Impossible direction for +: ${this.direction}`);
+              case "^":
+                this.direction = ">";
+                break;
+              case ">":
+                this.direction = "v";
+                break;
+              case "v":
+                this.direction = "<";
+                break;
+              case "<":
+                this.direction = "^";
+                break;
+              default:
+                throw new Error(`Impossible direction for +: ${this.direction}`);
             }
             break;
-          default: throw new Error(`Impossible turn: ${this.turns}`);
+          default:
+            throw new Error(`Impossible turn: ${this.turns}`);
         }
         this.turns += 1;
         break;
@@ -105,14 +150,14 @@ export default class Puzzle extends AoCPuzzle {
     this.crashes = [];
 
     this.lines.forEach((line, y) => {
-      line.split('').forEach((char, x) => {
-        if (['^', 'v', '<', '>'].includes(char)) {
-          this.carts.push(new Cart(x, y, char as '^' | 'v' | '<' | '>'));
+      line.split("").forEach((char, x) => {
+        if (["^", "v", "<", ">"].includes(char)) {
+          this.carts.push(new Cart(x, y, char as "^" | "v" | "<" | ">"));
         }
-        if (['^', 'v'].includes(char)) {
-          this.tracks[`${x},${y}`] = '|';
-        } else if (['<', '>'].includes(char)) {
-          this.tracks[`${x},${y}`] = '-';
+        if (["^", "v"].includes(char)) {
+          this.tracks[`${x},${y}`] = "|";
+        } else if (["<", ">"].includes(char)) {
+          this.tracks[`${x},${y}`] = "-";
         } else {
           this.tracks[`${x},${y}`] = char;
         }
@@ -130,10 +175,7 @@ export default class Puzzle extends AoCPuzzle {
           cart.move();
           cart.rotate(this.tracks[`${cart.x},${cart.y}`]);
 
-          const collision = this.carts.find((c) => c !== cart &&
-            c.x === cart.x &&
-            c.y === cart.y &&
-            !c.crashed);
+          const collision = this.carts.find((c) => c !== cart && c.x === cart.x && c.y === cart.y && !c.crashed);
           if (collision) {
             cart.crashed = true;
             collision.crashed = true;

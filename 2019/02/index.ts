@@ -1,8 +1,8 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private run(a: number, b: number) {
-    const list = this.input.split(',').map(Number);
+    const list = this.input.split(",").map(Number);
     list[1] = a;
     list[2] = b;
 
@@ -36,6 +36,6 @@ export default class Puzzle extends AoCPuzzle {
       }
     }
 
-    return '<NOT FOUND>';
+    return "<NOT FOUND>";
   }
 }

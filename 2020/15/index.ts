@@ -1,10 +1,9 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
-
   private run(iterations: number): number {
     const numbers = new Map<number, number[]>();
-    const inputs = this.input.split(',').map(Number);
+    const inputs = this.input.split(",").map(Number);
     const startIndex = inputs.length;
     let lastNumber = -1;
 

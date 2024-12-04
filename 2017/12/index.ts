@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Program {
   id: number;
@@ -18,15 +18,19 @@ export default class Puzzle extends AoCPuzzle {
   private addLink(l: number, r: number): void {
     const left = this.getProgram(l);
     const right = this.getProgram(r);
-    if (!left.linked.includes(right.id)) { left.linked.push(right.id); }
-    if (!right.linked.includes(left.id)) { right.linked.push(left.id); }
+    if (!left.linked.includes(right.id)) {
+      left.linked.push(right.id);
+    }
+    if (!right.linked.includes(left.id)) {
+      right.linked.push(left.id);
+    }
   }
 
   public async part1(): Promise<string | number> {
     for (const line of this.lines) {
-      const [left, right] = line.split(' <-> ');
+      const [left, right] = line.split(" <-> ");
 
-      for (const linked of right.split(', ')) {
+      for (const linked of right.split(", ")) {
         this.addLink(+left, +linked);
       }
     }

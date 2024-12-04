@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private list: number[] = [];
@@ -24,7 +24,7 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   private convertInputToAsciiCodes(input: string): number[] {
-    return input.split('').map((char) => char.charCodeAt(0));
+    return input.split("").map((char) => char.charCodeAt(0));
   }
 
   public knotHash(str: string): string {
@@ -52,10 +52,10 @@ export default class Puzzle extends AoCPuzzle {
     for (let i = 0; i < 16; i += 1) {
       const block = this.list.slice(i * 16, (i + 1) * 16);
       const xor = block.reduce((acc, val) => acc ^ val, 0);
-      result.push(xor.toString(16).padStart(2, '0'));
+      result.push(xor.toString(16).padStart(2, "0"));
     }
 
-    return result.join('');
+    return result.join("");
   }
 
   public async part2(): Promise<string | number> {

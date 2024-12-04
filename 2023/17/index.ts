@@ -1,6 +1,6 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
-type Direction = '^' | 'v' | '<' | '>';
+type Direction = "^" | "v" | "<" | ">";
 
 interface Path {
   x: number;
@@ -45,22 +45,22 @@ export default class Puzzle extends AoCPuzzle {
 
   private getNextMoves(path: Path): Move[] {
     const moves: Move[] = [];
-    if (path.direction === '^') {
-      moves.push({ x: path.x, y: path.y - 1, direction: '^' });
-      moves.push({ x: path.x - 1, y: path.y, direction: '<' });
-      moves.push({ x: path.x + 1, y: path.y, direction: '>' });
-    } else if (path.direction === 'v') {
-      moves.push({ x: path.x, y: path.y + 1, direction: 'v' });
-      moves.push({ x: path.x - 1, y: path.y, direction: '<' });
-      moves.push({ x: path.x + 1, y: path.y, direction: '>' });
-    } else if (path.direction === '<') {
-      moves.push({ x: path.x - 1, y: path.y, direction: '<' });
-      moves.push({ x: path.x, y: path.y - 1, direction: '^' });
-      moves.push({ x: path.x, y: path.y + 1, direction: 'v' });
-    } else if (path.direction === '>') {
-      moves.push({ x: path.x + 1, y: path.y, direction: '>' });
-      moves.push({ x: path.x, y: path.y - 1, direction: '^' });
-      moves.push({ x: path.x, y: path.y + 1, direction: 'v' });
+    if (path.direction === "^") {
+      moves.push({ x: path.x, y: path.y - 1, direction: "^" });
+      moves.push({ x: path.x - 1, y: path.y, direction: "<" });
+      moves.push({ x: path.x + 1, y: path.y, direction: ">" });
+    } else if (path.direction === "v") {
+      moves.push({ x: path.x, y: path.y + 1, direction: "v" });
+      moves.push({ x: path.x - 1, y: path.y, direction: "<" });
+      moves.push({ x: path.x + 1, y: path.y, direction: ">" });
+    } else if (path.direction === "<") {
+      moves.push({ x: path.x - 1, y: path.y, direction: "<" });
+      moves.push({ x: path.x, y: path.y - 1, direction: "^" });
+      moves.push({ x: path.x, y: path.y + 1, direction: "v" });
+    } else if (path.direction === ">") {
+      moves.push({ x: path.x + 1, y: path.y, direction: ">" });
+      moves.push({ x: path.x, y: path.y - 1, direction: "^" });
+      moves.push({ x: path.x, y: path.y + 1, direction: "v" });
     }
     return moves;
   }
@@ -68,8 +68,22 @@ export default class Puzzle extends AoCPuzzle {
   private run(ultraCrucible = false) {
     this.queue = new Queue();
     this.seen = new Map();
-    this.queue.enqueue({ x: 0, y: 0, heatLoss: 0, direction: '>', steps: '>', straight: 0 });
-    this.queue.enqueue({ x: 0, y: 0, heatLoss: 0, direction: 'v', steps: 'v', straight: 0 });
+    this.queue.enqueue({
+      x: 0,
+      y: 0,
+      heatLoss: 0,
+      direction: ">",
+      steps: ">",
+      straight: 0,
+    });
+    this.queue.enqueue({
+      x: 0,
+      y: 0,
+      heatLoss: 0,
+      direction: "v",
+      steps: "v",
+      straight: 0,
+    });
 
     // const results = [];
     while (this.queue.length > 0) {
@@ -89,10 +103,7 @@ export default class Puzzle extends AoCPuzzle {
           }
           return path.straight > 2 ? move.direction !== path.direction : true;
         })
-        .filter((move) => (move.x >= 0 &&
-          move.x < this.grid[0].length &&
-          move.y >= 0 &&
-          move.y < this.grid.length))
+        .filter((move) => move.x >= 0 && move.x < this.grid[0].length && move.y >= 0 && move.y < this.grid.length)
         .forEach((move) => {
           const { direction, x, y } = move;
           const heatLoss = path.heatLoss + this.getHeatLoss(x, y);
@@ -106,7 +117,7 @@ export default class Puzzle extends AoCPuzzle {
           }
         });
     }
-    return 'ERROR';
+    return "ERROR";
   }
 
   public async part1(): Promise<string | number> {

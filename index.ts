@@ -1,8 +1,8 @@
-import axios from 'axios';
-import dotenv from 'dotenv';
-import { existsSync } from 'fs';
-import { performance } from 'perf_hooks';
-import { readFile, generateCodeFile, updateStatFile, generateStatFile, writeFile } from './helpers/file';
+import axios from "axios";
+import dotenv from "dotenv";
+import { existsSync } from "fs";
+import { performance } from "perf_hooks";
+import { generateCodeFile, generateStatFile, readFile, updateStatFile, writeFile } from "./helpers/file";
 
 dotenv.config();
 
@@ -11,15 +11,15 @@ let year = today.getFullYear().toString();
 let day = today.getDate().toString();
 
 if (today.getMonth() < 11) {
-  day = '1';
+  day = "1";
 }
 
 if (process.argv.length > 2) {
   [year, day] = process.argv[2].split(/\//gi);
 }
 
-year = year.padStart(4, '0');
-day = day.padStart(2, '0');
+year = year.padStart(4, "0");
+day = day.padStart(2, "0");
 
 const folder = `${__dirname}/${year}/${day}`;
 const codeFile = `${folder}/index.ts`;
@@ -41,14 +41,11 @@ if (!existsSync(statFile)) {
 
 const downloadInput = async () => {
   if (!existsSync(inputFile)) {
-    const response = await axios.get(
-      `https://adventofcode.com/${+year}/day/${+day}/input`,
-      {
-        headers: {
-          Cookie: `session=${process.env.SESSION_TOKEN}`,
-        },
+    const response = await axios.get(`https://adventofcode.com/${+year}/day/${+day}/input`, {
+      headers: {
+        Cookie: `session=${process.env.SESSION_TOKEN}`,
       },
-    );
+    });
     writeFile(inputFile, response.data);
   }
 };
@@ -60,39 +57,29 @@ const readableTime = (ms: number) => {
   if (ms < 1000) {
     return `${ms.toFixed(0)} ms`;
   }
-  return `${(ms / 1000).toFixed(0)} s`
-}
+  return `${(ms / 1000).toFixed(0)} s`;
+};
 
 const resultMessage = (label: string, value: string, time: number, color: number = 0) => {
-  const message = [
-    label.padEnd(25, ' '),
-    `\x1b[${`${color}`.padStart(2, '0')}m${value}\x1b[0m`.padStart(30, ' '),
-    `(${readableTime(time)})`
-  ]
+  const message = [label.padEnd(25, " "), `\x1b[${`${color}`.padStart(2, "0")}m${value}\x1b[0m`.padStart(30, " "), `(${readableTime(time)})`];
 
-  console.log(message.join(' '));
-}
+  console.log(message.join(" "));
+};
 
 const failedMessage = (label: string, value: string, expected: string, time: number) => {
-
-  const message = [
-    label.padEnd(25, ' '),
-    ` `.padStart(21, ' '),
-    `(${readableTime(time)})`,
-    `\n\x1b[41m${value}\x1b[0m\n\x1b[42m${expected}\x1b[0m`,
-  ];
-  throw message.join(' ');
+  const message = [label.padEnd(25, " "), ` `.padStart(21, " "), `(${readableTime(time)})`, `\n\x1b[41m${value}\x1b[0m\n\x1b[42m${expected}\x1b[0m`];
+  throw message.join(" ");
 };
 
 import(codeFile)
   .then(async ({ default: Puzzle }) => {
-    const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][new Date(Number(year), 11, Number(day)).getDay()];
+    const dayName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date(Number(year), 11, Number(day)).getDay()];
     const date = `${dayName} ${year}-12-${day}`;
     console.log(`\n${date}\n`);
 
-    console.log('+------------------------------------------------------+');
-    console.log('|                        PART 1                        |');
-    console.log('+------------------------------------------------------+');
+    console.log("+------------------------------------------------------+");
+    console.log("|                        PART 1                        |");
+    console.log("+------------------------------------------------------+");
 
     // part 1 - example
     await downloadInput();
@@ -101,11 +88,11 @@ import(codeFile)
     let expected = readFile(p1ExpectedFile);
     const examplePuzzle = new Puzzle(example, true);
 
-    let part1ExampleResult = 'skip';
+    let part1ExampleResult = "skip";
     let part1ExampleTime = 0;
 
-    if (expected === 'skip') {
-      resultMessage('Test case skipped', '', part1ExampleTime)
+    if (expected === "skip") {
+      resultMessage("Test case skipped", "", part1ExampleTime);
     } else {
       const part1ExampleStart = performance.now();
       part1ExampleResult = await examplePuzzle.part1();
@@ -113,9 +100,9 @@ import(codeFile)
       part1ExampleTime = part1ExampleEnd - part1ExampleStart;
 
       if (`${part1ExampleResult}` !== `${expected}`) {
-        failedMessage('Test case failed:', part1ExampleResult, expected, part1ExampleTime);
+        failedMessage("Test case failed:", part1ExampleResult, expected, part1ExampleTime);
       } else {
-        resultMessage('Test case success:', part1ExampleResult, part1ExampleTime, 42);
+        resultMessage("Test case success:", part1ExampleResult, part1ExampleTime, 42);
       }
     }
 
@@ -126,22 +113,22 @@ import(codeFile)
     const part1End = performance.now();
     const part1Time = part1End - part1Start;
 
-    resultMessage('Result:', part1Result, part1Time);
+    resultMessage("Result:", part1Result, part1Time);
 
-    console.log('');
-    console.log('+------------------------------------------------------+');
-    console.log('|                        PART 2                        |');
-    console.log('+------------------------------------------------------+');
+    console.log("");
+    console.log("+------------------------------------------------------+");
+    console.log("|                        PART 2                        |");
+    console.log("+------------------------------------------------------+");
 
     // part 2 - example
     example = readFile(p2ExampleFile);
     expected = readFile(p2ExpectedFile);
 
-    let part2ExampleResult = 'skip';
+    let part2ExampleResult = "skip";
     let part2ExampleTime = 0;
 
-    if (expected === 'skip') {
-      resultMessage('Test case skipped', '', part2ExampleTime)
+    if (expected === "skip") {
+      resultMessage("Test case skipped", "", part2ExampleTime);
     } else {
       const part2ExampleStart = performance.now();
       if (example) {
@@ -152,9 +139,9 @@ import(codeFile)
       part2ExampleTime = part2ExampleEnd - part2ExampleStart;
 
       if (`${part2ExampleResult}` !== `${expected}`) {
-        failedMessage('Test case failed:', part2ExampleResult, expected, part2ExampleTime);
+        failedMessage("Test case failed:", part2ExampleResult, expected, part2ExampleTime);
       } else {
-        resultMessage('Test case success:', part2ExampleResult, part2ExampleTime, 42);
+        resultMessage("Test case success:", part2ExampleResult, part2ExampleTime, 42);
       }
     }
 
@@ -164,9 +151,9 @@ import(codeFile)
     const part2End = performance.now();
     const part2Time = part2End - part2Start;
 
-    resultMessage('Result:', part2Result, part2Time);
+    resultMessage("Result:", part2Result, part2Time);
 
-    console.log('');
+    console.log("");
     updateStatFile(statFile, +day, {
       part1ExampleResult,
       part1ExampleTime,

@@ -1,5 +1,5 @@
-import { addUniqueItem } from '../../helpers/array';
-import AoCPuzzle from '../../puzzle';
+import { addUniqueItem } from "../../helpers/array";
+import AoCPuzzle from "../../puzzle";
 
 interface Galaxy {
   id: number;
@@ -30,7 +30,7 @@ export default class Puzzle extends AoCPuzzle {
 
     this.rowsWithoutGalaxy.forEach((y) => {
       this.grid[y].forEach((cell, x) => {
-        this.grid[y][x] = '█';
+        this.grid[y][x] = "█";
       });
     });
 
@@ -41,14 +41,14 @@ export default class Puzzle extends AoCPuzzle {
 
     this.columnsWithoutGalaxy.forEach((x) => {
       this.grid.forEach((row, y) => {
-        this.grid[y][x] = '█';
+        this.grid[y][x] = "█";
       });
     });
 
     let galaxyId = 0;
     this.grid.forEach((row, y) => {
       row.forEach((cell, x) => {
-        if (cell === '#') {
+        if (cell === "#") {
           this.galaxies.push({ x, y, id: galaxyId });
           galaxyId += 1;
         }
@@ -82,18 +82,20 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     if (totalPairs !== (this.galaxies.length * (this.galaxies.length - 1)) / 2) {
-      throw new Error('Pairs count is wrong');
+      throw new Error("Pairs count is wrong");
     }
   }
 
   public async part1(): Promise<string | number> {
-    this.grid = this.lines.map((line, y) => line.split('').map((char, x) => {
-      if (char === '#') {
-        addUniqueItem(this.rowsWithGalaxy, y);
-        addUniqueItem(this.columnsWithGalaxy, x);
-      }
-      return char;
-    }));
+    this.grid = this.lines.map((line, y) =>
+      line.split("").map((char, x) => {
+        if (char === "#") {
+          addUniqueItem(this.rowsWithGalaxy, y);
+          addUniqueItem(this.columnsWithGalaxy, x);
+        }
+        return char;
+      }),
+    );
 
     this.expandUniverse();
     // print2d(this.grid);

@@ -1,5 +1,5 @@
-import { isNextTo, print2d } from '../../helpers/array';
-import AoCPuzzle from '../../puzzle';
+import { isNextTo, print2d } from "../../helpers/array";
+import AoCPuzzle from "../../puzzle";
 
 interface Point {
   x: number;
@@ -14,13 +14,12 @@ export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
     this.points = [];
     this.lines.forEach((line, y) => {
-      line.split('')
-        .forEach((value, x) => {
-          this.points.push({ x, y, value });
-        });
+      line.split("").forEach((value, x) => {
+        this.points.push({ x, y, value });
+      });
     });
 
-    const initialPoint = this.points.find((p) => p.value === 'S')!;
+    const initialPoint = this.points.find((p) => p.value === "S")!;
     let prevPoint: Point = initialPoint;
     // both test and input give the bottom point as next point from starting point
     let point: Point = this.points.find((p) => p.x === prevPoint.x && p.y === prevPoint.y + 1)!;
@@ -28,34 +27,49 @@ export default class Puzzle extends AoCPuzzle {
     let i = 1;
 
     do {
-      const entry = prevPoint.x === point.x ? (prevPoint.y > point.y ? 'bottom' : 'top') : (prevPoint.x > point.x ? 'right' : 'left');  
+      const entry = prevPoint.x === point.x ? (prevPoint.y > point.y ? "bottom" : "top") : prevPoint.x > point.x ? "right" : "left";
 
-      let exit: 'top' | 'bottom' | 'left' | 'right' | undefined;
+      let exit: "top" | "bottom" | "left" | "right" | undefined;
       switch (point.value) {
-        case 'F': exit = entry === 'bottom' ? 'right' : 'bottom'; break;
-        case 'L': exit = entry === 'top' ? 'right' : 'top'; break;
-        case 'J': exit = entry === 'top' ? 'left' : 'top'; break;
-        case '7': exit = entry === 'bottom' ? 'left' : 'bottom'; break;
-        case '|': exit = entry === 'top' ? 'bottom' : 'top'; break;
-        case '-': exit = entry === 'left' ? 'right' : 'left'; break;
-        case 'S': break;
-        default: throw new Error(`Unknown value ${point.value}`);
+        case "F":
+          exit = entry === "bottom" ? "right" : "bottom";
+          break;
+        case "L":
+          exit = entry === "top" ? "right" : "top";
+          break;
+        case "J":
+          exit = entry === "top" ? "left" : "top";
+          break;
+        case "7":
+          exit = entry === "bottom" ? "left" : "bottom";
+          break;
+        case "|":
+          exit = entry === "top" ? "bottom" : "top";
+          break;
+        case "-":
+          exit = entry === "left" ? "right" : "left";
+          break;
+        case "S":
+          break;
+        default:
+          throw new Error(`Unknown value ${point.value}`);
       }
 
       switch (exit) {
-        case 'top': // x, y-1, must be F, 7 or |
-          point.next = this.points.find((p) => p.x === point.x && p.y === point.y - 1 && ['F', '7', '|'].includes(p.value));
+        case "top": // x, y-1, must be F, 7 or |
+          point.next = this.points.find((p) => p.x === point.x && p.y === point.y - 1 && ["F", "7", "|"].includes(p.value));
           break;
-        case 'bottom': // x, y+1, must be L, J or |
-          point.next = this.points.find((p) => p.x === point.x && p.y === point.y + 1 && ['L', 'J', '|'].includes(p.value));
+        case "bottom": // x, y+1, must be L, J or |
+          point.next = this.points.find((p) => p.x === point.x && p.y === point.y + 1 && ["L", "J", "|"].includes(p.value));
           break;
-        case 'left': // x-1, y, must be F, L or -
-          point.next = this.points.find((p) => p.x === point.x - 1 && p.y === point.y && ['F', 'L', '-'].includes(p.value));
+        case "left": // x-1, y, must be F, L or -
+          point.next = this.points.find((p) => p.x === point.x - 1 && p.y === point.y && ["F", "L", "-"].includes(p.value));
           break;
-        case 'right': // x+1, y, must be J, 7 or -
-          point.next = this.points.find((p) => p.x === point.x + 1 && p.y === point.y && ['J', '7', '-'].includes(p.value));
+        case "right": // x+1, y, must be J, 7 or -
+          point.next = this.points.find((p) => p.x === point.x + 1 && p.y === point.y && ["J", "7", "-"].includes(p.value));
           break;
-        default: throw new Error(`Unknown exit ${exit}`);
+        default:
+          throw new Error(`Unknown exit ${exit}`);
       }
 
       prevPoint = point;
@@ -70,26 +84,27 @@ export default class Puzzle extends AoCPuzzle {
   public async part2(): Promise<string | number> {
     this.part1();
 
-    const INSIDE = 'I';
-    const OUTSIDE = 'O';
+    const INSIDE = "I";
+    const OUTSIDE = "O";
     const BETTER_TABLE: any = {
-      F: '┌',
-      7: '┐',
-      L: '└',
-      J: '┘',
-      '|': '│',
-      '-': '─',
+      F: "┌",
+      7: "┐",
+      L: "└",
+      J: "┘",
+      "|": "│",
+      "-": "─",
     };
 
-    let cleanedGrid: string[][] = this.lines.map((line, y) => line.split('')
-      .map((value, x) => {
+    let cleanedGrid: string[][] = this.lines.map((line, y) =>
+      line.split("").map((value, x) => {
         const point = this.points.find((p) => p.x === x && p.y === y);
-        return point?.next || point?.value === 'S' ? `${BETTER_TABLE[value] || value}` : INSIDE;
-      }));
+        return point?.next || point?.value === "S" ? `${BETTER_TABLE[value] || value}` : INSIDE;
+      }),
+    );
 
     // replace S by its real value
     {
-      const pointS = this.points.find((p) => p.value === 'S')!;
+      const pointS = this.points.find((p) => p.value === "S")!;
       const left = cleanedGrid[pointS.y]?.[pointS.x - 1];
       const right = cleanedGrid[pointS.y]?.[pointS.x + 1];
 
@@ -103,11 +118,11 @@ export default class Puzzle extends AoCPuzzle {
 
       if (fromleft) {
         if (fromBottom) {
-          cleanedGrid[pointS.y][pointS.x] = BETTER_TABLE['7'];
+          cleanedGrid[pointS.y][pointS.x] = BETTER_TABLE["7"];
         } else if (fromTop) {
           cleanedGrid[pointS.y][pointS.x] = BETTER_TABLE.J;
         } else if (fromRight) {
-          cleanedGrid[pointS.y][pointS.x] = BETTER_TABLE['-'];
+          cleanedGrid[pointS.y][pointS.x] = BETTER_TABLE["-"];
         }
       } else if (fromRight) {
         if (fromBottom) {
@@ -116,33 +131,35 @@ export default class Puzzle extends AoCPuzzle {
           cleanedGrid[pointS.y][pointS.x] = BETTER_TABLE.L;
         }
       } else if (fromTop && fromBottom) {
-        cleanedGrid[pointS.y][pointS.x] = BETTER_TABLE['|'];
+        cleanedGrid[pointS.y][pointS.x] = BETTER_TABLE["|"];
       }
     }
 
     // add columns
-    cleanedGrid = cleanedGrid.map((line) => line.map((value) => {
-      if (value !== INSIDE) {
-        if (['┌', '└', '─'].includes(value)) {
-          return `${value}─`;
+    cleanedGrid = cleanedGrid.map((line) =>
+      line.map((value) => {
+        if (value !== INSIDE) {
+          if (["┌", "└", "─"].includes(value)) {
+            return `${value}─`;
+          }
+          if (["┐", "┘", "│"].includes(value)) {
+            return `${value}${INSIDE}`;
+          }
         }
-        if (['┐', '┘', '│'].includes(value)) {
-          return `${value}${INSIDE}`;
-        }
-      }
-      return `${value}${value}`;
-    }));
+        return `${value}${value}`;
+      }),
+    );
 
     // add rows
     const newGrid: string[][] = [];
     for (let i = 0; i < cleanedGrid.length; i += 1) {
-      const line = cleanedGrid[i].join('').split('');
+      const line = cleanedGrid[i].join("").split("");
       const newLine: string[] = [];
       for (let j = 0; j < line.length; j += 1) {
         const value = line[j];
         let newValue = INSIDE;
-        if (value !== INSIDE && ['┌', '┐', '│'].includes(value)) {
-          newValue = '│';
+        if (value !== INSIDE && ["┌", "┐", "│"].includes(value)) {
+          newValue = "│";
         }
         newLine.push(newValue);
       }
@@ -182,11 +199,17 @@ export default class Puzzle extends AoCPuzzle {
               if (x % 2 === 1) {
                 return null;
               }
-              let color = '';
+              let color = "";
               switch (value) {
-                case INSIDE: color = '\x1b[31m'; break;
-                case OUTSIDE: color = '\x1b[90m'; break;
-                default: color = '\x1b[0m'; break;
+                case INSIDE:
+                  color = "\x1b[31m";
+                  break;
+                case OUTSIDE:
+                  color = "\x1b[90m";
+                  break;
+                default:
+                  color = "\x1b[0m";
+                  break;
               }
               return `${color}${value}\x1b[0m`;
             })

@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private diskSize: number = 0;
@@ -6,7 +6,11 @@ export default class Puzzle extends AoCPuzzle {
   private calculateChecksum(): string {
     let data = this.input;
     while (data.length < this.diskSize) {
-      const reversedCopy = data.split('').reverse().map((c) => (c === '0' ? '1' : '0')).join('');
+      const reversedCopy = data
+        .split("")
+        .reverse()
+        .map((c) => (c === "0" ? "1" : "0"))
+        .join("");
       data = `${data}0${reversedCopy}`;
     }
     if (data.length > this.diskSize) {
@@ -14,9 +18,9 @@ export default class Puzzle extends AoCPuzzle {
     }
     let checksum = data;
     do {
-      let newChecksum = '';
+      let newChecksum = "";
       for (let i = 0; i < checksum.length; i += 2) {
-        newChecksum += checksum[i] === checksum[i + 1] ? '1' : '0';
+        newChecksum += checksum[i] === checksum[i + 1] ? "1" : "0";
       }
       checksum = newChecksum;
     } while (checksum.length % 2 === 0);

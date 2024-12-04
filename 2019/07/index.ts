@@ -1,7 +1,7 @@
-import { IntCodeComputer } from '../int-code-computer';
+import { IntCodeComputer } from "../int-code-computer";
 
-import { permutations } from '../../helpers/string';
-import AoCPuzzle from '../../puzzle';
+import { permutations } from "../../helpers/string";
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
@@ -11,9 +11,9 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     let highestSignal = 0;
-    const perms = permutations('01234');
+    const perms = permutations("01234");
     for (const p of perms) {
-      const n = p.split('').map(Number);
+      const n = p.split("").map(Number);
       let val = 0;
       for (let i = 0; i < 5; i += 1) {
         computers[i].addInputs([n[i], val!]);
@@ -33,9 +33,9 @@ export default class Puzzle extends AoCPuzzle {
     const computers = [];
 
     let highestSignal = 0;
-    const perms = permutations('56789');
+    const perms = permutations("56789");
     for (const p of perms) {
-      const n = p.split('').map(Number);
+      const n = p.split("").map(Number);
       for (let i = 0; i < 5; i += 1) {
         computers[i] = new IntCodeComputer(this.input);
         computers[i].addInputs([n[i]]);

@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private serialNumber: number = 0;
@@ -18,7 +18,9 @@ export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
     this.serialNumber = Number(this.input.trim());
 
-    this.gridN = Array(300).fill(0).map(() => Array(300).fill(0));
+    this.gridN = Array(300)
+      .fill(0)
+      .map(() => Array(300).fill(0));
     this.gridN = this.gridN.map((row, y) => row.map((_, x) => this.findPowerLevel(x + 1, y + 1)));
 
     let maxPower = -Infinity;

@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private layers: number[] = [];
@@ -19,12 +19,8 @@ export default class Puzzle extends AoCPuzzle {
     const caughts: number[] = [];
     for (let t = 0; t < this.layers.length; t += 1) {
       this.debug(`======================================================== ${t} `);
-      this.debug(
-        this.layers.map((l, i) => ` ${i} `).join('   '),
-      );
-      this.debug(
-        this.layers.map((l, i) => (i === (t) ? `\x1b[43m ${(t + delay) % (l * 2 - 2)} \x1b[0m` : ` ${(t + delay) % (l * 2 - 2)} `)).join('   '),
-      );
+      this.debug(this.layers.map((l, i) => ` ${i} `).join("   "));
+      this.debug(this.layers.map((l, i) => (i === t ? `\x1b[43m ${(t + delay) % (l * 2 - 2)} \x1b[0m` : ` ${(t + delay) % (l * 2 - 2)} `)).join("   "));
 
       const range = this.layers[t];
       if (range === 0) {
@@ -44,9 +40,9 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public async part1(): Promise<string | number> {
-    this.layers = Array.from({ length: +this.lines[this.lines.length - 1].split(': ')[0] }, () => 0);
+    this.layers = Array.from({ length: +this.lines[this.lines.length - 1].split(": ")[0] }, () => 0);
     for (const line of this.lines) {
-      const [layer, range] = line.split(': ').map(Number);
+      const [layer, range] = line.split(": ").map(Number);
       this.layers[layer] = range;
     }
 

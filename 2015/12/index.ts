@@ -1,9 +1,11 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
-    return this.input.replace(/[^-0-9]/g, ' ')
-      .split(' ').map(Number)
+    return this.input
+      .replace(/[^-0-9]/g, " ")
+      .split(" ")
+      .map(Number)
       .reduce((acc, val) => acc + val, 0);
   }
 
@@ -12,8 +14,8 @@ export default class Puzzle extends AoCPuzzle {
       return obj.map((o) => this.removeRed(o));
     }
 
-    if (typeof obj === 'object') {
-      if (Object.values(obj).includes('red')) {
+    if (typeof obj === "object") {
+      if (Object.values(obj).includes("red")) {
         return {};
       }
 
@@ -27,8 +29,10 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public async part2(): Promise<string | number> {
-    return JSON.stringify(this.removeRed(JSON.parse(this.input))).replace(/[^-0-9]/g, ' ')
-      .split(' ').map(Number)
+    return JSON.stringify(this.removeRed(JSON.parse(this.input)))
+      .replace(/[^-0-9]/g, " ")
+      .split(" ")
+      .map(Number)
       .reduce((acc, val) => acc + val, 0);
   }
 }

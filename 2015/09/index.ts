@@ -1,13 +1,13 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Connection {
-  to: City,
-  distance: number,
+  to: City;
+  distance: number;
 }
 
 interface City {
-  name: string,
-  connections: Connection[],
+  name: string;
+  connections: Connection[];
 }
 
 export default class Puzzle extends AoCPuzzle {

@@ -16,7 +16,7 @@ export const addUniqueItem = (array: any[], item: any): void => {
  * @param array
  */
 export const print2d = (array: any[][]): void => {
-  console.log(`${array.map((row) => row.join('')).join('\n')}\n`);
+  console.log(`${array.map((row) => row.join("")).join("\n")}\n`);
 };
 
 /**
@@ -47,31 +47,19 @@ export const sum = (array: number[]): number => array.reduce((acc, val) => acc +
  */
 export const multiply = (array: number[]): number => array.reduce((acc, val) => acc * val, 1);
 
-export const isNextTo = (
-  array: any[],
-  x: number,
-  y: number,
-  value: any,
-): boolean => array[y - 1]?.[x] === value ||
-array[y + 1]?.[x] === value ||
-array[y]?.[x - 1] === value ||
-  array[y]?.[x + 1] === value;
+export const isNextTo = (array: any[], x: number, y: number, value: any): boolean =>
+  array[y - 1]?.[x] === value || array[y + 1]?.[x] === value || array[y]?.[x - 1] === value || array[y]?.[x + 1] === value;
 
-export const isNextTo3D = (
-  array: any[][][],
-  x: number,
-  y: number,
-  z: number,
-  value: any,
-): boolean => array[z][y - 1]?.[x] === value ||
-array[z][y + 1]?.[x] === value ||
-array[z][y]?.[x - 1] === value ||
-array[z][y]?.[x + 1] === value ||
-array[z - 1]?.[y]?.[x] === value ||
+export const isNextTo3D = (array: any[][][], x: number, y: number, z: number, value: any): boolean =>
+  array[z][y - 1]?.[x] === value ||
+  array[z][y + 1]?.[x] === value ||
+  array[z][y]?.[x - 1] === value ||
+  array[z][y]?.[x + 1] === value ||
+  array[z - 1]?.[y]?.[x] === value ||
   array[z + 1]?.[y]?.[x] === value;
 
 export const rotate = (array: string[]): string[] => {
-  const newArray: string[] = Array(array[0].length).fill('');
+  const newArray: string[] = Array(array[0].length).fill("");
 
   for (let i = 0; i < array.length; i += 1) {
     for (let j = 0; j < array[i].length; j += 1) {
@@ -90,4 +78,10 @@ export const create2DArray = (width: number, height: number, defaultValue: any =
   return array;
 };
 
-export const getUpRightLeftDownCoordinates = ({ x, y }: Point): Point[] => [[0, -1], [+1, 0], [0, +1], [-1, 0]].map(([mx, my]) => ({ x: x + mx, y: y + my }));
+export const getUpRightLeftDownCoordinates = ({ x, y }: Point): Point[] =>
+  [
+    [0, -1],
+    [+1, 0],
+    [0, +1],
+    [-1, 0],
+  ].map(([mx, my]) => ({ x: x + mx, y: y + my }));

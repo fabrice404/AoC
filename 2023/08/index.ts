@@ -1,5 +1,5 @@
-import { lcm } from '../../helpers/numbers';
-import AoCPuzzle from '../../puzzle';
+import { lcm } from "../../helpers/numbers";
+import AoCPuzzle from "../../puzzle";
 
 interface Node {
   name: string;
@@ -14,26 +14,34 @@ export default class Puzzle extends AoCPuzzle {
 
   private nodes: Node[] = [];
 
-  private currentNode: string = 'AAA';
+  private currentNode: string = "AAA";
 
   private steps: number = 0;
 
   private reset() {
-    this.currentNode = 'AAA';
+    this.currentNode = "AAA";
     this.steps = 0;
     this.movePosition = 0;
 
     const lines = [...this.lines];
-    this.moves = lines.shift()!.split('').map((move) => move.trim());
+    this.moves = lines
+      .shift()!
+      .split("")
+      .map((move) => move.trim());
 
-    this.nodes = lines.filter((x) => x).map((line) => {
-      const [name, left, right] = line.split(/[,=()]/gi).map((x) => x.trim()).filter((x) => x);
-      return { name, left, right };
-    });
+    this.nodes = lines
+      .filter((x) => x)
+      .map((line) => {
+        const [name, left, right] = line
+          .split(/[,=()]/gi)
+          .map((x) => x.trim())
+          .filter((x) => x);
+        return { name, left, right };
+      });
   }
 
   private moveNext() {
-    const nextMove = this.moves[this.movePosition] === 'L' ? 'left' : 'right';
+    const nextMove = this.moves[this.movePosition] === "L" ? "left" : "right";
 
     const node = this.nodes.find((n) => n.name === this.currentNode);
     this.currentNode = node![nextMove];
@@ -50,7 +58,7 @@ export default class Puzzle extends AoCPuzzle {
 
     do {
       this.moveNext();
-    } while (this.currentNode !== 'ZZZ');
+    } while (this.currentNode !== "ZZZ");
 
     return this.steps;
   }
@@ -59,14 +67,14 @@ export default class Puzzle extends AoCPuzzle {
     this.reset();
 
     const results: number[] = this.nodes
-      .filter((n) => n.name.endsWith('A'))
+      .filter((n) => n.name.endsWith("A"))
       .map((n) => {
         let steps = 0;
         let currentMovePosition = 0;
         let currentNode = n;
 
-        while (!currentNode.name.endsWith('Z')) {
-          const nextMove = this.moves[currentMovePosition] === 'L' ? 'left' : 'right';
+        while (!currentNode.name.endsWith("Z")) {
+          const nextMove = this.moves[currentMovePosition] === "L" ? "left" : "right";
 
           // get next node
           const nextNode = currentNode[nextMove];

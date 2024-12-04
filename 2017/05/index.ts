@@ -1,10 +1,10 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private debug(list: any[], i: number) {
     if (this.isExample) {
       list[i] = `(${list[i]})`;
-      console.log(list.join(', '));
+      console.log(list.join(", "));
     }
   }
 

@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Piece {
   x: number;
@@ -8,16 +8,16 @@ interface Piece {
 }
 
 interface Step {
-  letter: 'x' | 'm' | 'a' | 's';
+  letter: "x" | "m" | "a" | "s";
   operand: string;
   value: number;
   result: string;
 }
 
 interface Workflow {
-  code: Function,
-  steps: Step[],
-  finalStep?: string,
+  code: Function;
+  steps: Step[];
+  finalStep?: string;
 }
 
 interface Ranges {
@@ -34,62 +34,69 @@ export default class Puzzle extends AoCPuzzle {
 
   private parseWorkflow(line: string): void {
     const [key, functions] = line.split(/{|}/gi);
-    let code = '(piece) => {\n';
+    let code = "(piece) => {\n";
     const steps: Step[] = [];
-    let finalStep = '';
-    functions.split(',').forEach((f) => {
+    let finalStep = "";
+    functions.split(",").forEach((f) => {
       const operand = f.match(/[<>]/gi)?.[0];
       if (operand) {
         const [letter, value, result] = f.split(/[<>:]/gi);
         code += ` if (piece.${letter} ${operand} ${value}) { return this.workflows.get('${result}').code(piece); }\n`;
-        steps.push({ letter: letter as 'x' | 'm' | 'a' | 's', operand, value: +value, result });
+        steps.push({
+          letter: letter as "x" | "m" | "a" | "s",
+          operand,
+          value: +value,
+          result,
+        });
       } else {
         code += ` return this.workflows.get('${f}').code(piece);`;
         finalStep = f;
       }
     });
-    code += '}\n';
+    code += "}\n";
     this.workflows.set(key, { code: eval(code), steps, finalStep });
   }
 
   private parsePiece(line: string): void {
     const piece = {} as Piece;
-    line.replace(/{|}/gi, '').split(',').forEach((x) => {
-      const [key, value] = x.split('=');
-      piece[key as 'x' | 'm' | 'a' | 's'] = +value;
-    });
+    line
+      .replace(/{|}/gi, "")
+      .split(",")
+      .forEach((x) => {
+        const [key, value] = x.split("=");
+        piece[key as "x" | "m" | "a" | "s"] = +value;
+      });
     this.pieces.push(piece);
   }
 
   public async part1(): Promise<string | number> {
-    this.lines.filter((x) => x).forEach((line) => {
-      if (line.startsWith('{')) {
-        this.parsePiece(line);
-      } else {
-        this.parseWorkflow(line);
-      }
-    });
-    this.workflows.set('A', { code: () => true, steps: [] });
-    this.workflows.set('R', { code: () => false, steps: [] });
+    this.lines
+      .filter((x) => x)
+      .forEach((line) => {
+        if (line.startsWith("{")) {
+          this.parsePiece(line);
+        } else {
+          this.parseWorkflow(line);
+        }
+      });
+    this.workflows.set("A", { code: () => true, steps: [] });
+    this.workflows.set("R", { code: () => false, steps: [] });
 
-    return this.pieces
-      .filter((piece) => this.workflows.get('in')!.code(piece))
-      .reduce((acc, { x, m, a, s }) => acc + x + m + a + s, 0);
+    return this.pieces.filter((piece) => this.workflows.get("in")!.code(piece)).reduce((acc, { x, m, a, s }) => acc + x + m + a + s, 0);
   }
 
-  public async part2(
-    src: Ranges = { x: [1, 4000], m: [1, 4000], a: [1, 4000], s: [1, 4000] },
-    workflowKey = 'in',
-  ): Promise<number> {
-    let ranges: Ranges = { x: [...src.x], m: [...src.m], a: [...src.a], s: [...src.s] };
-    if (workflowKey === 'R') {
+  public async part2(src: Ranges = { x: [1, 4000], m: [1, 4000], a: [1, 4000], s: [1, 4000] }, workflowKey = "in"): Promise<number> {
+    let ranges: Ranges = {
+      x: [...src.x],
+      m: [...src.m],
+      a: [...src.a],
+      s: [...src.s],
+    };
+    if (workflowKey === "R") {
       return 0;
     }
-    if (workflowKey === 'A') {
-      return (ranges.x[1] - ranges.x[0] + 1) *
-        (ranges.m[1] - ranges.m[0] + 1) *
-        (ranges.a[1] - ranges.a[0] + 1) *
-        (ranges.s[1] - ranges.s[0] + 1);
+    if (workflowKey === "A") {
+      return (ranges.x[1] - ranges.x[0] + 1) * (ranges.m[1] - ranges.m[0] + 1) * (ranges.a[1] - ranges.a[0] + 1) * (ranges.s[1] - ranges.s[0] + 1);
     }
 
     let result = 0;
@@ -99,7 +106,7 @@ export default class Puzzle extends AoCPuzzle {
       const step = workflow.steps[i];
       const min = ranges[step.letter][0];
       const max = ranges[step.letter][1];
-      if (step.operand === '<') {
+      if (step.operand === "<") {
         if (max < step.value) {
           result += await this.part2(ranges, step.result);
           return result;
@@ -109,7 +116,7 @@ export default class Puzzle extends AoCPuzzle {
           ranges = { ...ranges, [step.letter]: [step.value, max] };
           continue;
         }
-      } else if (step.operand === '>') {
+      } else if (step.operand === ">") {
         if (min > step.value) {
           result += await this.part2(ranges, step.result);
           return result;

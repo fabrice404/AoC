@@ -1,11 +1,11 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Position {
   x: number;
   y: number;
 }
 
-type Direction = 'U' | 'R' | 'D' | 'L';
+type Direction = "U" | "R" | "D" | "L";
 
 export default class Puzzle extends AoCPuzzle {
   private paths: string[][] = [[], []];
@@ -17,7 +17,7 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   private keyToPosition(key: string): Position {
-    const [x, y] = key.split(',').map(Number)
+    const [x, y] = key.split(",").map(Number);
     return { x, y };
   }
 
@@ -25,11 +25,20 @@ export default class Puzzle extends AoCPuzzle {
     const path: string[] = [];
     for (let i = 0; i < quantity; i += 1) {
       switch (direction) {
-        case 'U': position = { x: position.x, y: position.y - 1 }; break;
-        case 'D': position = { x: position.x, y: position.y + 1 }; break;
-        case 'R': position = { x: position.x + 1, y: position.y }; break;
-        case 'L': position = { x: position.x - 1, y: position.y }; break;
-        default: throw new Error(`Unknown direction: ${direction}`);
+        case "U":
+          position = { x: position.x, y: position.y - 1 };
+          break;
+        case "D":
+          position = { x: position.x, y: position.y + 1 };
+          break;
+        case "R":
+          position = { x: position.x + 1, y: position.y };
+          break;
+        case "L":
+          position = { x: position.x - 1, y: position.y };
+          break;
+        default:
+          throw new Error(`Unknown direction: ${direction}`);
       }
       path.push(this.positionToKey(position));
     }
@@ -38,7 +47,7 @@ export default class Puzzle extends AoCPuzzle {
 
   public async part1(): Promise<string | number> {
     for (let i = 0; i < this.lines.length; i += 1) {
-      const moves = this.lines[i].split(',');
+      const moves = this.lines[i].split(",");
       let position = { x: 0, y: 0 };
 
       for (let j = 0; j < moves.length; j += 1) {
@@ -71,7 +80,7 @@ export default class Puzzle extends AoCPuzzle {
     let shortestDistanceToIntersection = Number.MAX_SAFE_INTEGER;
     for (const key of this.intersections.keys()) {
       const a = this.paths[0].indexOf(key) + 1;
-      const b = this.paths[1].indexOf(key) + 1
+      const b = this.paths[1].indexOf(key) + 1;
       shortestDistanceToIntersection = Math.min(shortestDistanceToIntersection, a + b);
     }
     return shortestDistanceToIntersection;

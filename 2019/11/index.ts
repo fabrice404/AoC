@@ -1,13 +1,12 @@
-import { pointToKey } from '../../helpers/helpers';
-import AoCPuzzle from '../../puzzle';
-import { Direction, Point } from '../../types';
-import { IntCodeComputer } from '../int-code-computer';
-
+import { pointToKey } from "../../helpers/helpers";
+import AoCPuzzle from "../../puzzle";
+import { Direction, Point } from "../../types";
+import { IntCodeComputer } from "../int-code-computer";
 
 const BLACK = 0;
 const WHITE = 1;
 
-const DIRECTIONS: Direction[] = ['U', 'R', 'D', 'L'];
+const DIRECTIONS: Direction[] = ["U", "R", "D", "L"];
 
 export default class Puzzle extends AoCPuzzle {
   private hull: { [key: string]: number } = {};
@@ -22,10 +21,18 @@ export default class Puzzle extends AoCPuzzle {
 
   private move(location: Point, direction: Direction): Point {
     switch (direction) {
-      case 'U': location.y -= 1; break;
-      case 'D': location.y += 1; break;
-      case 'L': location.x -= 1; break;
-      case 'R': location.x += 1; break;
+      case "U":
+        location.y -= 1;
+        break;
+      case "D":
+        location.y += 1;
+        break;
+      case "L":
+        location.x -= 1;
+        break;
+      case "R":
+        location.x += 1;
+        break;
     }
     return location;
   }
@@ -47,8 +54,10 @@ export default class Puzzle extends AoCPuzzle {
       finished = computer.compute(false);
       directionIndex = (directionIndex + (computer.output === 0 ? -1 : 1) + 4) % 4;
       location = this.move(location, DIRECTIONS[directionIndex]);
-      this.minX = Math.min(this.minX, location.x); this.maxX = Math.max(this.maxX, location.x);
-      this.minY = Math.min(this.minY, location.y); this.maxY = Math.max(this.maxY, location.y);
+      this.minX = Math.min(this.minX, location.x);
+      this.maxX = Math.max(this.maxX, location.x);
+      this.minY = Math.min(this.minY, location.y);
+      this.maxY = Math.max(this.maxY, location.y);
 
       const key = pointToKey(location);
       if (this.hull[key] == null) {
@@ -61,9 +70,9 @@ export default class Puzzle extends AoCPuzzle {
       const row = [];
       for (let x = this.minX; x <= this.maxX; x += 1) {
         const key = pointToKey({ x, y });
-        row.push((this.hull[key] ?? initialColor) ? '▓' : ' ');
+        row.push((this.hull[key] ?? initialColor) ? "▓" : " ");
       }
-      console.log(row.join(''));
+      console.log(row.join(""));
     }
 
     return Object.keys(this.hull).length;
@@ -75,6 +84,6 @@ export default class Puzzle extends AoCPuzzle {
 
   public async part2(): Promise<string | number> {
     this.print(WHITE);
-    return 'see console output';
+    return "see console output";
   }
 }

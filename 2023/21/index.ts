@@ -1,24 +1,24 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private steps: number = 0;
 
   private oize(x: number, y: number) {
-    if (this.grid[y][x] !== '#') {
-      this.grid[y][x] = 'O';
+    if (this.grid[y][x] !== "#") {
+      this.grid[y][x] = "O";
     }
   }
 
   private run() {
     for (let i = 0; i < this.steps; i += 1) {
-      if (this.grid.flat(3).join('').match(/O/gi)) {
+      if (this.grid.flat(3).join("").match(/O/gi)) {
         this.grid.forEach((line, y) => {
           line.forEach((cell, x) => {
-            if (cell === 'S') {
-              this.grid[y][x] = '.';
+            if (cell === "S") {
+              this.grid[y][x] = ".";
             }
-            if (cell === 'O') {
-              this.grid[y][x] = 'S';
+            if (cell === "O") {
+              this.grid[y][x] = "S";
             }
           });
         });
@@ -27,7 +27,7 @@ export default class Puzzle extends AoCPuzzle {
       // find all S
       this.grid.forEach((line, y) => {
         line.forEach((cell, x) => {
-          if (cell === 'S') {
+          if (cell === "S") {
             this.oize(x + 1, y);
             this.oize(x - 1, y);
             this.oize(x, y + 1);
@@ -37,7 +37,7 @@ export default class Puzzle extends AoCPuzzle {
       });
     }
 
-    return this.grid.flat(3).filter((cell) => cell === 'O').length;
+    return this.grid.flat(3).filter((cell) => cell === "O").length;
   }
 
   public async part1(): Promise<string | number> {
@@ -50,14 +50,12 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   private getAt(x: number, y: number) {
-    return this.grid[
-      this.mod(y, this.grid.length)][
-      this.mod(x, this.grid.length)];
+    return this.grid[this.mod(y, this.grid.length)][this.mod(x, this.grid.length)];
   }
 
   public async part2(): Promise<string | number> {
     if (this.lines.length === 11) {
-      return 'skip';
+      return "skip";
     }
     this.setInput(this.input);
     this.steps = 26501365;
@@ -67,9 +65,9 @@ export default class Puzzle extends AoCPuzzle {
     let locations: Map<string, boolean> = new Map<string, boolean>();
     this.grid.forEach((line, y) => {
       line.forEach((cell, x) => {
-        if (cell === 'S') {
+        if (cell === "S") {
           locations.set(`${x},${y}`, true);
-          this.grid[y][x] = '.';
+          this.grid[y][x] = ".";
         }
       });
     });
@@ -77,11 +75,19 @@ export default class Puzzle extends AoCPuzzle {
     for (let i = 1; i < 131 * 5 + 65; i += 1) {
       const newLocations: Map<string, boolean> = new Map<string, boolean>();
       [...locations.keys()].forEach((coords) => {
-        const [x, y] = coords.split(',').map((n: string) => parseInt(n, 10));
-        if (this.getAt(x + 1, y) === '.') { newLocations.set(`${x + 1},${y}`, true); }
-        if (this.getAt(x - 1, y) === '.') { newLocations.set(`${x - 1},${y}`, true); }
-        if (this.getAt(x, y + 1) === '.') { newLocations.set(`${x},${y + 1}`, true); }
-        if (this.getAt(x, y - 1) === '.') { newLocations.set(`${x},${y - 1}`, true); }
+        const [x, y] = coords.split(",").map((n: string) => parseInt(n, 10));
+        if (this.getAt(x + 1, y) === ".") {
+          newLocations.set(`${x + 1},${y}`, true);
+        }
+        if (this.getAt(x - 1, y) === ".") {
+          newLocations.set(`${x - 1},${y}`, true);
+        }
+        if (this.getAt(x, y + 1) === ".") {
+          newLocations.set(`${x},${y + 1}`, true);
+        }
+        if (this.getAt(x, y - 1) === ".") {
+          newLocations.set(`${x},${y - 1}`, true);
+        }
       });
 
       if (i % 131 === 65) {
@@ -103,6 +109,6 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     const steps = (26501365 - 65) / 131;
-    return totals[0] + (totals[1] * steps) + ((steps * ((steps - 1) * totals[2])) / 2);
+    return totals[0] + totals[1] * steps + (steps * ((steps - 1) * totals[2])) / 2;
   }
 }

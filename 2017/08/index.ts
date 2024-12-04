@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private registers: Map<string, number> = new Map<string, number>();
@@ -16,23 +16,39 @@ export default class Puzzle extends AoCPuzzle {
 
       let condition = false;
       switch (conditionOp) {
-        case '==': condition = conditionRegisterValue === +conditionValue; break;
-        case '!=': condition = conditionRegisterValue !== +conditionValue; break;
-        case '>': condition = conditionRegisterValue > +conditionValue; break;
-        case '<': condition = conditionRegisterValue < +conditionValue; break;
-        case '>=': condition = conditionRegisterValue >= +conditionValue; break;
-        case '<=': condition = conditionRegisterValue <= +conditionValue; break;
-        default: throw new Error(`Unknown condition operator: ${conditionOp}`);
+        case "==":
+          condition = conditionRegisterValue === +conditionValue;
+          break;
+        case "!=":
+          condition = conditionRegisterValue !== +conditionValue;
+          break;
+        case ">":
+          condition = conditionRegisterValue > +conditionValue;
+          break;
+        case "<":
+          condition = conditionRegisterValue < +conditionValue;
+          break;
+        case ">=":
+          condition = conditionRegisterValue >= +conditionValue;
+          break;
+        case "<=":
+          condition = conditionRegisterValue <= +conditionValue;
+          break;
+        default:
+          throw new Error(`Unknown condition operator: ${conditionOp}`);
       }
 
       if (condition) {
         switch (op) {
-          case 'inc':
+          case "inc":
             this.registers.set(register, registerValue + +value);
             this.maxValue = Math.max(this.maxValue, registerValue + +value);
             break;
-          case 'dec': this.registers.set(register, registerValue - +value); break;
-          default: throw new Error(`Unknown operation: ${op}`);
+          case "dec":
+            this.registers.set(register, registerValue - +value);
+            break;
+          default:
+            throw new Error(`Unknown operation: ${op}`);
         }
       }
     }

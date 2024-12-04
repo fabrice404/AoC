@@ -1,6 +1,6 @@
-import crypto from 'node:crypto';
+import crypto from "node:crypto";
 
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Hash {
   hash: string;
@@ -16,10 +16,7 @@ export default class Puzzle extends AoCPuzzle {
 
   private find3ConsecutiveLetters(hash: string): string | null {
     for (let i = 0; i < hash.length - 2; i += 1) {
-      if (
-        hash[i] === hash[i + 1] &&
-        hash[i] === hash[i + 2]
-      ) {
+      if (hash[i] === hash[i + 1] && hash[i] === hash[i + 2]) {
         return hash[i];
       }
     }
@@ -28,12 +25,7 @@ export default class Puzzle extends AoCPuzzle {
 
   private find5ConsecutiveLetters(hash: string): string | null {
     for (let i = 0; i < hash.length - 4; i += 1) {
-      if (
-        hash[i] === hash[i + 1] &&
-        hash[i] === hash[i + 2] &&
-        hash[i] === hash[i + 3] &&
-        hash[i] === hash[i + 4]
-      ) {
+      if (hash[i] === hash[i + 1] && hash[i] === hash[i + 2] && hash[i] === hash[i + 3] && hash[i] === hash[i + 4]) {
         return hash[i];
       }
     }
@@ -46,10 +38,10 @@ export default class Puzzle extends AoCPuzzle {
     this.hashes = [];
 
     while (i <= breakAt) {
-      let hash = crypto.createHash('md5').update(`${this.input}${i}`).digest('hex');
+      let hash = crypto.createHash("md5").update(`${this.input}${i}`).digest("hex");
       if (strech > 0) {
         for (let j = 0; j < strech; j += 1) {
-          hash = crypto.createHash('md5').update(hash).digest('hex');
+          hash = crypto.createHash("md5").update(hash).digest("hex");
         }
       }
 
@@ -64,7 +56,9 @@ export default class Puzzle extends AoCPuzzle {
       if (letter) {
         this.hashes
           .filter((h) => h.letter === letter && h.index < i && h.index >= i - 1000)
-          .forEach((h) => { h.matchingIndex = i; });
+          .forEach((h) => {
+            h.matchingIndex = i;
+          });
 
         const validHashes = this.hashes.filter((h) => h.matchingIndex);
         if (validHashes.length >= 64) {
@@ -74,8 +68,7 @@ export default class Puzzle extends AoCPuzzle {
       i += 1;
     }
 
-    const validHashes = this.hashes.filter((h) => h.matchingIndex)
-      .sort((a, b) => (a.index > b.index ? 1 : -1));
+    const validHashes = this.hashes.filter((h) => h.matchingIndex).sort((a, b) => (a.index > b.index ? 1 : -1));
 
     return validHashes[63].index;
   }

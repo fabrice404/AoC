@@ -1,6 +1,4 @@
- 
-
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Sample {
   before: number[];
@@ -15,50 +13,90 @@ export default class Puzzle extends AoCPuzzle {
   private program: number[][] = [];
 
   private operations: { [key: string]: Function } = {
-    addr: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (before[instruction[1]] + before[instruction[2]])),
-    addi: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (before[instruction[1]] + instruction[2])),
-    mulr: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (before[instruction[1]] * before[instruction[2]])),
-    muli: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (before[instruction[1]] * instruction[2])),
-    banr: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (before[instruction[1]] & before[instruction[2]])),
-    bani: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (before[instruction[1]] & instruction[2])),
-    borr: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (before[instruction[1]] | before[instruction[2]])),
-    bori: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (before[instruction[1]] | instruction[2])),
-    setr: ({ before, instruction, after }: Sample) => (after[instruction[3]] === before[instruction[1]]),
-    seti: ({ instruction, after }: Sample) => (after[instruction[3]] === instruction[1]),
-    gtir: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (instruction[1] > before[instruction[2]] ? 1 : 0)),
-    gtri: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (before[instruction[1]] > instruction[2] ? 1 : 0)),
-    gtrr: ({ before, instruction, after }: Sample) => (after[instruction[3]] === ((before[instruction[1]] > before[instruction[2]]) ? 1 : 0)),
-    eqir: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (instruction[1] === before[instruction[2]] ? 1 : 0)),
-    eqri: ({ before, instruction, after }: Sample) => (after[instruction[3]] === (before[instruction[1]] === instruction[2] ? 1 : 0)),
-    eqrr: ({ before, instruction, after }: Sample) => (after[instruction[3]] === ((before[instruction[1]] === before[instruction[2]]) ? 1 : 0)),
+    addr: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] + before[instruction[2]],
+    addi: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] + instruction[2],
+    mulr: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] * before[instruction[2]],
+    muli: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]] * instruction[2],
+    banr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] & before[instruction[2]]),
+    bani: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] & instruction[2]),
+    borr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] | before[instruction[2]]),
+    bori: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] | instruction[2]),
+    setr: ({ before, instruction, after }: Sample) => after[instruction[3]] === before[instruction[1]],
+    seti: ({ instruction, after }: Sample) => after[instruction[3]] === instruction[1],
+    gtir: ({ before, instruction, after }: Sample) => after[instruction[3]] === (instruction[1] > before[instruction[2]] ? 1 : 0),
+    gtri: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] > instruction[2] ? 1 : 0),
+    gtrr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] > before[instruction[2]] ? 1 : 0),
+    eqir: ({ before, instruction, after }: Sample) => after[instruction[3]] === (instruction[1] === before[instruction[2]] ? 1 : 0),
+    eqri: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] === instruction[2] ? 1 : 0),
+    eqrr: ({ before, instruction, after }: Sample) => after[instruction[3]] === (before[instruction[1]] === before[instruction[2]] ? 1 : 0),
   };
 
   private execute: { [key: string]: Function } = {
-    addr: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] + registers[instruction[2]]); },
-    addi: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] + instruction[2]); },
-    mulr: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] * registers[instruction[2]]); },
-    muli: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] * instruction[2]); },
-    banr: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] & registers[instruction[2]]); },
-    bani: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] & instruction[2]); },
-    borr: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] | registers[instruction[2]]); },
-    bori: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] | instruction[2]); },
-    setr: (instruction: number[], registers: number[]) => { registers[instruction[3]] = registers[instruction[1]]; },
-    seti: (instruction: number[], registers: number[]) => { registers[instruction[3]] = instruction[1]; },  
-    gtir: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (instruction[1] > registers[instruction[2]] ? 1 : 0); },
-    gtri: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] > instruction[2] ? 1 : 0); },
-    gtrr: (instruction: number[], registers: number[]) => { registers[instruction[3]] = ((registers[instruction[1]] > registers[instruction[2]]) ? 1 : 0); },
-    eqir: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (instruction[1] === registers[instruction[2]] ? 1 : 0); },
-    eqri: (instruction: number[], registers: number[]) => { registers[instruction[3]] = (registers[instruction[1]] === instruction[2] ? 1 : 0); },
-    eqrr: (instruction: number[], registers: number[]) => { registers[instruction[3]] = ((registers[instruction[1]] === registers[instruction[2]]) ? 1 : 0); },
+    addr: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] + registers[instruction[2]];
+    },
+    addi: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] + instruction[2];
+    },
+    mulr: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] * registers[instruction[2]];
+    },
+    muli: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] * instruction[2];
+    },
+    banr: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] & registers[instruction[2]];
+    },
+    bani: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] & instruction[2];
+    },
+    borr: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] | registers[instruction[2]];
+    },
+    bori: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] | instruction[2];
+    },
+    setr: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]];
+    },
+    seti: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = instruction[1];
+    },
+    gtir: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = instruction[1] > registers[instruction[2]] ? 1 : 0;
+    },
+    gtri: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] > instruction[2] ? 1 : 0;
+    },
+    gtrr: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] > registers[instruction[2]] ? 1 : 0;
+    },
+    eqir: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = instruction[1] === registers[instruction[2]] ? 1 : 0;
+    },
+    eqri: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] === instruction[2] ? 1 : 0;
+    },
+    eqrr: (instruction: number[], registers: number[]) => {
+      registers[instruction[3]] = registers[instruction[1]] === registers[instruction[2]] ? 1 : 0;
+    },
   };
 
   public async part1(): Promise<string | number> {
     for (let i = 0; i < this.lines.length; i += 1) {
       const line = this.lines[i];
-      if (line.startsWith('Before:')) {
-        const before = line.replace(/[^0-9 ]*/gi, '').trim().split(/\s/).map(Number);
+      if (line.startsWith("Before:")) {
+        const before = line
+          .replace(/[^0-9 ]*/gi, "")
+          .trim()
+          .split(/\s/)
+          .map(Number);
         const instruction = this.lines[i + 1].split(/\s/).map(Number);
-        const after = this.lines[i + 2].replace(/[^0-9 ]*/gi, '').trim().split(/\s/).map(Number);
+        const after = this.lines[i + 2]
+          .replace(/[^0-9 ]*/gi, "")
+          .trim()
+          .split(/\s/)
+          .map(Number);
         this.samples.push({ before, instruction, after });
         i += 3;
       } else if (line.trim()) {
@@ -86,7 +124,9 @@ export default class Puzzle extends AoCPuzzle {
     while (cleaned) {
       cleaned = false;
       // find opcodes with only one possible operation
-      const ops = Object.values(output).filter((o: string[]) => o.length === 1).map((o: string[]) => o[0]);
+      const ops = Object.values(output)
+        .filter((o: string[]) => o.length === 1)
+        .map((o: string[]) => o[0]);
       if (ops) {
         for (const op of ops) {
           for (const key of Object.keys(output)) {

@@ -1,5 +1,5 @@
-import { isNextTo } from '../../helpers/array';
-import AoCPuzzle from '../../puzzle';
+import { isNextTo } from "../../helpers/array";
+import AoCPuzzle from "../../puzzle";
 
 interface Point {
   x: number;
@@ -22,15 +22,24 @@ export default class Puzzle extends AoCPuzzle {
 
     let [minX, minY, maxX, maxY] = [0, 0, 0, 0];
     instructions.forEach((line) => {
-      const [direction, sdistance] = line.replace(/\(|\)/gi, '').split(' ');
+      const [direction, sdistance] = line.replace(/\(|\)/gi, "").split(" ");
 
       const distance = parseInt(sdistance, 10);
       switch (direction) {
-        case 'U': this.y -= distance; break;
-        case 'D': this.y += distance; break;
-        case 'L': this.x -= distance; break;
-        case 'R': this.x += distance; break;
-        default: break;
+        case "U":
+          this.y -= distance;
+          break;
+        case "D":
+          this.y += distance;
+          break;
+        case "L":
+          this.x -= distance;
+          break;
+        case "R":
+          this.x += distance;
+          break;
+        default:
+          break;
       }
       minX = Math.min(minX, this.x);
       maxX = Math.max(maxX, this.x);
@@ -44,26 +53,37 @@ export default class Puzzle extends AoCPuzzle {
     this.x = Math.abs(minX) + 1;
     this.y = Math.abs(minY) + 1;
 
-    this.grid = Array(this.height).fill(0).map(() => Array(this.width).fill('.'));
-    this.grid[this.y][this.x] = '#';
+    this.grid = Array(this.height)
+      .fill(0)
+      .map(() => Array(this.width).fill("."));
+    this.grid[this.y][this.x] = "#";
 
     instructions.forEach((line) => {
-      const [direction, distance] = line.replace(/\(|\)/gi, '').split(' ');
+      const [direction, distance] = line.replace(/\(|\)/gi, "").split(" ");
 
       for (let i = 0; i < parseInt(distance, 10); i += 1) {
         switch (direction) {
-          case 'U': this.y -= 1; break;
-          case 'D': this.y += 1; break;
-          case 'L': this.x -= 1; break;
-          case 'R': this.x += 1; break;
-          default: break;
+          case "U":
+            this.y -= 1;
+            break;
+          case "D":
+            this.y += 1;
+            break;
+          case "L":
+            this.x -= 1;
+            break;
+          case "R":
+            this.x += 1;
+            break;
+          default:
+            break;
         }
-        this.grid[this.y][this.x] = '#';
+        this.grid[this.y][this.x] = "#";
       }
     });
 
-    const INSIDE = '.';
-    const OUTSIDE = 'O';
+    const INSIDE = ".";
+    const OUTSIDE = "O";
     let count = this.grid.flat().filter((x) => x === OUTSIDE).length;
     let prevCount = -1;
 
@@ -84,7 +104,7 @@ export default class Puzzle extends AoCPuzzle {
       count = this.grid.flat().filter((x) => x === OUTSIDE).length;
     }
 
-    return this.grid.flat().filter((x) => ['#', '.'].includes(x)).length;
+    return this.grid.flat().filter((x) => ["#", "."].includes(x)).length;
   }
 
   private getLastPoint(): Point {
@@ -96,7 +116,7 @@ export default class Puzzle extends AoCPuzzle {
 
     let perimeter = 0;
     instructions.forEach((line) => {
-      const [direction, sdistance] = line.replace(/\(|\)/gi, '').split(' ');
+      const [direction, sdistance] = line.replace(/\(|\)/gi, "").split(" ");
       const distance = parseInt(sdistance, 10);
 
       const lastPoint = this.getLastPoint();
@@ -104,11 +124,24 @@ export default class Puzzle extends AoCPuzzle {
       let newX = -Infinity;
       let newY = -Infinity;
       switch (direction) {
-        case 'U': newX = lastPoint.x; newY = lastPoint.y - distance; break;
-        case 'D': newX = lastPoint.x; newY = lastPoint.y + distance; break;
-        case 'L': newX = lastPoint.x - distance; newY = lastPoint.y; break;
-        case 'R': newX = lastPoint.x + distance; newY = lastPoint.y; break;
-        default: break;
+        case "U":
+          newX = lastPoint.x;
+          newY = lastPoint.y - distance;
+          break;
+        case "D":
+          newX = lastPoint.x;
+          newY = lastPoint.y + distance;
+          break;
+        case "L":
+          newX = lastPoint.x - distance;
+          newY = lastPoint.y;
+          break;
+        case "R":
+          newX = lastPoint.x + distance;
+          newY = lastPoint.y;
+          break;
+        default:
+          break;
       }
 
       perimeter += distance;
@@ -118,8 +151,7 @@ export default class Puzzle extends AoCPuzzle {
     // https://www.theoremoftheday.org/GeometryAndTrigonometry/Shoelace/TotDShoelace.pdf
     let area = 0;
     for (let i = 0; i < this.points.length; i += 1) {
-      area += this.points[i].x * this.points[(i + 1) % this.points.length].y -
-        this.points[i].y * this.points[(i + 1) % this.points.length].x;
+      area += this.points[i].x * this.points[(i + 1) % this.points.length].y - this.points[i].y * this.points[(i + 1) % this.points.length].x;
     }
     area = Math.abs(area) / 2;
 
@@ -137,11 +169,20 @@ export default class Puzzle extends AoCPuzzle {
       const distance = parseInt(hexa.substring(1, 6), 16);
       let direction = hexa.substring(6, 7);
       switch (direction) {
-        case '0': direction = 'R'; break;
-        case '1': direction = 'D'; break;
-        case '2': direction = 'L'; break;
-        case '3': direction = 'U'; break;
-        default: break;
+        case "0":
+          direction = "R";
+          break;
+        case "1":
+          direction = "D";
+          break;
+        case "2":
+          direction = "L";
+          break;
+        case "3":
+          direction = "U";
+          break;
+        default:
+          break;
       }
       return `${direction} ${distance} (${hexa})`;
     });

@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface AstronomicalObject {
   name: string;
@@ -20,7 +20,7 @@ export default class Puzzle extends AoCPuzzle {
 
   public async part1(): Promise<string | number> {
     for (const line of this.lines) {
-      const [from, to] = line.split(')').map((name) => this.getObject(name));
+      const [from, to] = line.split(")").map((name) => this.getObject(name));
       to.orbitsOn = from;
     }
 
@@ -38,16 +38,16 @@ export default class Puzzle extends AoCPuzzle {
 
   public async part2(): Promise<string | number> {
     const santaQueue = [];
-    let current = this.astronomicalObjects.find((o) => o.name === "SAN")!
+    let current = this.astronomicalObjects.find((o) => o.name === "SAN")!;
     while (current.orbitsOn) {
-      current = current.orbitsOn
+      current = current.orbitsOn;
       santaQueue.push(current.name);
     }
 
     let i = 0;
     current = this.astronomicalObjects.find((o) => o.name === "YOU")!;
     while (current.orbitsOn) {
-      current = current.orbitsOn
+      current = current.orbitsOn;
       const index = santaQueue.indexOf(current.name);
       if (index !== -1) {
         return index + i;
@@ -55,6 +55,6 @@ export default class Puzzle extends AoCPuzzle {
       i += 1;
     }
 
-    return 'ERROR';
+    return "ERROR";
   }
 }

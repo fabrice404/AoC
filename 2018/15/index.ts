@@ -1,7 +1,7 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Cell {
-  type: 'wall' | 'open' | 'unit';
+  type: "wall" | "open" | "unit";
   unit: Unit | null;
 }
 
@@ -12,7 +12,7 @@ interface Unit {
   round: number;
 }
 
-type Type = 'elf' | 'goblin';
+type Type = "elf" | "goblin";
 
 interface Coordinates {
   x: number;
@@ -39,25 +39,29 @@ export default class Puzzle extends AoCPuzzle {
   private currentRound: number = 0;
 
   private hasElves(): boolean {
-    return this.playgrid.flat().some((cell) => cell.type === 'unit' && cell.unit?.type === 'elf');
+    return this.playgrid.flat().some((cell) => cell.type === "unit" && cell.unit?.type === "elf");
   }
 
   private hasGoblins(): boolean {
-    return this.playgrid.flat().some((cell) => cell.type === 'unit' && cell.unit?.type === 'goblin');
+    return this.playgrid.flat().some((cell) => cell.type === "unit" && cell.unit?.type === "goblin");
   }
 
   private isFreeCell({ x, y }: Coordinates): boolean {
-    return this.playgrid[y][x].type === 'open';
+    return this.playgrid[y][x].type === "open";
   }
 
   private checkEnemyInRange(x: number, y: number, enemyType: Type): Coordinates | null {
-    const around = [[x, y - 1], [x - 1, y], [x + 1, y], [x, y + 1]];
+    const around = [
+      [x, y - 1],
+      [x - 1, y],
+      [x + 1, y],
+      [x, y + 1],
+    ];
 
     let result = null;
     let minHP = 300;
     for (const [xE, yE] of around) {
-      if (this.playgrid[yE][xE].type === 'unit' &&
-        this.playgrid[yE][xE].unit?.type === enemyType) {
+      if (this.playgrid[yE][xE].type === "unit" && this.playgrid[yE][xE].unit?.type === enemyType) {
         const enemy = this.playgrid[yE][xE].unit!;
         if (enemy.hp < minHP) {
           minHP = enemy.hp;
@@ -84,10 +88,15 @@ export default class Puzzle extends AoCPuzzle {
       return [];
     }
 
-    return [[fromX, fromY - 1], [fromX - 1, fromY], [fromX + 1, fromY], [fromX, fromY + 1]]
+    return [
+      [fromX, fromY - 1],
+      [fromX - 1, fromY],
+      [fromX + 1, fromY],
+      [fromX, fromY + 1],
+    ]
       .map(([x, y]) => {
         if (this.isFreeCell({ x, y }) && !steps.some((s) => s.x === x && s.y === y)) {
-          return ({ fromX: x, fromY: y, toX, toY, steps: [...steps, { x, y }] });
+          return { fromX: x, fromY: y, toX, toY, steps: [...steps, { x, y }] };
         }
         return null;
       })
@@ -95,7 +104,7 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   private moveToClosestEnemy(x: number, y: number, enemyType: Type): Coordinates | null {
-    const enemies = this.playgrid.flat().filter((cell) => cell.type === 'unit' && cell.unit?.type === enemyType);
+    const enemies = this.playgrid.flat().filter((cell) => cell.type === "unit" && cell.unit?.type === enemyType);
     if (enemies.length === 0) {
       return null;
     }
@@ -103,13 +112,17 @@ export default class Puzzle extends AoCPuzzle {
     const potentialCoordinates: number[][] = [];
     for (let yA = 0; yA < this.playgrid.length; yA += 1) {
       for (let xA = 0; xA < this.playgrid[yA].length; xA += 1) {
-        if (this.playgrid[yA][xA].type === 'unit' && this.playgrid[yA][xA].unit?.type === enemyType) {
-          [[xA, yA - 1], [xA - 1, yA], [xA + 1, yA], [xA, yA + 1]]
-            .forEach(([xE, yE]) => {
-              if (this.isFreeCell({ x: xE, y: yE })) {
-                potentialCoordinates.push([xE, yE]);
-              }
-            });
+        if (this.playgrid[yA][xA].type === "unit" && this.playgrid[yA][xA].unit?.type === enemyType) {
+          [
+            [xA, yA - 1],
+            [xA - 1, yA],
+            [xA + 1, yA],
+            [xA, yA + 1],
+          ].forEach(([xE, yE]) => {
+            if (this.isFreeCell({ x: xE, y: yE })) {
+              potentialCoordinates.push([xE, yE]);
+            }
+          });
         }
       }
     }
@@ -136,31 +149,44 @@ export default class Puzzle extends AoCPuzzle {
       }
     }
     if (minPath.length) {
-      this.print([
-        ...minPath.slice(0, -1).map((s) => ({ x: s.x, y: s.y, color: 42 })),
-        ...minPath.slice(-1).map((s) => ({ x: s.x, y: s.y, color: 43 })),
-      ]);
+      this.print([...minPath.slice(0, -1).map((s) => ({ x: s.x, y: s.y, color: 42 })), ...minPath.slice(-1).map((s) => ({ x: s.x, y: s.y, color: 43 }))]);
     }
 
     if (coordinates) {
       if (coordinates.y < y) {
-        this.print([{ x: coordinates.x, y: coordinates.y, color: 44 }, { x, y: y - 1, color: 42 }]);
-        this.playgrid[y - 1][x] = this.playgrid[y][x]; this.playgrid[y][x] = { type: 'open', unit: null };
+        this.print([
+          { x: coordinates.x, y: coordinates.y, color: 44 },
+          { x, y: y - 1, color: 42 },
+        ]);
+        this.playgrid[y - 1][x] = this.playgrid[y][x];
+        this.playgrid[y][x] = { type: "open", unit: null };
         return { x, y: y - 1 };
       }
       if (coordinates.x < x) {
-        this.print([{ x: coordinates.x, y: coordinates.y, color: 44 }, { x: x - 1, y, color: 42 }]);
-        this.playgrid[y][x - 1] = this.playgrid[y][x]; this.playgrid[y][x] = { type: 'open', unit: null };
+        this.print([
+          { x: coordinates.x, y: coordinates.y, color: 44 },
+          { x: x - 1, y, color: 42 },
+        ]);
+        this.playgrid[y][x - 1] = this.playgrid[y][x];
+        this.playgrid[y][x] = { type: "open", unit: null };
         return { x: x - 1, y };
       }
       if (coordinates.x > x) {
-        this.print([{ x: coordinates.x, y: coordinates.y, color: 44 }, { x: x + 1, y, color: 42 }]);
-        this.playgrid[y][x + 1] = this.playgrid[y][x]; this.playgrid[y][x] = { type: 'open', unit: null };
+        this.print([
+          { x: coordinates.x, y: coordinates.y, color: 44 },
+          { x: x + 1, y, color: 42 },
+        ]);
+        this.playgrid[y][x + 1] = this.playgrid[y][x];
+        this.playgrid[y][x] = { type: "open", unit: null };
         return { x: x + 1, y };
       }
       if (coordinates.y > y) {
-        this.print([{ x: coordinates.x, y: coordinates.y, color: 44 }, { x, y: y + 1, color: 42 }]);
-        this.playgrid[y + 1][x] = this.playgrid[y][x]; this.playgrid[y][x] = { type: 'open', unit: null };
+        this.print([
+          { x: coordinates.x, y: coordinates.y, color: 44 },
+          { x, y: y + 1, color: 42 },
+        ]);
+        this.playgrid[y + 1][x] = this.playgrid[y][x];
+        this.playgrid[y][x] = { type: "open", unit: null };
         return { x, y: y + 1 };
       }
     }
@@ -171,16 +197,19 @@ export default class Puzzle extends AoCPuzzle {
     const enemyUnit = this.playgrid[enemy.y][enemy.x].unit!;
     enemyUnit.hp -= 3;
     if (enemyUnit.hp <= 0) {
-      this.playgrid[enemy.y][enemy.x] = { type: 'open', unit: null };
+      this.playgrid[enemy.y][enemy.x] = { type: "open", unit: null };
     }
-    this.print([{ x, y, color: 44 }, { x: enemy.x, y: enemy.y, color: 41 }]);
+    this.print([
+      { x, y, color: 44 },
+      { x: enemy.x, y: enemy.y, color: 41 },
+    ]);
   }
 
   private takeTurn(x: number, y: number, enemyType: Type): void {
     if (this.playgrid[y][x].unit!.round < this.currentRound) {
       this.playgrid[y][x].unit!.round = this.currentRound;
 
-      const enemies = this.playgrid.flat().filter((cell) => cell.type === 'unit' && cell.unit?.type === enemyType);
+      const enemies = this.playgrid.flat().filter((cell) => cell.type === "unit" && cell.unit?.type === enemyType);
       if (enemies.length === 0) {
         return;
       }
@@ -211,12 +240,20 @@ export default class Puzzle extends AoCPuzzle {
         .map((row, y) => {
           const line = row
             .map((cell, x) => {
-              let output = '';
+              let output = "";
               switch (cell.type) {
-                case 'wall': output = '#'; break;
-                case 'open': output = '.'; break;
-                case 'unit': output = cell.unit?.type === 'elf' ? 'E' : 'G'; break;
-                default: output = '?'; break;
+                case "wall":
+                  output = "#";
+                  break;
+                case "open":
+                  output = ".";
+                  break;
+                case "unit":
+                  output = cell.unit?.type === "elf" ? "E" : "G";
+                  break;
+                default:
+                  output = "?";
+                  break;
               }
               const highlight = highlights.find((h) => h.x === x && h.y === y);
               if (highlight) {
@@ -224,24 +261,39 @@ export default class Puzzle extends AoCPuzzle {
               }
               return output;
             })
-            .join('');
+            .join("");
 
-          return `${line}   ${row.filter((cell) => cell.type === 'unit').map((cell) => `${cell.unit?.type === 'elf' ? 'E' : 'G'}(${cell.unit?.hp})`).join(', ')}`;
+          return `${line}   ${row
+            .filter((cell) => cell.type === "unit")
+            .map((cell) => `${cell.unit?.type === "elf" ? "E" : "G"}(${cell.unit?.hp})`)
+            .join(", ")}`;
         })
-        .join('\n'),
+        .join("\n"),
     );
   }
 
   private play(grid: string) {
     let unitId = 1;
-    this.playgrid = grid.split('\n').map((line) => line.split('').map((char) => {
-      switch (char) {
-        case '#': return { type: 'wall' } as Cell;
-        case 'E': return { type: 'unit', unit: { id: unitId++, type: 'elf', hp: 200, round: -1 } } as Cell;  
-        case 'G': return { type: 'unit', unit: { id: unitId++, type: 'goblin', hp: 200, round: -1 } } as Cell;  
-        default: return { type: 'open' } as Cell;
-      }
-    }));
+    this.playgrid = grid.split("\n").map((line) =>
+      line.split("").map((char) => {
+        switch (char) {
+          case "#":
+            return { type: "wall" } as Cell;
+          case "E":
+            return {
+              type: "unit",
+              unit: { id: unitId++, type: "elf", hp: 200, round: -1 },
+            } as Cell;
+          case "G":
+            return {
+              type: "unit",
+              unit: { id: unitId++, type: "goblin", hp: 200, round: -1 },
+            } as Cell;
+          default:
+            return { type: "open" } as Cell;
+        }
+      }),
+    );
 
     this.currentRound = 0;
     this.print();
@@ -251,8 +303,8 @@ export default class Puzzle extends AoCPuzzle {
       for (let y = 0; y < this.playgrid.length; y += 1) {
         for (let x = 0; x < this.playgrid[y].length; x += 1) {
           const cell = this.playgrid[y][x];
-          if (cell.type === 'unit') {
-            this.takeTurn(x, y, cell.unit!.type === 'elf' ? 'goblin' : 'elf');
+          if (cell.type === "unit") {
+            this.takeTurn(x, y, cell.unit!.type === "elf" ? "goblin" : "elf");
           }
         }
       }
@@ -260,17 +312,23 @@ export default class Puzzle extends AoCPuzzle {
       this.print();
     } while (this.hasElves() && this.hasGoblins());
 
-    const totalHP = this.playgrid.flat().filter((cell) => cell.type === 'unit').reduce((acc, cell) => acc + cell.unit!.hp, 0);
+    const totalHP = this.playgrid
+      .flat()
+      .filter((cell) => cell.type === "unit")
+      .reduce((acc, cell) => acc + cell.unit!.hp, 0);
     // console.log(this.currentRound, totalHP);
 
     return totalHP * this.currentRound;
   }
 
   public async part1(): Promise<string | number> {
-    return this.input.split('\n\n').map((grid) => this.play(grid)).join(',');
+    return this.input
+      .split("\n\n")
+      .map((grid) => this.play(grid))
+      .join(",");
   }
 
   public async part2(): Promise<string | number> {
-    return '<NOT YET IMPLEMENTED>';
+    return "<NOT YET IMPLEMENTED>";
   }
 }

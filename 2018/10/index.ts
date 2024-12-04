@@ -1,5 +1,5 @@
-import { print2d } from '../../helpers/array';
-import AoCPuzzle from '../../puzzle';
+import { print2d } from "../../helpers/array";
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private elaspedTime: number = 0;
@@ -12,7 +12,10 @@ export default class Puzzle extends AoCPuzzle {
     let minY = 0;
     let maxY = 0;
     const points: any[] = this.lines.map((line) => {
-      const data = line.match(/position=<\s*(-?\d+),\s*(-?\d+)> velocity=<\s*(-?\d+),\s*(-?\d+)>/)!.slice(1).map((n) => parseInt(n, 10));
+      const data = line
+        .match(/position=<\s*(-?\d+),\s*(-?\d+)> velocity=<\s*(-?\d+),\s*(-?\d+)>/)!
+        .slice(1)
+        .map((n) => parseInt(n, 10));
       let [posX, posY] = data;
       const [, , velX, velY] = data;
       if (this.lines.length > 100) {
@@ -26,7 +29,10 @@ export default class Puzzle extends AoCPuzzle {
       minY = Math.min(minY, posY);
       maxY = Math.max(maxY, posY);
       return {
-        posX, posY, velX, velY,
+        posX,
+        posY,
+        velX,
+        velY,
       };
     });
 
@@ -42,14 +48,10 @@ export default class Puzzle extends AoCPuzzle {
       let biggerX = -Infinity;
       let smallerY = Infinity;
       let biggerY = -Infinity;
-      grid = new Array(yOffset + maxY + 1).fill(0).map(() => new Array(xOffset + maxX + 1).fill(' '));
+      grid = new Array(yOffset + maxY + 1).fill(0).map(() => new Array(xOffset + maxX + 1).fill(" "));
       points.forEach((point) => {
-        if (point.posX + xOffset > 0 &&
-          point.posX + xOffset < grid[0].length &&
-          point.posY + yOffset > 0 &&
-          point.posY + yOffset < grid.length
-        ) {
-          grid[point.posY + yOffset][point.posX + xOffset] = '#';
+        if (point.posX + xOffset > 0 && point.posX + xOffset < grid[0].length && point.posY + yOffset > 0 && point.posY + yOffset < grid.length) {
+          grid[point.posY + yOffset][point.posX + xOffset] = "#";
         }
         point.posX += point.velX;
         point.posY += point.velY;
@@ -64,15 +66,15 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     let firstNonEmptyColumn = 0;
-    while (grid!.every((row) => row[firstNonEmptyColumn] === ' ')) {
+    while (grid!.every((row) => row[firstNonEmptyColumn] === " ")) {
       firstNonEmptyColumn += 1;
     }
-    grid = grid!.filter((row) => row.some((cell) => cell === '#')).map((row) => row.join('').trimEnd().split('').slice(firstNonEmptyColumn));
+    grid = grid!.filter((row) => row.some((cell) => cell === "#")).map((row) => row.join("").trimEnd().split("").slice(firstNonEmptyColumn));
     console.log(`${this.elaspedTime - 1} seconds elapsed\n`);
     print2d(grid);
-    console.log('');
+    console.log("");
 
-    return '';
+    return "";
   }
 
   public async part2(): Promise<string | number> {

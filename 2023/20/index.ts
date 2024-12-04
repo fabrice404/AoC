@@ -1,11 +1,11 @@
-import { lcm } from '../../helpers/numbers';
-import AoCPuzzle from '../../puzzle';
+import { lcm } from "../../helpers/numbers";
+import AoCPuzzle from "../../puzzle";
 
-const OFF = 'OFF';
-const ON = 'ON';
+const OFF = "OFF";
+const ON = "ON";
 
-const HIGH = '-high-';
-const LOW = '-low-';
+const HIGH = "-high-";
+const LOW = "-low-";
 
 type Pulse = typeof HIGH | typeof LOW;
 
@@ -83,7 +83,11 @@ export default class Puzzle extends AoCPuzzle {
   private jqCycles: Map<string, number> = new Map<string, number>();
 
   private pushButton(i: number): boolean {
-    const pulses: { emitter: string; receiver: string, pulse: Pulse }[] = this.modules.get('button')!.targets.map((target) => ({ emitter: 'button', receiver: target, pulse: LOW }));
+    const pulses: { emitter: string; receiver: string; pulse: Pulse }[] = this.modules.get("button")!.targets.map((target) => ({
+      emitter: "button",
+      receiver: target,
+      pulse: LOW,
+    }));
 
     while (pulses.length > 0) {
       const { emitter, receiver, pulse } = pulses.shift()!;
@@ -92,7 +96,7 @@ export default class Puzzle extends AoCPuzzle {
       } else {
         this.lowPulses += 1;
       }
-      if (receiver === 'jq' && pulse === HIGH) {
+      if (receiver === "jq" && pulse === HIGH) {
         this.jqCycles.set(emitter, i);
       }
       // if (receiver === 'rx') {
@@ -104,10 +108,9 @@ export default class Puzzle extends AoCPuzzle {
       if (this.modules.has(receiver)) {
         const mod = this.modules.get(receiver)!;
         const result = mod.receive(pulse, emitter);
-        result.targets
-          .forEach((t) => {
-            pulses.push({ emitter: receiver, receiver: t, pulse: result.pulse });
-          });
+        result.targets.forEach((t) => {
+          pulses.push({ emitter: receiver, receiver: t, pulse: result.pulse });
+        });
       }
     }
     return false;
@@ -118,20 +121,23 @@ export default class Puzzle extends AoCPuzzle {
     this.lowPulses = 0;
     this.highPulses = 0;
 
-    this.modules.set('button', new Module('button', ['broadcaster']));
+    this.modules.set("button", new Module("button", ["broadcaster"]));
 
     this.lines.forEach((line) => {
-      const [name, ...targets] = line.replace(/[%&]/gi, '').split(/->|,/gi).map((x) => x.trim());
-      if (targets.includes('rx')) {
+      const [name, ...targets] = line
+        .replace(/[%&]/gi, "")
+        .split(/->|,/gi)
+        .map((x) => x.trim());
+      if (targets.includes("rx")) {
         this.rxExists = true;
       }
       let mod: Module | undefined;
-      if (line.startsWith('broadcaster')) {
+      if (line.startsWith("broadcaster")) {
         mod = new Module(name, targets);
         this.modules.set(name, mod);
-      } else if (line.startsWith('%')) {
+      } else if (line.startsWith("%")) {
         mod = new FlipFlop(name, targets);
-      } else if (line.startsWith('&')) {
+      } else if (line.startsWith("&")) {
         mod = new Conjunction(name, targets);
       }
       if (mod) {
@@ -144,7 +150,7 @@ export default class Puzzle extends AoCPuzzle {
         const targetMod = this.modules.get(target);
         if (targetMod instanceof Conjunction) {
           targetMod.addEmitter(mod.name);
-          if (targetMod.name === 'jq') {
+          if (targetMod.name === "jq") {
             this.jqCycles.set(mod.name, -1);
           }
         }
@@ -166,7 +172,7 @@ export default class Puzzle extends AoCPuzzle {
     this.init();
 
     if (!this.rxExists) {
-      return 'skipped';
+      return "skipped";
     }
 
     let i = 1;

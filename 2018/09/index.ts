@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Marble {
   value: number;
@@ -46,7 +46,11 @@ export default class Puzzle extends AoCPuzzle {
     let currentPlayer = 0;
     let currentMarble = 0;
 
-    this.nodes[currentMarble] = { left: currentMarble, right: currentMarble, value: 0 };
+    this.nodes[currentMarble] = {
+      left: currentMarble,
+      right: currentMarble,
+      value: 0,
+    };
     for (let i = 1; i <= marbles * this.multiplier; i += 1) {
       if (i % 23 === 0) {
         scores[currentPlayer] += i;

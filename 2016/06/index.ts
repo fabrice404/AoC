@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private groups: Map<string, number>[] = [];
@@ -14,30 +14,34 @@ export default class Puzzle extends AoCPuzzle {
       }
     }
 
-    return this.groups.map((group) => {
-      let max = 0;
-      let maxChar = '';
-      group.forEach((count, char) => {
-        if (count > max) {
-          max = count;
-          maxChar = char;
-        }
-      });
-      return maxChar;
-    }).join('');
+    return this.groups
+      .map((group) => {
+        let max = 0;
+        let maxChar = "";
+        group.forEach((count, char) => {
+          if (count > max) {
+            max = count;
+            maxChar = char;
+          }
+        });
+        return maxChar;
+      })
+      .join("");
   }
 
   public async part2(): Promise<string | number> {
-    return this.groups.map((group) => {
-      let min = Number.MAX_SAFE_INTEGER;
-      let minChar = '';
-      group.forEach((count, char) => {
-        if (count < min) {
-          min = count;
-          minChar = char;
-        }
-      });
-      return minChar;
-    }).join('');
+    return this.groups
+      .map((group) => {
+        let min = Number.MAX_SAFE_INTEGER;
+        let minChar = "";
+        group.forEach((count, char) => {
+          if (count < min) {
+            min = count;
+            minChar = char;
+          }
+        });
+        return minChar;
+      })
+      .join("");
   }
 }

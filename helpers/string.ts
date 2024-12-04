@@ -1,11 +1,11 @@
-import { countItems } from './array';
+import { countItems } from "./array";
 
 /**
  * Count each letter in the *input* string
  * @param input
  * @returns Map<string, number>
  */
-export const countLetters = (input: string): Map<string, number> => countItems(input.split(''));
+export const countLetters = (input: string): Map<string, number> => countItems(input.split(""));
 
 /**
  * Returns true if the *input* string has the same letter *times* times
@@ -54,4 +54,4 @@ export const permutations = (s: string): string[] => {
     }
   }
   return result;
-}
+};

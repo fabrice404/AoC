@@ -1,5 +1,5 @@
-import { sum } from '../../helpers/numbers';
-import AoCPuzzle from '../../puzzle';
+import { sum } from "../../helpers/numbers";
+import AoCPuzzle from "../../puzzle";
 
 interface Resource {
   name: string;
@@ -43,22 +43,22 @@ export default class Puzzle extends AoCPuzzle {
       const multiplier = Math.ceil(quantityNeeded / quantityMade);
       this.leftovers.set(resource.name, quantityMade * multiplier - quantityNeeded);
       return resource.receipe?.ingredients
-        .map((ingredient) =>
-          ingredient.name === "ORE" ? ingredient.quantity * multiplier :
-            this.getOreRequired(ingredient.name, ingredient.quantity * multiplier)
-        )
-        .reduce(sum)
+        .map((ingredient) => (ingredient.name === "ORE" ? ingredient.quantity * multiplier : this.getOreRequired(ingredient.name, ingredient.quantity * multiplier)))
+        .reduce(sum);
     }
     return 0;
   }
 
   public async part1(): Promise<string | number> {
     this.lines.forEach((line) => {
-      const [ingredients, [{ name, quantity }]] = line.split('=>').map((s: string) => {
-        return s.trim().split(/,/gi).map((sub) => {
-          const [quantity, name] = sub.trim().split(/\s/);
-          return { name, quantity: +quantity };
-        })
+      const [ingredients, [{ name, quantity }]] = line.split("=>").map((s: string) => {
+        return s
+          .trim()
+          .split(/,/gi)
+          .map((sub) => {
+            const [quantity, name] = sub.trim().split(/\s/);
+            return { name, quantity: +quantity };
+          });
       });
 
       this.getResource(name).receipe = { ingredients, quantityMade: quantity };
@@ -66,8 +66,6 @@ export default class Puzzle extends AoCPuzzle {
 
     return this.getOreRequired("FUEL", 1);
   }
-
-
 
   public async part2(): Promise<string | number> {
     let i = 0;

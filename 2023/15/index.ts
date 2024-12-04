@@ -1,5 +1,5 @@
-import { sum } from '../../helpers/array';
-import AoCPuzzle from '../../puzzle';
+import { sum } from "../../helpers/array";
+import AoCPuzzle from "../../puzzle";
 
 interface Lens {
   label: string;
@@ -8,7 +8,7 @@ interface Lens {
 
 const hash = (sequence: string): number => {
   let value = 0;
-  sequence.split('').forEach((char, i) => {
+  sequence.split("").forEach((char, i) => {
     value += sequence.charCodeAt(i);
     value *= 17;
     value %= 256;
@@ -44,8 +44,6 @@ export default class Puzzle extends AoCPuzzle {
       }
     });
 
-    return sum(boxes.map((box, i) => sum(
-      box.map((lens: Lens, j: number) => (i + 1) * (j + 1) * lens.focalLength),
-    )));
+    return sum(boxes.map((box, i) => sum(box.map((lens: Lens, j: number) => (i + 1) * (j + 1) * lens.focalLength))));
   }
 }

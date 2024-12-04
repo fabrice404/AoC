@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Reeindeer {
   name: string;
@@ -25,7 +25,13 @@ export default class Puzzle extends AoCPuzzle {
     let maxDistance = 0;
     for (const line of this.lines) {
       const [name, , , speed, , , duration, , , , , , , rest] = line.split(/\s/gi);
-      this.reeindeers.push({ name, speed: +speed, duration: +duration, rest: +rest, score: 0 });
+      this.reeindeers.push({
+        name,
+        speed: +speed,
+        duration: +duration,
+        rest: +rest,
+        score: 0,
+      });
       maxDistance = Math.max(maxDistance, this.getDistance(this.reeindeers[this.reeindeers.length - 1], this.seconds));
     }
 
@@ -45,7 +51,9 @@ export default class Puzzle extends AoCPuzzle {
 
       distances
         .filter((d) => d.distance === max)
-        .forEach((d) => { d.reeindeer.score += 1; });
+        .forEach((d) => {
+          d.reeindeer.score += 1;
+        });
     }
 
     console.log(this.reeindeers);

@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Node {
   name: string;
@@ -35,21 +35,18 @@ export default class Puzzle extends AoCPuzzle {
       nodeB.previous.sort();
     });
 
-    let response = '';
-    let currentNode: Node | undefined = this.nodes
-      .sort((a, b) => (a.name > b.name ? 1 : -1))
-      .find((n) => !n.finished && n.previous.length === 0)!;
+    let response = "";
+    let currentNode: Node | undefined = this.nodes.sort((a, b) => (a.name > b.name ? 1 : -1)).find((n) => !n.finished && n.previous.length === 0)!;
 
     while (currentNode) {
       response += currentNode.name;
       currentNode.finished = true;
-      this.nodes.filter((n) => n.previous.includes(currentNode!.name))
+      this.nodes
+        .filter((n) => n.previous.includes(currentNode!.name))
         .forEach((n) => {
           n.previous = n.previous.filter((p) => p !== currentNode!.name);
         });
-      currentNode = this.nodes
-        .sort((a, b) => (a.name > b.name ? 1 : -1))
-        .find((n) => !n.finished && n.previous.length === 0)!;
+      currentNode = this.nodes.sort((a, b) => (a.name > b.name ? 1 : -1)).find((n) => !n.finished && n.previous.length === 0)!;
     }
 
     return response;
@@ -60,9 +57,7 @@ export default class Puzzle extends AoCPuzzle {
   private workers = 0;
 
   private assignAvailableWorkers(): void {
-    const runnable = this.nodes
-      .filter((n) => !n.finished && !n.running && n.previous.length === 0)
-      .sort((a, b) => (a.name > b.name ? 1 : -1));
+    const runnable = this.nodes.filter((n) => !n.finished && !n.running && n.previous.length === 0).sort((a, b) => (a.name > b.name ? 1 : -1));
     const available = this.workers - this.running.length;
     for (let i = 0; i < available; i += 1) {
       const job = runnable.shift();
@@ -88,12 +83,13 @@ export default class Puzzle extends AoCPuzzle {
     this.assignAvailableWorkers();
 
     while (this.nodes.find((n) => !n.finished)) {
-      console.log(seconds, this.running.map((n) => `${n.name}(${n.duration})`).join(''));
+      console.log(seconds, this.running.map((n) => `${n.name}(${n.duration})`).join(""));
       this.running.forEach((currentNode) => {
         currentNode.duration -= 1;
         if (currentNode.duration === 0) {
           currentNode.finished = true;
-          this.nodes.filter((n) => n.previous.includes(currentNode!.name))
+          this.nodes
+            .filter((n) => n.previous.includes(currentNode!.name))
             .forEach((n) => {
               n.previous = n.previous.filter((p) => p !== currentNode!.name);
             });

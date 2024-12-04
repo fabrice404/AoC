@@ -1,7 +1,6 @@
+import { BinaryHeap } from "../../helpers/structures";
 
-import { BinaryHeap } from '../../helpers/structures';
-
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private target: any = {};
@@ -9,7 +8,12 @@ export default class Puzzle extends AoCPuzzle {
   private neighbours(node: any) {
     const neighbours = [];
 
-    for (const [x, y] of [[node.x - 1, node.y], [node.x + 1, node.y], [node.x, node.y - 1], [node.x, node.y + 1]]) {
+    for (const [x, y] of [
+      [node.x - 1, node.y],
+      [node.x + 1, node.y],
+      [node.x, node.y - 1],
+      [node.x, node.y + 1],
+    ]) {
       if (this.grid[y] && this.grid[y][x]) {
         neighbours.push(this.grid[y][x]);
       }
@@ -36,7 +40,7 @@ export default class Puzzle extends AoCPuzzle {
           closed: false,
           x: x,
           y: y,
-        }
+        };
       }
     }
 
@@ -72,10 +76,9 @@ export default class Puzzle extends AoCPuzzle {
         }
 
         const gScore = currentNode.g + neighbour.score;
-        const hasBeenVisited = neighbour.visited
+        const hasBeenVisited = neighbour.visited;
 
         if (!hasBeenVisited || gScore < neighbour.g) {
-
           neighbour.visited = true;
           neighbour.parent = currentNode;
           neighbour.h = neighbour.h || this.heuristic(neighbour.x, neighbour.y, this.target.x, this.target.y);
@@ -83,7 +86,7 @@ export default class Puzzle extends AoCPuzzle {
           neighbour.f = neighbour.g + neighbour.h;
 
           if (!hasBeenVisited) {
-            openHeap.push(neighbour)
+            openHeap.push(neighbour);
           } else {
             openHeap.rescoreElement(neighbour);
           }
@@ -103,7 +106,7 @@ export default class Puzzle extends AoCPuzzle {
     if (value < 10) {
       return `${value}`;
     }
-    return `${value % 9 + Math.floor(value / 9) - 1}`;
+    return `${(value % 9) + Math.floor(value / 9) - 1}`;
   }
 
   public async part2(): Promise<string | number> {
@@ -122,11 +125,11 @@ export default class Puzzle extends AoCPuzzle {
         let add = 0;
         let value = +this.grid[y % originalRows][x % originalColumns];
         if (x >= originalColumns) {
-          add += Math.floor(x / originalColumns)
+          add += Math.floor(x / originalColumns);
           value = +this.grid[y][x % originalColumns];
         }
         if (y >= originalRows && x < originalColumns) {
-          add += Math.floor(y / originalRows)
+          add += Math.floor(y / originalRows);
         }
         this.grid[y][x] = this.valuate(value + add);
       }

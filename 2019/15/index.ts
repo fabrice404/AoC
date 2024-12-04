@@ -1,15 +1,15 @@
-import { keyToPoint, pointToKey } from '../../helpers/helpers';
-import AoCPuzzle from '../../puzzle';
-import { Direction, Point } from '../../types';
-import { IntCodeComputer } from '../int-code-computer';
+import { keyToPoint, pointToKey } from "../../helpers/helpers";
+import AoCPuzzle from "../../puzzle";
+import { Direction, Point } from "../../types";
+import { IntCodeComputer } from "../int-code-computer";
 
-const DIRECTIONS: Direction[] = ['U', 'R', 'D', 'L'];
+const DIRECTIONS: Direction[] = ["U", "R", "D", "L"];
 
 const MOVEMENT = {
-  'U': 1,
-  'D': 2,
-  'L': 3,
-  'R': 4,
+  U: 1,
+  D: 2,
+  L: 3,
+  R: 4,
 };
 
 interface Route {
@@ -41,12 +41,18 @@ export default class Puzzle extends AoCPuzzle {
       const row = [];
       for (let x = this.minX - 1; x <= this.maxX; x += 1) {
         const key = pointToKey({ x, y });
-        let pixel = ' ';
+        let pixel = " ";
         if (this.map.has(key)) {
           switch (this.map.get(key)) {
-            case 0: pixel = '█'; break;
-            case 1: pixel = '·'; break;
-            case 2: pixel = '@'; break;
+            case 0:
+              pixel = "█";
+              break;
+            case 1:
+              pixel = "·";
+              break;
+            case 2:
+              pixel = "@";
+              break;
           }
         }
         if (this.currentPosition.x === x && this.currentPosition.y === y) {
@@ -56,31 +62,35 @@ export default class Puzzle extends AoCPuzzle {
         } else {
           row.push(pixel);
         }
-
       }
-      console.log(row.join(''));
+      console.log(row.join(""));
     }
   }
 
   private nextMove() {
     const { x, y } = this.currentPosition;
 
-    return [[0, -1], [+1, 0], [0, +1], [-1, 0]]
+    return [
+      [0, -1],
+      [+1, 0],
+      [0, +1],
+      [-1, 0],
+    ]
       .map(([mx, my], i) => {
-        const position = { x: x + mx, y: y + my }
+        const position = { x: x + mx, y: y + my };
         const value = this.map.get(pointToKey(position)) ?? -1;
         if (value !== 0) {
           return {
             direction: DIRECTIONS[i],
             position,
-            value
+            value,
           };
         }
         return;
       })
       .filter(Boolean)
-      .sort((a, b) => a!.value > b!.value ? Math.random() - 0.25 : Math.random() - 0.5)
-      .find(x => x)!;
+      .sort((a, b) => (a!.value > b!.value ? Math.random() - 0.25 : Math.random() - 0.5))
+      .find((x) => x)!;
   }
 
   private run() {
@@ -117,8 +127,13 @@ export default class Puzzle extends AoCPuzzle {
   private isFullyWalled(): boolean {
     for (const key of this.map.keys()) {
       const { x, y } = keyToPoint(key);
-      if (!
-        [[0, -1], [+1, 0], [0, +1], [-1, 0]]
+      if (
+        ![
+          [0, -1],
+          [+1, 0],
+          [0, +1],
+          [-1, 0],
+        ]
           .map(([mx, my]) => {
             return this.map.has(pointToKey({ x: x + mx, y: y + my }));
           })
@@ -131,12 +146,16 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   private step(route: Route): Route[] {
-    return [[0, -1], [+1, 0], [0, +1], [-1, 0]]
+    return [
+      [0, -1],
+      [+1, 0],
+      [0, +1],
+      [-1, 0],
+    ]
       .map(([mx, my]) => {
         const nextStep = { x: route.position.x + mx, y: route.position.y + my };
         const nextStepKey = pointToKey(nextStep);
         if (this.map.has(nextStepKey)) {
-
           if (route.steps.includes(nextStepKey)) {
             return;
           }
@@ -144,7 +163,7 @@ export default class Puzzle extends AoCPuzzle {
           const newRoute = {
             position: nextStep,
             steps: [...route.steps, nextStepKey],
-          }
+          };
           if (value === 2) {
             this.fullRoutes.push(newRoute);
             return;
@@ -159,7 +178,7 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public async part1(): Promise<string | number> {
-    this.map.set('0,0', 1);
+    this.map.set("0,0", 1);
     let i = 1;
     while (!this.isFullyWalled() && i < 30) {
       this.currentPosition = { x: 0, y: 0 };
@@ -176,7 +195,7 @@ export default class Puzzle extends AoCPuzzle {
       }
     }
 
-    return this.fullRoutes.sort((a, b) => a.steps.length > b.steps.length ? 1 : -1)[0].steps.length;
+    return this.fullRoutes.sort((a, b) => (a.steps.length > b.steps.length ? 1 : -1))[0].steps.length;
   }
 
   private expandOxygen() {
@@ -185,17 +204,21 @@ export default class Puzzle extends AoCPuzzle {
       const value = this.map.get(key);
       if (value === 2) {
         const { x, y } = keyToPoint(key);
-        [[0, -1], [+1, 0], [0, +1], [-1, 0]]
-          .forEach(([mx, my]) => {
-            const newPoint = { x: x + mx, y: y + my };
-            const newPointKey = pointToKey(newPoint);
-            if (this.map.has(newPointKey)) {
-              const newValue = this.map.get(newPointKey);
-              if (newValue === 1) {
-                nextMap.set(newPointKey, 2);
-              }
+        [
+          [0, -1],
+          [+1, 0],
+          [0, +1],
+          [-1, 0],
+        ].forEach(([mx, my]) => {
+          const newPoint = { x: x + mx, y: y + my };
+          const newPointKey = pointToKey(newPoint);
+          if (this.map.has(newPointKey)) {
+            const newValue = this.map.get(newPointKey);
+            if (newValue === 1) {
+              nextMap.set(newPointKey, 2);
             }
-          })
+          }
+        });
       }
     }
     this.map = new Map(nextMap);

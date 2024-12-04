@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Step {
   x: number;
@@ -19,9 +19,9 @@ export default class Puzzle extends AoCPuzzle {
       return true;
     }
 
-    const num = ((x * x) + (3 * x) + (2 * x * y) + (y) + (y * y)) + +this.input;
+    const num = x * x + 3 * x + 2 * x * y + y + y * y + +this.input;
     const binary = num.toString(2);
-    return binary.split('').filter((c) => c === '1').length % 2 !== 0;
+    return binary.split("").filter((c) => c === "1").length % 2 !== 0;
   }
 
   private isAlreadyVisited(x: number, y: number, steps: Step[]): boolean {

@@ -1,4 +1,3 @@
-
 export class IntCodeComputer {
   private code: number[];
 
@@ -11,7 +10,7 @@ export class IntCodeComputer {
   private relativeBase: number;
 
   constructor(code: string, inputs: number[] = []) {
-    this.code = code.split(',').map(Number);
+    this.code = code.split(",").map(Number);
     this.lastIndex = 0;
     this.output = 0;
     this.inputs = inputs;
@@ -26,12 +25,12 @@ export class IntCodeComputer {
     for (let i = restart ? 0 : this.lastIndex; i < this.code.length; i += 1) {
       this.lastIndex = i;
       const code = this.code[i];
-      const [a, b, c, ...opcodes] = code.toString().padStart(5, '0').split('').map(Number);
-      const opcode = +opcodes.join('');
+      const [a, b, c, ...opcodes] = code.toString().padStart(5, "0").split("").map(Number);
+      const opcode = +opcodes.join("");
 
-      const index1 = c === 0 ? this.code[i + 1] : (c === 1 ? i + 1 : this.code[i + 1] + this.relativeBase);
-      const index2 = b === 0 ? this.code[i + 2] : (b === 1 ? i + 2 : this.code[i + 2] + this.relativeBase);
-      const index3 = a === 0 ? this.code[i + 3] : (a === 1 ? i + 3 : this.code[i + 3] + this.relativeBase);
+      const index1 = c === 0 ? this.code[i + 1] : c === 1 ? i + 1 : this.code[i + 1] + this.relativeBase;
+      const index2 = b === 0 ? this.code[i + 2] : b === 1 ? i + 2 : this.code[i + 2] + this.relativeBase;
+      const index3 = a === 0 ? this.code[i + 3] : a === 1 ? i + 3 : this.code[i + 3] + this.relativeBase;
 
       const param1 = this.code[index1];
       const param2 = this.code[index2];
@@ -41,16 +40,19 @@ export class IntCodeComputer {
       switch (opcode) {
         case 1:
           this.code[index3] = param1 + param2;
-          i += 3; break;
+          i += 3;
+          break;
         case 2:
           this.code[index3] = param1 * param2;
-          i += 3; break;
+          i += 3;
+          break;
         case 3:
           if (this.inputs.length === 0) {
             throw new Error(`Unexpected opcode 3 with empty inputs!`);
           }
           this.code[index1] = this.inputs.shift()!;
-          i += 1; break;
+          i += 1;
+          break;
         case 4:
           this.output = param1;
           i += 1;
@@ -71,14 +73,17 @@ export class IntCodeComputer {
           }
           break;
         case 7:
-          this.code[index3] = (param1 < param2 ? 1 : 0)
-          i += 3; break;
+          this.code[index3] = param1 < param2 ? 1 : 0;
+          i += 3;
+          break;
         case 8:
-          this.code[index3] = (param1 === param2 ? 1 : 0)
-          i += 3; break;
+          this.code[index3] = param1 === param2 ? 1 : 0;
+          i += 3;
+          break;
         case 9:
           this.relativeBase += param1;
-          i += 1; break;
+          i += 1;
+          break;
         case 99:
           return true;
         default:

@@ -1,11 +1,11 @@
-import { sum } from '../../helpers/array';
-import AoCPuzzle from '../../puzzle';
+import { sum } from "../../helpers/array";
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
     const results = this.lines.map((line) => {
       const suites = [];
-      let suite = line.split(' ').map((word) => Number(word));
+      let suite = line.split(" ").map((word) => Number(word));
       suites.push(suite);
       while (suite.some((value) => value !== 0)) {
         const newSuite = [];
@@ -32,7 +32,7 @@ export default class Puzzle extends AoCPuzzle {
   public async part2(): Promise<string | number> {
     const results = this.lines.map((line) => {
       const suites = [];
-      let suite = line.split(' ').map((word) => Number(word));
+      let suite = line.split(" ").map((word) => Number(word));
       suites.push(suite);
       while (suite.some((value) => value !== 0)) {
         const newSuite = [];

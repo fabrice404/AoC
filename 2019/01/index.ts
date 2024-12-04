@@ -1,10 +1,8 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
-    return this.lines
-      .map((line) => Math.floor(+line / 3) - 2)
-      .reduce((acc, val) => acc + val, 0)
+    return this.lines.map((line) => Math.floor(+line / 3) - 2).reduce((acc, val) => acc + val, 0);
   }
 
   public async part2(): Promise<string | number> {
@@ -19,6 +17,6 @@ export default class Puzzle extends AoCPuzzle {
       }
     }
 
-    return results.reduce((acc, val) => acc + val, 0)
+    return results.reduce((acc, val) => acc + val, 0);
   }
 }

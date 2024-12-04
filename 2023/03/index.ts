@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Symbol {
   symbol: string;
@@ -16,7 +16,7 @@ export default class Puzzle extends AoCPuzzle {
 
   public async part1(): Promise<string | number> {
     this.lines.forEach((line, row) => {
-      let currentNum = '';
+      let currentNum = "";
       let posStart = -1;
       let posEnd = -1;
       for (let i = 0; i < line.length; i += 1) {
@@ -44,33 +44,49 @@ export default class Puzzle extends AoCPuzzle {
 
           if (row > 0) {
             for (let j = posLeft; j <= posRight; j += 1) {
-              if (this.lines[row - 1][j] !== '.') {
-                symbols.push({ symbol: this.lines[row - 1][j], row: row - 1, col: j });
+              if (this.lines[row - 1][j] !== ".") {
+                symbols.push({
+                  symbol: this.lines[row - 1][j],
+                  row: row - 1,
+                  col: j,
+                });
               }
             }
           }
 
           if (row < this.lines.length - 1) {
             for (let j = posLeft; j <= posRight; j += 1) {
-              if (this.lines[row + 1][j] !== '.') {
-                symbols.push({ symbol: this.lines[row + 1][j], row: row + 1, col: j });
+              if (this.lines[row + 1][j] !== ".") {
+                symbols.push({
+                  symbol: this.lines[row + 1][j],
+                  row: row + 1,
+                  col: j,
+                });
               }
             }
           }
 
-          if (posStart > 0 && this.lines[row][posStart - 1] !== '.') {
-            symbols.push({ symbol: this.lines[row][posStart - 1], row, col: posStart - 1 });
+          if (posStart > 0 && this.lines[row][posStart - 1] !== ".") {
+            symbols.push({
+              symbol: this.lines[row][posStart - 1],
+              row,
+              col: posStart - 1,
+            });
           }
 
-          if (posEnd < line.length - 1 && this.lines[row][posEnd + 1] !== '.') {
-            symbols.push({ symbol: this.lines[row][posEnd + 1], row, col: posEnd + 1 });
+          if (posEnd < line.length - 1 && this.lines[row][posEnd + 1] !== ".") {
+            symbols.push({
+              symbol: this.lines[row][posEnd + 1],
+              row,
+              col: posEnd + 1,
+            });
           }
 
           if (symbols.length > 0) {
             this.parts.push({ value: parseInt(currentNum, 10), symbols });
           }
 
-          currentNum = '';
+          currentNum = "";
           posStart = -1;
           posEnd = -1;
         }
@@ -81,18 +97,15 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public async part2(): Promise<string | number> {
-    const potentialGearParts = this.parts
-      .filter((part) => part.symbols.some((symbol) => symbol.symbol === '*'));
+    const potentialGearParts = this.parts.filter((part) => part.symbols.some((symbol) => symbol.symbol === "*"));
 
     const gears: number[] = [];
 
     while (potentialGearParts.length > 0) {
       const part1 = potentialGearParts.pop();
-      const gear = part1!.symbols.find((symbol) => symbol.symbol === '*');
+      const gear = part1!.symbols.find((symbol) => symbol.symbol === "*");
 
-      const indexFound = potentialGearParts
-        .findIndex((potentialGearPart) => potentialGearPart.symbols
-          .find((symbol) => symbol.col === gear?.col && symbol.row === gear?.row));
+      const indexFound = potentialGearParts.findIndex((potentialGearPart) => potentialGearPart.symbols.find((symbol) => symbol.col === gear?.col && symbol.row === gear?.row));
       if (indexFound !== -1) {
         const part2 = potentialGearParts.splice(indexFound, 1)[0];
         gears.push(part1!.value * part2!.value);

@@ -1,8 +1,8 @@
-import { countLetters } from '../../helpers/string';
-import AoCPuzzle from '../../puzzle';
+import { countLetters } from "../../helpers/string";
+import AoCPuzzle from "../../puzzle";
 
-const CARDS = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'];
-const CARDS_JOKER = ['A', 'K', 'Q', 'T', '9', '8', '7', '6', '5', '4', '3', '2', 'J'];
+const CARDS = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"];
+const CARDS_JOKER = ["A", "K", "Q", "T", "9", "8", "7", "6", "5", "4", "3", "2", "J"];
 
 interface Hand {
   cards: string[];
@@ -26,20 +26,25 @@ const findTypeStrength = (cards: string): number => {
   const moreFrequent = Array.from(count.values()).sort((a, b) => b - a)[0];
 
   switch (count.size) {
-    case 1: return TypeStrengths.fiveOfAKind;
-    case 2: return moreFrequent === 4 ? TypeStrengths.fourOfAKind : TypeStrengths.fullHouse;
-    case 3: return moreFrequent === 3 ? TypeStrengths.threeOfAKind : TypeStrengths.twoPairs;
-    case 4: return TypeStrengths.onePair;
-    default: return TypeStrengths.highCard;
+    case 1:
+      return TypeStrengths.fiveOfAKind;
+    case 2:
+      return moreFrequent === 4 ? TypeStrengths.fourOfAKind : TypeStrengths.fullHouse;
+    case 3:
+      return moreFrequent === 3 ? TypeStrengths.threeOfAKind : TypeStrengths.twoPairs;
+    case 4:
+      return TypeStrengths.onePair;
+    default:
+      return TypeStrengths.highCard;
   }
 };
 
 const findTypeStrengthWithJoker = (originalCards: string[]): number => {
-  if (!originalCards.includes('J')) {
-    return findTypeStrength(originalCards.join(''));
+  if (!originalCards.includes("J")) {
+    return findTypeStrength(originalCards.join(""));
   }
   const cards = [...originalCards];
-  const count = countLetters(cards.join('').replace(/J/g, ''));
+  const count = countLetters(cards.join("").replace(/J/g, ""));
   const moreFrequent = Array.from(count.entries()).sort((a, b) => {
     if (a[1] !== b[1]) {
       return b[1] > a[1] ? 1 : -1;
@@ -47,9 +52,9 @@ const findTypeStrengthWithJoker = (originalCards: string[]): number => {
     return CARDS.indexOf(b[0]) > CARDS.indexOf(a[0]) ? 1 : -1;
   });
   if (moreFrequent.length > 0) {
-    return findTypeStrength(cards.join('').replace(/J/g, moreFrequent[0][0]));
+    return findTypeStrength(cards.join("").replace(/J/g, moreFrequent[0][0]));
   }
-  return findTypeStrength(cards.join(''));
+  return findTypeStrength(cards.join(""));
 };
 
 const sortHands = (a: Hand, b: Hand, reference: string[]) => {
@@ -71,11 +76,11 @@ export default class Puzzle extends AoCPuzzle {
 
   public async part1(): Promise<string | number> {
     this.hands = this.lines.map((line) => {
-      const [cards, bid] = line.split(' ');
+      const [cards, bid] = line.split(" ");
       const typeStrength = findTypeStrength(cards);
 
       const hand: Hand = {
-        cards: cards.split(''),
+        cards: cards.split(""),
         bid: parseInt(bid, 10),
         typeStrength,
       };
@@ -87,7 +92,7 @@ export default class Puzzle extends AoCPuzzle {
       hand.rank = index + 1;
     });
 
-    return this.hands.reduce((acc, hand) => acc + (hand.bid * hand.rank!), 0);
+    return this.hands.reduce((acc, hand) => acc + hand.bid * hand.rank!, 0);
   }
 
   public async part2(): Promise<string | number> {
@@ -100,6 +105,6 @@ export default class Puzzle extends AoCPuzzle {
       hand.rank = index + 1;
     });
 
-    return this.hands.reduce((acc, hand) => acc + (hand.bid * hand.rank!), 0);
+    return this.hands.reduce((acc, hand) => acc + hand.bid * hand.rank!, 0);
   }
 }

@@ -1,9 +1,9 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private layers: number[][] = [];
   public async part1(): Promise<string | number> {
-    const pixels = this.input.split('').map(Number);
+    const pixels = this.input.split("").map(Number);
 
     let minZeroDigits = Number.MAX_SAFE_INTEGER;
     let minZeroDigitsLayer = -1;
@@ -19,8 +19,7 @@ export default class Puzzle extends AoCPuzzle {
       i += 1;
     }
 
-    return this.layers[minZeroDigitsLayer].filter((p) => p === 1).length *
-      this.layers[minZeroDigitsLayer].filter((p) => p === 2).length;
+    return this.layers[minZeroDigitsLayer].filter((p) => p === 1).length * this.layers[minZeroDigitsLayer].filter((p) => p === 2).length;
   }
 
   public async part2(): Promise<string | number> {
@@ -30,20 +29,19 @@ export default class Puzzle extends AoCPuzzle {
       for (let i = 0; i < layer.length; i += 1) {
         const pixel = layer[i];
         if (pixel === 0) {
-          image[i] = '▓';
+          image[i] = "▓";
         } else if (pixel === 1) {
-          image[i] = ' ';
+          image[i] = " ";
         }
       }
     }
-    
-    console.log("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
+
+    console.log("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓");
     while (image.length > 0) {
-      console.log(`▓${image.splice(0, 25).join('')}▓`);
+      console.log(`▓${image.splice(0, 25).join("")}▓`);
     }
-    console.log("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
+    console.log("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓");
 
-
-    return 'see console output';
+    return "see console output";
   }
 }

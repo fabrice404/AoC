@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Ingredient {
   name: string;
@@ -18,8 +18,11 @@ export default class Puzzle extends AoCPuzzle {
 
   public async part1(): Promise<string | number> {
     this.ingredients = this.lines.map((line) => {
-      const [name, properties] = line.split(': ');
-      const [capacity, durability, flavor, texture, calories] = properties.replace(/[^\d,-]/g, '').split(',').map(Number);
+      const [name, properties] = line.split(": ");
+      const [capacity, durability, flavor, texture, calories] = properties
+        .replace(/[^\d,-]/g, "")
+        .split(",")
+        .map(Number);
       return { name, capacity, durability, flavor, texture, calories };
     });
 
@@ -47,7 +50,10 @@ export default class Puzzle extends AoCPuzzle {
             const l = 100 - i - j - k;
 
             const capacity = Math.max(0, i * this.ingredients[0].capacity + j * this.ingredients[1].capacity + k * this.ingredients[2].capacity + l * this.ingredients[3].capacity);
-            const durability = Math.max(0, i * this.ingredients[0].durability + j * this.ingredients[1].durability + k * this.ingredients[2].durability + l * this.ingredients[3].durability);
+            const durability = Math.max(
+              0,
+              i * this.ingredients[0].durability + j * this.ingredients[1].durability + k * this.ingredients[2].durability + l * this.ingredients[3].durability,
+            );
             const flavor = Math.max(0, i * this.ingredients[0].flavor + j * this.ingredients[1].flavor + k * this.ingredients[2].flavor + l * this.ingredients[3].flavor);
             const texture = Math.max(0, i * this.ingredients[0].texture + j * this.ingredients[1].texture + k * this.ingredients[2].texture + l * this.ingredients[3].texture);
             const score = capacity * durability * flavor * texture;

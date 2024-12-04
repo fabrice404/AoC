@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Card {
   winning: number[];
@@ -11,12 +11,16 @@ export default class Puzzle extends AoCPuzzle {
 
   public async part1(): Promise<string | number> {
     this.cards = this.lines.map((line) => {
-      let [winning, numbers] = line.split(/:/)[1]
+      let [winning, numbers] = line
+        .split(/:/)[1]
         .split(/\|/)
-        .map((n) => n.trim()
-          .split(' ')
-          .filter((x) => x)
-          .map((num) => parseInt(num, 10)));
+        .map((n) =>
+          n
+            .trim()
+            .split(" ")
+            .filter((x) => x)
+            .map((num) => parseInt(num, 10)),
+        );
       winning = [...new Set(winning)];
       numbers = [...new Set(numbers)];
       const power = numbers.reduce((acc, val) => {
@@ -51,13 +55,15 @@ export default class Puzzle extends AoCPuzzle {
     });
     // console.dir(this.cards, { depth: null });
 
-    const countCards = (cards: Card[]): number => cards.map((card) => {
-      if (card.cards) {
-        return 1 + countCards(card.cards);
-      }
-      return 1;
-    })
-      .reduce((acc, val) => acc + val, 0);
+    const countCards = (cards: Card[]): number =>
+      cards
+        .map((card) => {
+          if (card.cards) {
+            return 1 + countCards(card.cards);
+          }
+          return 1;
+        })
+        .reduce((acc, val) => acc + val, 0);
 
     return countCards(this.cards);
   }

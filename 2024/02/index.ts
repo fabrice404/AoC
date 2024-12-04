@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private isValid = (n: number[]) => {
@@ -15,7 +15,7 @@ export default class Puzzle extends AoCPuzzle {
     }
 
     return true;
-  }
+  };
 
   public async part1(): Promise<string | number> {
     return this.lines.filter((line) => this.isValid(line.split(/\s/gi).map(Number))).length;

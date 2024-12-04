@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Bot {
   id: number;
@@ -40,18 +40,18 @@ export default class Puzzle extends AoCPuzzle {
     let result = 0;
 
     this.bots = this.lines
-      .filter((line) => line.startsWith('bot'))
+      .filter((line) => line.startsWith("bot"))
       .map((line) => {
         const [, id, lowType, lowValue, highType, highValue] = line.match(/bot (\d+) gives low to (bot|output) (\d+) and high to (bot|output) (\d+)/)!;
         return {
           id: +id,
-          low: +lowValue * (lowType === 'output' ? -1 : 1),
-          high: +highValue * (highType === 'output' ? -1 : 1),
+          low: +lowValue * (lowType === "output" ? -1 : 1),
+          high: +highValue * (highType === "output" ? -1 : 1),
           chips: [],
         };
       });
 
-    for (const instruction of this.lines.filter((line) => line.startsWith('value'))) {
+    for (const instruction of this.lines.filter((line) => line.startsWith("value"))) {
       const [, value, bot] = instruction.match(/value (\d+) goes to bot (\d+)/)!;
       this.bots.find((b) => b.id === +bot)!.chips.push(+value);
     }

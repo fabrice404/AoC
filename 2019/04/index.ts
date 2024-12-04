@@ -1,17 +1,21 @@
-import { countLetters } from '../../helpers/string';
-import AoCPuzzle from '../../puzzle';
+import { countLetters } from "../../helpers/string";
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private validPasswords: string[] = [];
 
   public async part1(): Promise<string | number> {
-    const [min, max] = this.input.split('-').map(Number);
+    const [min, max] = this.input.split("-").map(Number);
     for (let i = min; i <= max; i += 1) {
-      const [a, b, c, d, e, f] = i.toString().split('');
+      const [a, b, c, d, e, f] = i.toString().split("");
       if (
         i.toString().length === 6 && // six-digit number
         (a === b || b === c || c === d || d === e || e === f) && // two adjacent digits are the same
-        (a <= b && b <= c && c <= d && d <= e && e <= f) // only increase or stay the same
+        a <= b &&
+        b <= c &&
+        c <= d &&
+        d <= e &&
+        e <= f // only increase or stay the same
       ) {
         this.validPasswords.push(i.toString());
       }

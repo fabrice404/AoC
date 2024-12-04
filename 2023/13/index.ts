@@ -1,6 +1,6 @@
-import { rotate, sum } from '../../helpers/array';
-import { replaceAt } from '../../helpers/string';
-import AoCPuzzle from '../../puzzle';
+import { rotate, sum } from "../../helpers/array";
+import { replaceAt } from "../../helpers/string";
+import AoCPuzzle from "../../puzzle";
 
 const findSymetrical = (puzzle: string[], ignoreResult: number = 0): number => {
   for (let i = 1; i < puzzle.length; i += 1) {
@@ -35,11 +35,11 @@ export default class Puzzle extends AoCPuzzle {
   private init() {
     let puzzle: string[] = [];
     this.lines.forEach((line) => {
-      if (line === '') {
+      if (line === "") {
         this.puzzles.push(puzzle);
         puzzle = [];
       } else {
-        puzzle.push(line.replace(/\./g, ' '));
+        puzzle.push(line.replace(/\./g, " "));
       }
     });
     this.puzzles.push(puzzle);
@@ -51,13 +51,13 @@ export default class Puzzle extends AoCPuzzle {
     this.results = this.puzzles.map((puzzle, index) => {
       let result = findSymetrical(puzzle) * 100;
       if (result) {
-        return { index, result, type: 'horizontal' };
+        return { index, result, type: "horizontal" };
       }
       result = findSymetrical(rotate(puzzle));
       if (result) {
-        return { index, result, type: 'vertical' };
+        return { index, result, type: "vertical" };
       }
-      return { index, result: 0, type: 'unknown' };
+      return { index, result: 0, type: "unknown" };
     });
     return sum(this.results.map((r) => r.result));
   }
@@ -68,15 +68,15 @@ export default class Puzzle extends AoCPuzzle {
       for (let i = 0; i < puzzle.length; i += 1) {
         for (let j = 0; j < puzzle[i].length; j += 1) {
           const newPuzzle = [...puzzle];
-          newPuzzle[i] = replaceAt(newPuzzle[i], j, newPuzzle[i][j] === '#' ? ' ' : '#');
+          newPuzzle[i] = replaceAt(newPuzzle[i], j, newPuzzle[i][j] === "#" ? " " : "#");
 
           const previousResult = this.results.find((r) => r.index === index)!;
-          result = findSymetrical(newPuzzle, previousResult.type === 'horizontal' ? previousResult.result / 100 : 0) * 100;
+          result = findSymetrical(newPuzzle, previousResult.type === "horizontal" ? previousResult.result / 100 : 0) * 100;
           if (result) {
             return result;
           }
 
-          result = findSymetrical(rotate(newPuzzle), previousResult.type === 'vertical' ? previousResult.result : 0);
+          result = findSymetrical(rotate(newPuzzle), previousResult.type === "vertical" ? previousResult.result : 0);
           if (result) {
             return result;
           }

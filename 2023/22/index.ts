@@ -1,5 +1,5 @@
-import { addUniqueItem, sum } from '../../helpers/array';
-import AoCPuzzle from '../../puzzle';
+import { addUniqueItem, sum } from "../../helpers/array";
+import AoCPuzzle from "../../puzzle";
 
 interface Brick {
   name: string;
@@ -28,8 +28,9 @@ export default class Puzzle extends AoCPuzzle {
   private grid3d: string[][][] = []; // y, z, x
 
   private getLayer(i: number): void {
-    const gridLayer = Array(this.maxY - this.minY + 1).fill('.')
-      .map(() => Array(this.maxX - this.minX + 1).fill('.'));
+    const gridLayer = Array(this.maxY - this.minY + 1)
+      .fill(".")
+      .map(() => Array(this.maxX - this.minX + 1).fill("."));
     while (this.grid3d.length < i + 1) {
       this.grid3d.push([...gridLayer]);
     }
@@ -49,7 +50,18 @@ export default class Puzzle extends AoCPuzzle {
       const height = Math.abs(zB - zA) + 1;
 
       const name = `brick${i}`;
-      const brick: Brick = { name, xA, yA, zA, xB, yB, zB, height, supports: [], supportedBy: [] };
+      const brick: Brick = {
+        name,
+        xA,
+        yA,
+        zA,
+        xB,
+        yB,
+        zB,
+        height,
+        supports: [],
+        supportedBy: [],
+      };
       this.bricks.push(brick);
     });
     this.getLayer(0);
@@ -64,7 +76,7 @@ export default class Puzzle extends AoCPuzzle {
           for (let y = brick.yA; y <= brick.yB; y += 1) {
             for (let x = brick.xA; x <= brick.xB; x += 1) {
               const cell = this.grid3d[layerIndex][y][x];
-              if (cell !== '.') {
+              if (cell !== ".") {
                 hasBrickInLayer = true;
                 addUniqueItem(brick.supportedBy, cell);
                 const supporter = this.bricks.find((b) => b.name === cell)!;
@@ -92,10 +104,9 @@ export default class Puzzle extends AoCPuzzle {
         }
       });
 
-    const disintegratableBricks = this.bricks
-      .filter((brick) => (brick.supports
-        .every((supported) => this.bricks
-          .some((b) => b.supports.includes(supported) && b.name !== brick.name))));
+    const disintegratableBricks = this.bricks.filter((brick) =>
+      brick.supports.every((supported) => this.bricks.some((b) => b.supports.includes(supported) && b.name !== brick.name)),
+    );
 
     return disintegratableBricks.length;
   }

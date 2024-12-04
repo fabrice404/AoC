@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private isValidLine(line: string): boolean {
@@ -11,7 +11,7 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   private isValidLineAnagrams(line: string): boolean {
-    const words = line.split(/\s/gi).map((word) => word.split('').sort().join(''));
+    const words = line.split(/\s/gi).map((word) => word.split("").sort().join(""));
     return words.length === new Set(words).size;
   }
 

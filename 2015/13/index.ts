@@ -1,18 +1,18 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 interface Connection {
-  to: Person,
-  happiness: number,
+  to: Person;
+  happiness: number;
 }
 
 interface Person {
-  name: string,
-  connections: Connection[],
+  name: string;
+  connections: Connection[];
 }
 
 interface Route {
-  visited: Person[],
-  happiness: number[],
+  visited: Person[];
+  happiness: number[];
 }
 
 export default class Puzzle extends AoCPuzzle {
@@ -53,7 +53,10 @@ export default class Puzzle extends AoCPuzzle {
       const fromPerson = this.getPerson(from);
       const toPerson = this.getPerson(to);
 
-      fromPerson.connections.push({ to: toPerson, happiness: happiness === 'gain' ? +score : -+score });
+      fromPerson.connections.push({
+        to: toPerson,
+        happiness: happiness === "gain" ? +score : -+score,
+      });
     }
     for (const person of this.persons) {
       const routes = this.calculateRoutes(person, [person], []);
@@ -81,9 +84,12 @@ export default class Puzzle extends AoCPuzzle {
       const fromPerson = this.getPerson(from);
       const toPerson = this.getPerson(to);
 
-      fromPerson.connections.push({ to: toPerson, happiness: happiness === 'gain' ? +score : -+score });
+      fromPerson.connections.push({
+        to: toPerson,
+        happiness: happiness === "gain" ? +score : -+score,
+      });
     }
-    const me = this.getPerson('me');
+    const me = this.getPerson("me");
 
     for (const person of this.persons) {
       person.connections.push({ to: me, happiness: 0 });

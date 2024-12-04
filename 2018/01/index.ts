@@ -1,8 +1,8 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
-    return eval(0 + this.input);  
+    return eval(0 + this.input);
   }
 
   public async part2(): Promise<string | number> {

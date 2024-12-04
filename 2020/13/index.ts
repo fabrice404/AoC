@@ -1,6 +1,5 @@
-import { lcm } from '../../helpers/numbers';
-import AoCPuzzle from '../../puzzle';
-
+import { lcm } from "../../helpers/numbers";
+import AoCPuzzle from "../../puzzle";
 
 interface Line {
   id: number;
@@ -10,7 +9,10 @@ interface Line {
 export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
     const departureTime = +this.lines[0];
-    const lines = this.lines[1].split(',').filter(x => x.replace(/[^0-9]+/gi, '')).map(Number);
+    const lines = this.lines[1]
+      .split(",")
+      .filter((x) => x.replace(/[^0-9]+/gi, ""))
+      .map(Number);
 
     let minTime = Number.MAX_SAFE_INTEGER;
     let minTimeLine = 0;
@@ -29,14 +31,14 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public async part2(): Promise<string | number> {
-    const lines: Line[] = []
-    for (let i = 0; i < this.lines[1].split(',').length; i += 1) {
-      const line = this.lines[1].split(',')[i];
-      if (line !== 'x') {
+    const lines: Line[] = [];
+    for (let i = 0; i < this.lines[1].split(",").length; i += 1) {
+      const line = this.lines[1].split(",")[i];
+      if (line !== "x") {
         lines.push({
           id: +line,
           offset: i,
-        })
+        });
       }
     }
 

@@ -1,7 +1,7 @@
-import { existsSync, writeFileSync } from 'fs';
-import { execSync } from 'child_process';
-import AoCPuzzle from '../../puzzle';
-import { addUniqueItem } from '../../helpers/array';
+import { existsSync, writeFileSync } from "fs";
+import { execSync } from "child_process";
+import AoCPuzzle from "../../puzzle";
+import { addUniqueItem } from "../../helpers/array";
 
 interface Component {
   name: string;
@@ -21,11 +21,11 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public async part1(): Promise<string | number> {
-    let dot = 'graph {\n';
+    let dot = "graph {\n";
     this.lines.forEach((line) => {
       const [source, targetList] = line.split(/:/gi).map((s) => s.trim());
-      const targets = targetList.split(' ').map((s) => s.trim());
-      dot += `  ${source} -- ${targets.join(',')}\n`;
+      const targets = targetList.split(" ").map((s) => s.trim());
+      dot += `  ${source} -- ${targets.join(",")}\n`;
       targets.forEach((target) => {
         const sourceComponent = this.getComponent(source);
         const targetComponent = this.getComponent(target);
@@ -33,25 +33,33 @@ export default class Puzzle extends AoCPuzzle {
         addUniqueItem(targetComponent.components, source);
       });
     });
-    dot += '}\n';
+    dot += "}\n";
 
     let toRemove: string[][] = [];
     if (this.isExample) {
-      if (!existsSync('./2023/25/example.dot')) {
-        writeFileSync('./2023/25/example.dot', dot);
+      if (!existsSync("./2023/25/example.dot")) {
+        writeFileSync("./2023/25/example.dot", dot);
       }
-      if (!existsSync('./2023/25/example.svg')) {
-        execSync('neato -Tsvg ./2023/25/example.dot -o ./2023/25/example.svg');
+      if (!existsSync("./2023/25/example.svg")) {
+        execSync("neato -Tsvg ./2023/25/example.dot -o ./2023/25/example.svg");
       }
-      toRemove = [['jqt', 'nvd'], ['bvb', 'cmg'], ['hfx', 'pzl']];
+      toRemove = [
+        ["jqt", "nvd"],
+        ["bvb", "cmg"],
+        ["hfx", "pzl"],
+      ];
     } else {
       if (!execSync) {
-        writeFileSync('./2023/25/input.dot', dot);
+        writeFileSync("./2023/25/input.dot", dot);
       }
-      if (!existsSync('./2023/25/input.svg')) {
-        execSync('neato -Tsvg ./2023/25/input.dot -o ./2023/25/input.svg');
+      if (!existsSync("./2023/25/input.svg")) {
+        execSync("neato -Tsvg ./2023/25/input.dot -o ./2023/25/input.svg");
       }
-      toRemove = [['frl', 'thx'], ['lhg', 'llm'], ['ccp', 'fvm']];
+      toRemove = [
+        ["frl", "thx"],
+        ["lhg", "llm"],
+        ["ccp", "fvm"],
+      ];
     }
 
     toRemove.forEach(([nodeName1, nodeName2]) => {
@@ -84,6 +92,6 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public async part2(): Promise<string | number> {
-    return 'Happy Xmas!';
+    return "Happy Xmas!";
   }
 }

@@ -1,51 +1,51 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
     let x = 0;
     let y = 0;
 
-    let direction: 'N' | 'S' | 'W' | 'E' = 'N';
+    let direction: "N" | "S" | "W" | "E" = "N";
 
-    const instructions = this.input.split(', ');
+    const instructions = this.input.split(", ");
     for (const instruction of instructions) {
       const turn = instruction[0];
       const distance = parseInt(instruction.slice(1), 10);
 
       switch (direction) {
-        case 'N':
-          if (turn === 'R') {
-            direction = 'E';
+        case "N":
+          if (turn === "R") {
+            direction = "E";
             x += distance;
           } else {
-            direction = 'W';
+            direction = "W";
             x -= distance;
           }
           break;
-        case 'E':
-          if (turn === 'R') {
-            direction = 'S';
+        case "E":
+          if (turn === "R") {
+            direction = "S";
             y -= distance;
           } else {
-            direction = 'N';
+            direction = "N";
             y += distance;
           }
           break;
-        case 'S':
-          if (turn === 'R') {
-            direction = 'W';
+        case "S":
+          if (turn === "R") {
+            direction = "W";
             x -= distance;
           } else {
-            direction = 'E';
+            direction = "E";
             x += distance;
           }
           break;
-        case 'W':
-          if (turn === 'R') {
-            direction = 'N';
+        case "W":
+          if (turn === "R") {
+            direction = "N";
             y += distance;
           } else {
-            direction = 'S';
+            direction = "S";
             y -= distance;
           }
           break;
@@ -59,7 +59,7 @@ export default class Puzzle extends AoCPuzzle {
     let x = 0;
     let y = 0;
 
-    const visitedLocations: string[] = ['0,0'];
+    const visitedLocations: string[] = ["0,0"];
 
     const isVisited = (a: number, b: number): boolean => {
       const key = `${a},${b}`;
@@ -90,60 +90,60 @@ export default class Puzzle extends AoCPuzzle {
       return false;
     };
 
-    let direction: 'N' | 'S' | 'W' | 'E' = 'N';
-    const instructions = this.input.split(', ');
+    let direction: "N" | "S" | "W" | "E" = "N";
+    const instructions = this.input.split(", ");
     for (const instruction of instructions) {
       const turn = instruction[0];
       const distance = parseInt(instruction.slice(1), 10);
 
       switch (direction) {
-        case 'N':
-          if (turn === 'R') {
-            direction = 'E';
+        case "N":
+          if (turn === "R") {
+            direction = "E";
             if (addToX(distance)) {
               return Math.abs(x) + Math.abs(y);
             }
           } else {
-            direction = 'W';
+            direction = "W";
             if (addToX(-distance)) {
               return Math.abs(x) + Math.abs(y);
             }
           }
           break;
-        case 'E':
-          if (turn === 'R') {
-            direction = 'S';
+        case "E":
+          if (turn === "R") {
+            direction = "S";
             if (addToY(-distance)) {
               return Math.abs(x) + Math.abs(y);
             }
           } else {
-            direction = 'N';
+            direction = "N";
             if (addToY(distance)) {
               return Math.abs(x) + Math.abs(y);
             }
           }
           break;
-        case 'S':
-          if (turn === 'R') {
-            direction = 'W';
+        case "S":
+          if (turn === "R") {
+            direction = "W";
             if (addToX(-distance)) {
               return Math.abs(x) + Math.abs(y);
             }
           } else {
-            direction = 'E';
+            direction = "E";
             if (addToX(distance)) {
               return Math.abs(x) + Math.abs(y);
             }
           }
           break;
-        case 'W':
-          if (turn === 'R') {
-            direction = 'N';
+        case "W":
+          if (turn === "R") {
+            direction = "N";
             if (addToY(distance)) {
               return Math.abs(x) + Math.abs(y);
             }
           } else {
-            direction = 'S';
+            direction = "S";
             if (addToY(-distance)) {
               return Math.abs(x) + Math.abs(y);
             }

@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private cleaned: string[] = [];
@@ -6,22 +6,22 @@ export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
     for (let i = 0; i < this.input.length; i += 1) {
       const char = this.input[i];
-      if (char === '!') {
+      if (char === "!") {
         i += 1;
       } else {
         this.cleaned.push(char);
       }
     }
 
-    const cleanedString = this.cleaned.join('').replace(/<[^>]*>/g, '');
+    const cleanedString = this.cleaned.join("").replace(/<[^>]*>/g, "");
     const scores: number[] = [];
     let level = 0;
     for (let i = 0; i < cleanedString.length; i += 1) {
       const char = cleanedString[i];
-      if (char === '{') {
+      if (char === "{") {
         level += 1;
         scores.push(level);
-      } else if (char === '}') {
+      } else if (char === "}") {
         level -= 1;
       }
     }
@@ -30,6 +30,6 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public async part2(): Promise<string | number> {
-    return this.cleaned.length - this.cleaned.join('').replace(/<[^>]*>/g, '<>').length;
+    return this.cleaned.length - this.cleaned.join("").replace(/<[^>]*>/g, "<>").length;
   }
 }

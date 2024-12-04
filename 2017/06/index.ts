@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private blocksHistory: string[] = [];
@@ -6,7 +6,7 @@ export default class Puzzle extends AoCPuzzle {
   private blocks: number[] = [];
 
   private addHistory(blocks: number[]): boolean {
-    const key = blocks.join(',');
+    const key = blocks.join(",");
     if (this.isExample) {
       console.log(key);
     }
@@ -50,6 +50,6 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public async part2(): Promise<string | number> {
-    return this.blocksHistory.length - this.blocksHistory.indexOf(this.blocks.join(','));
+    return this.blocksHistory.length - this.blocksHistory.indexOf(this.blocks.join(","));
   }
 }

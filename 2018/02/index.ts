@@ -1,5 +1,5 @@
-import { hasDifferentLetterTimes, hasSameLetterTimes } from '../../helpers/string';
-import AoCPuzzle from '../../puzzle';
+import { hasDifferentLetterTimes, hasSameLetterTimes } from "../../helpers/string";
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   public async part1(): Promise<string | number> {
@@ -19,9 +19,9 @@ export default class Puzzle extends AoCPuzzle {
         const line2 = this.lines[j];
         if (hasDifferentLetterTimes(line, line2, 1)) {
           return line
-            .split('')
+            .split("")
             .filter((char, index) => char === line2[index])
-            .join('');
+            .join("");
         }
       }
     }

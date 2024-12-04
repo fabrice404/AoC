@@ -1,4 +1,4 @@
-import AoCPuzzle from '../../puzzle';
+import AoCPuzzle from "../../puzzle";
 
 export default class Puzzle extends AoCPuzzle {
   private ngrid: number[][] = [];
@@ -11,16 +11,17 @@ export default class Puzzle extends AoCPuzzle {
       for (let x = +x1; x <= +x2; x += 1) {
         for (let y = +y1; y <= +y2; y += 1) {
           switch (action) {
-            case 'turn on':
+            case "turn on":
               this.ngrid[x][y] = 1;
               break;
-            case 'turn off':
+            case "turn off":
               this.ngrid[x][y] = 0;
               break;
-            case 'toggle':
+            case "toggle":
               this.ngrid[x][y] = this.ngrid[x][y] === 0 ? 1 : 0;
               break;
-            default: break;
+            default:
+              break;
           }
         }
       }
@@ -36,19 +37,20 @@ export default class Puzzle extends AoCPuzzle {
       for (let x = +x1; x <= +x2; x += 1) {
         for (let y = +y1; y <= +y2; y += 1) {
           switch (action) {
-            case 'turn on':
+            case "turn on":
               this.ngrid[x][y] += 1;
               break;
-            case 'turn off':
+            case "turn off":
               this.ngrid[x][y] -= 1;
               if (this.ngrid[x][y] < 0) {
                 this.ngrid[x][y] = 0;
               }
               break;
-            case 'toggle':
+            case "toggle":
               this.ngrid[x][y] += 2;
               break;
-            default: break;
+            default:
+              break;
           }
         }
       }

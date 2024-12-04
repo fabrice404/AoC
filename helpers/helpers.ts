@@ -6,21 +6,21 @@ export const waitSync = (ms: number) => {
   while (now - start < ms) {
     now = Date.now();
   }
-}
+};
 
 export const pointToKey = (p: Point): string => {
   if (p.z != null) {
     return `${p.x},${p.y},${p.z}`;
   }
-  return `${p.x},${p.y}`
+  return `${p.x},${p.y}`;
 };
 
 export const keyToPoint = (key: string): Point => {
-  const [x, y, z] = key.split(',').map(Number);
+  const [x, y, z] = key.split(",").map(Number);
   if (z != null) {
     return { x, y, z };
   }
   return { x, y };
-}
+};
 
-export const DIRECTIONS: Direction[] = ['U', 'R', 'D', 'L'];
+export const DIRECTIONS: Direction[] = ["U", "R", "D", "L"];
