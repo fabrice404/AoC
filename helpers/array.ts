@@ -85,3 +85,22 @@ export const getUpRightLeftDownCoordinates = ({ x, y }: Point): Point[] =>
     [0, +1],
     [-1, 0],
   ].map(([mx, my]) => ({ x: x + mx, y: y + my }));
+
+export const permutations = (s: any): any[] => {
+  if (s.length < 2) {
+    return [s];
+  }
+  const result: any[] = [];
+  for (let i = 0; i < s.length; i += 1) {
+    const c = s[i];
+
+    if (s.indexOf(c) !== i) {
+      continue;
+    }
+
+    for (const sub of permutations([...s.slice(0, i), ...s.slice(i + 1, s.length)])) {
+      result.push([c, ...sub]);
+    }
+  }
+  return result;
+};
