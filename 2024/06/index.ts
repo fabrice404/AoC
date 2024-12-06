@@ -1,67 +1,33 @@
-import { pointToKey } from "../../helpers/helpers";
+import { keyToPoint, moveToCardinal, pointToKey } from "../../helpers/helpers";
 import AoCPuzzle from "../../puzzle";
 import { CardinalDirection, Point } from "../../types";
 
 const DIRECTIONS: CardinalDirection[] = ["N", "E", "S", "W"];
 
 export default class Puzzle extends AoCPuzzle {
-  private newObstructionsCount = 0;
-
   private normalStepsCount = Number.MAX_SAFE_INTEGER;
 
-  private turns: { [key: string]: Point[] } = {
-    N: [],
-    E: [],
-    S: [],
-    W: [],
-  };
+  private steps: Set<string> = new Set<string>();
 
   private countSteps(grid: any[][], initialPosition: Point, initialDirection: CardinalDirection = "N"): number {
     grid[initialPosition.y][initialPosition.x] = ".";
     let currentPosition = initialPosition;
     let currentDirection = initialDirection;
 
-    const steps: Set<string> = new Set<string>();
     let i = 0;
 
-    // this.turns["N"].push(currentPosition);
     while (true) {
-      steps.add(pointToKey(currentPosition));
-      let nextPosition;
-      switch (currentDirection) {
-        case "N":
-          nextPosition = { y: currentPosition.y - 1, x: currentPosition.x };
-          break;
-        case "S":
-          nextPosition = { y: currentPosition.y + 1, x: currentPosition.x };
-          break;
-        case "W":
-          nextPosition = { y: currentPosition.y, x: currentPosition.x - 1 };
-          break;
-        case "E":
-          nextPosition = { y: currentPosition.y, x: currentPosition.x + 1 };
-          break;
-      }
-      if (nextPosition.y < 0 || nextPosition.y >= grid.length || nextPosition.x < 0 || nextPosition.x >= grid[nextPosition.y].length) {
+      this.steps.add(pointToKey(currentPosition));
+      const nextPosition = moveToCardinal(currentPosition, currentDirection);
+      if (!this.isInGrid(nextPosition)) {
         break;
       }
 
       const nextCellValue = grid[nextPosition.y][nextPosition.x];
       if (nextCellValue === "#") {
         currentDirection = DIRECTIONS[(DIRECTIONS.indexOf(currentDirection) + 1) % 4];
-        // this.turns[currentDirection].push(currentPosition);
       } else if (nextCellValue === "." || nextCellValue === "X" || nextCellValue === "O") {
         grid[nextPosition.y][nextPosition.x] = "X";
-        // if (
-        //   (currentDirection === "N" && this.turns["E"].find((p) => p.y === currentPosition.y)) ||
-        //   (currentDirection === "E" && this.turns["S"].find((p) => p.x === currentPosition.x)) ||
-        //   (currentDirection === "S" && this.turns["W"].find((p) => p.y === currentPosition.y)) ||
-        //   (currentDirection === "W" && this.turns["N"].find((p) => p.x === currentPosition.x))
-        // ) {
-        //   this.newObstructionsCount += 1;
-        //   this.grid[nextPosition.y][nextPosition.x] = "O";
-        // }
-
         currentPosition = nextPosition;
         if (i > this.normalStepsCount * 2) {
           return Infinity;
@@ -69,7 +35,7 @@ export default class Puzzle extends AoCPuzzle {
       }
       i += 1;
     }
-    return steps.size;
+    return this.steps.size;
   }
 
   public async part1(): Promise<string | number> {
@@ -80,8 +46,8 @@ export default class Puzzle extends AoCPuzzle {
 
   public async part2(): Promise<string | number> {
     const [initialPosition] = this.findCellByValue("^");
-    console.log(this.normalStepsCount);
-    return this.getGridLoopXY().filter(({ x, y }) => {
+    return [...this.steps.keys()].filter((key) => {
+      const { x, y } = keyToPoint(key);
       const grid = JSON.parse(JSON.stringify(this.grid));
       grid[y][x] = "#";
       return this.countSteps(grid, initialPosition) === Infinity;

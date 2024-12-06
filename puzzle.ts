@@ -1,8 +1,10 @@
-import { print2d } from "./helpers/array";
+import { ConsoleColor, pointToKey } from "./helpers/helpers";
 import { Point } from "./types";
 
 export default abstract class AoCPuzzle {
   protected grid: any[][] = [];
+
+  protected highlights: Map<string, ConsoleColor>;
 
   protected input: string;
 
@@ -15,6 +17,11 @@ export default abstract class AoCPuzzle {
     this.lines = this.input.split(/\n/gi);
     this.grid = this.lines.map((line) => line.split(""));
     this.isExample = isExample;
+    this.highlights = new Map();
+  }
+
+  public clearHighlights() {
+    this.highlights = new Map();
   }
 
   public findCellByValue(value: any): Point[] {
@@ -31,12 +38,19 @@ export default abstract class AoCPuzzle {
     return result;
   }
 
-  public highlightCell(p: Point): void {
-    this.grid[p.y][p.x] = `\x1b[42m${this.grid[p.y][p.x]}\x1b[0m`;
+  public getValue(p: Point): any {
+    return this.grid[p.y][p.x];
+  }
+
+  public highlightCell(p: Point, color: ConsoleColor = ConsoleColor.Green): void {
+    const key = pointToKey(p);
+    if (!this.highlights.has(key)) {
+      this.highlights.set(key, color);
+    }
   }
 
   public isInGrid(p: Point): boolean {
-    return p.y > 0 && p.y < this.grid.length && p.x > 0 && p.x < this.grid[p.y].length;
+    return p.y >= 0 && p.y < this.grid.length && p.x >= 0 && p.x < this.grid[p.y].length;
   }
 
   public abstract part1(): Promise<string | number>;
@@ -44,15 +58,20 @@ export default abstract class AoCPuzzle {
   public abstract part2(): Promise<string | number>;
 
   public printGrid() {
-    // console.clear();
-    // process.stdout.cursorTo(0, 0);
-    if (typeof this.grid[0][0] === "string" || typeof this.grid[0][0] === "number") {
-      print2d(this.grid);
-    } else if (this.grid[0][0].value != null) {
-      print2d(this.grid.map((row) => row.map((cell) => cell.value)));
-    } else {
-      console.log(`Unable to print grid`);
+    console.log("");
+    for (let y = 0; y < Math.min(this.grid.length, 200); y += 1) {
+      const row = [];
+      for (let x = 0; x < Math.min(this.grid[y].length, 200); x += 1) {
+        const key = pointToKey({ x, y });
+        if (this.highlights.has(key)) {
+          row.push(`\x1b[${this.highlights.get(key)!}m${this.grid[y][x]}\x1b[0m`);
+        } else {
+          row.push(this.grid[y][x]);
+        }
+      }
+      console.log(row.join(""));
     }
+    console.log("");
   }
   public setInput(input: string) {
     this.input = input;
