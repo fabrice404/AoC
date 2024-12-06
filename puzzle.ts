@@ -17,6 +17,10 @@ export default abstract class AoCPuzzle {
     this.isExample = isExample;
   }
 
+  public findCellByValue(value: any): Point[] {
+    return this.getGridLoopXY().filter(({ x, y }) => this.grid[y][x] === value);
+  }
+
   public getGridLoopXY(): Point[] {
     const result = [];
     for (let y = 0; y < this.grid.length; y += 1) {
