@@ -6,50 +6,36 @@ export default class Puzzle extends AoCPuzzle {
 
   private calculate(n: number[], total: number, operatorsCount: number = 2): number {
     for (let i = 0; i < operatorsCount ** n.length; i += 1) {
-      const operators = operatorsCount === 2 ? this.decimalToBinaryToOperator(i, n.length - 1) : this.decimalToTernaryToOperator(i, n.length - 1);
-      const numbers = [...n];
-      let result = numbers.shift();
-      while (numbers.length > 0) {
-        const operator = operators.shift();
-        let operation;
-        if (operator === "||") {
-          operation = `${result}${numbers.shift()}`;
-        } else {
-          operation = `${result} ${operator} ${numbers.shift()}`;
-        }
-
-        // do it the other way, calculate the full string, and then remove numbers from right to left to check cache before calculating.
-        // if a+b+c+d is in cache, no need to check for a+b and a+b+c
-        if (this.cache.has(operation)) {
-          result = this.cache.get(operation);
-        } else {
-          result = eval(operation);
-          this.cache.set(operation, result!);
-        }
-      }
-      if (result === total) {
+      const operators = this.decimalToBaseNToOperator(i, n.length - 1, operatorsCount);
+      const parts = n.map((n: number, i: number) => (i === 0 ? `${n}` : `${operators[i - 1]}${n}`));
+      if (this.calculateWithCache(parts) === total) {
         return total;
       }
     }
     return 0;
   }
 
-  private decimalToBinaryToOperator(d: number, l: number): string[] {
-    return d
-      .toString(2)
-      .toString()
-      .padStart(l, "0")
-      .split("")
-      .map((s) => (s === "0" ? "+" : "*"));
+  private calculateWithCache(parts: string[]): number {
+    if (parts.length === 1) {
+      return +parts[0];
+    }
+    const calculation = parts.join("");
+    if (this.cache.has(calculation)) {
+      return this.cache.get(calculation)!;
+    } else {
+      const current = parts.pop();
+      const result = eval(`${this.calculateWithCache(parts)}${current}`);
+      this.cache.set(calculation, result);
+      return result;
+    }
   }
 
-  private decimalToTernaryToOperator(d: number, l: number): string[] {
+  private decimalToBaseNToOperator(d: number, l: number, base: number): string[] {
     return d
-      .toString(3)
-      .toString()
+      .toString(base)
       .padStart(l, "0")
       .split("")
-      .map((s) => (s === "0" ? "+" : s === "1" ? "*" : "||"));
+      .map((s) => (s === "0" ? "+" : s === "1" ? "*" : ""));
   }
 
   public async part1(): Promise<string | number> {
