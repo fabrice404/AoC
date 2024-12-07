@@ -150,7 +150,7 @@ export default class Puzzle extends AoCPuzzle {
       computer.addInputs([MOVEMENT[nextMove.direction]]);
       finished = computer.compute();
 
-      const { output } = computer;
+      const output = computer.output!;
 
       this.map.set(pointToKey(nextMove.position), output);
       switch (output) {

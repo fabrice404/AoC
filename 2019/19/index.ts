@@ -6,7 +6,7 @@ export default class Puzzle extends AoCPuzzle {
   private getPoint(point: Point): number {
     const computer = new IntCodeComputer(this.input, [point.x, point.y]);
     computer.compute();
-    return computer.output;
+    return computer.output!;
   }
 
   public async part1(): Promise<string | number> {

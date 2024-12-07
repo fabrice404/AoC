@@ -9,7 +9,7 @@ export default class Puzzle extends AoCPuzzle {
       finished = computer.compute(false);
     }
 
-    return computer.output;
+    return computer.output!;
   }
 
   public async part2(): Promise<string | number> {
@@ -19,6 +19,6 @@ export default class Puzzle extends AoCPuzzle {
       finished = computer.compute(false);
     }
 
-    return computer.output;
+    return computer.output!;
   }
 }

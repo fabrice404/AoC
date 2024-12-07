@@ -49,7 +49,7 @@ export default class Puzzle extends AoCPuzzle {
     let finished = false;
     while (!finished) {
       finished = computer.compute(false);
-      this.hull[pointToKey(location)] = computer.output;
+      this.hull[pointToKey(location)] = computer.output!;
 
       finished = computer.compute(false);
       directionIndex = (directionIndex + (computer.output === 0 ? -1 : 1) + 4) % 4;

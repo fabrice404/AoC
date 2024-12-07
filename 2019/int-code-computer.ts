@@ -1,20 +1,26 @@
 export class IntCodeComputer {
   private code: number[];
 
+  private defaultInput: number | undefined;
+
   private inputs: number[];
 
   private lastIndex: number;
 
   private relativeBase: number;
 
-  public output: number;
+  public output: number | null;
 
-  constructor(code: string, inputs: number[] = []) {
+  constructor(code: string, inputs: number[] = [], defaultInput?: number) {
+    if (code.length === 0) {
+      throw new Error("Empty code! Test case not defined?");
+    }
     this.code = code.split(",").map(Number);
     this.lastIndex = 0;
-    this.output = 0;
+    this.output = null;
     this.inputs = inputs;
     this.relativeBase = 0;
+    this.defaultInput = defaultInput;
   }
 
   public addInputs(inputs: number[]) {
@@ -22,6 +28,7 @@ export class IntCodeComputer {
   }
 
   public compute(restart: boolean = true): boolean {
+    this.output = null;
     for (let i = restart ? 0 : this.lastIndex; i < this.code.length; i += 1) {
       this.lastIndex = i;
       const code = this.code[i];
@@ -47,11 +54,21 @@ export class IntCodeComputer {
           i += 3;
           break;
         case 3:
+          let breakAfter = false;
           if (this.inputs.length === 0) {
-            throw new Error(`Unexpected opcode 3 with empty inputs!`);
+            if (this.defaultInput) {
+              this.inputs.push(this.defaultInput);
+              breakAfter = true;
+            } else {
+              throw new Error(`Unexpected opcode 3 with empty inputs!`);
+            }
           }
           this.code[index1] = this.inputs.shift()!;
           i += 1;
+          if (breakAfter) {
+            this.lastIndex = i + 1;
+            return false;
+          }
           break;
         case 4:
           this.output = param1;
@@ -91,5 +108,9 @@ export class IntCodeComputer {
       }
     }
     return false;
+  }
+
+  public inputQueue() {
+    return this.inputs;
   }
 }

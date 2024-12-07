@@ -13,7 +13,7 @@ export default class Puzzle extends AoCPuzzle {
 
     while (!finished) {
       finished = computer.compute(false);
-      output = computer.output;
+      output = computer.output!;
       if (!finished) {
         process.stdout.write(isAscii(output) ? String.fromCharCode(output) : output.toString());
       }

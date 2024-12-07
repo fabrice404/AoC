@@ -91,19 +91,19 @@ export default class Puzzle extends AoCPuzzle {
       if (finished) {
         break;
       }
-      const x = computer.output;
+      const x = computer.output!;
 
       finished = computer.compute(false);
       if (finished) {
         break;
       }
-      const y = computer.output;
+      const y = computer.output!;
 
       finished = computer.compute(false);
       if (finished) {
         break;
       }
-      const tile = computer.output;
+      const tile = computer.output!;
 
       if (x === -1 && y === 0) {
         score = tile;

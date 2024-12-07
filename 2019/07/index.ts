@@ -17,7 +17,7 @@ export default class Puzzle extends AoCPuzzle {
       for (let i = 0; i < 5; i += 1) {
         computers[i].addInputs([n[i], val!]);
         computers[i].compute();
-        val = computers[i].output;
+        val = computers[i].output!;
       }
 
       if (val! > highestSignal) {
@@ -47,7 +47,7 @@ export default class Puzzle extends AoCPuzzle {
         for (let i = 0; i < 5; i += 1) {
           computers[i].addInputs([val!]);
           finished = computers[i].compute(false);
-          val = computers[i].output;
+          val = computers[i].output!;
         }
       }
 

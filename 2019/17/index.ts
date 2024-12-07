@@ -114,7 +114,7 @@ export default class Puzzle extends AoCPuzzle {
           break;
         default:
           this.currentPosition = { x: row.length, y: this.grid.length };
-          const c = String.fromCharCode(computer.output);
+          const c = String.fromCharCode(computer.output!);
           switch (c) {
             case "^":
               this.currentDirection = "U";
@@ -130,7 +130,7 @@ export default class Puzzle extends AoCPuzzle {
               break;
           }
 
-          row.push(String.fromCharCode(computer.output));
+          row.push(String.fromCharCode(computer.output!));
           break;
       }
     }
@@ -166,7 +166,7 @@ export default class Puzzle extends AoCPuzzle {
     }
     console.log({ output: computer.output });
 
-    return computer.output;
+    return computer.output!;
     // return this.run(`2${this.input.slice(1)}`, inputs);
   }
 }
