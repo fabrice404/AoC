@@ -55,3 +55,5 @@ export const permutations = (s: string): string[] => {
   }
   return result;
 };
+
+export const isAscii = (num: number) => num > 0 && num <= 128;
