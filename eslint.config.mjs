@@ -26,9 +26,6 @@ export default [
       "perfectionist/sort-classes": [
         "error",
         {
-          type: "alphabetical",
-          order: "asc",
-          ignoreCase: true,
           groups: [
             "index-signature",
 
@@ -61,9 +58,12 @@ export default [
             "static-block",
             "unknown",
           ],
+          ignoreCase: true,
+          order: "asc",
+          type: "alphabetical",
         },
       ],
-      "perfectionist/sort-imports": ["error", { type: "natural", order: "asc" }],
+      "perfectionist/sort-named-exports": ["error", { order: "asc", type: "natural" }],
     },
   },
 ];
