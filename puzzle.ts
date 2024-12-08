@@ -24,6 +24,10 @@ export default abstract class AoCPuzzle {
     this.highlights = new Map();
   }
 
+  public cloneGrid(): any[][] {
+    return JSON.parse(JSON.stringify(this.grid));
+  }
+
   public findCellByValue(value: any): Point[] {
     return this.getGridLoopXY().filter(({ x, y }) => this.grid[y][x] === value);
   }

@@ -20,3 +20,5 @@ export const manhattanDistance = (x1: number, y1: number, x2: number, y2: number
 export const sum = (a: number, b: number) => a + b;
 
 export const multiply = (a: number, b: number) => a * b;
+
+export const between = (n: number, a: number, b: number): boolean => a <= n && n <= b;
