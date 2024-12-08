@@ -114,7 +114,7 @@ import(codeFile)
     const part1End = performance.now();
     const part1Time = part1End - part1Start;
 
-    resultMessage("Result:", part1Result, part1Time);
+    resultMessage("Result:", part1Result, part1Time, 44);
 
     console.log("");
     console.log("+------------------------------------------------------+");
@@ -152,7 +152,7 @@ import(codeFile)
     const part2End = performance.now();
     const part2Time = part2End - part2Start;
 
-    resultMessage("Result:", part2Result, part2Time);
+    resultMessage("Result:", part2Result, part2Time, 44);
 
     console.log("");
     updateStatFile(statFile, +day, {
