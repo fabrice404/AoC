@@ -28,6 +28,19 @@ export default abstract class AoCPuzzle {
     return JSON.parse(JSON.stringify(this.grid));
   }
 
+  public extendGrid(size: number) {
+    const a = Array.from({ length: size }, () => ".");
+    for (let y = 0; y < this.grid.length; y += 1) {
+      this.grid[y] = [...a, ...this.grid[y], ...a];
+    }
+
+    const b = Array.from({ length: this.grid[0].length }, () => ".");
+    for (let i = 0; i < 10; i += 1) {
+      this.grid.unshift([...b]);
+      this.grid.push([...b]);
+    }
+  }
+
   public findCellByValue(value: any): Point[] {
     return this.getGridLoopXY().filter(({ x, y }) => this.grid[y][x] === value);
   }
