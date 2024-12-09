@@ -86,6 +86,8 @@ export const getUpRightLeftDownCoordinates = ({ x, y }: Point): Point[] =>
     [-1, 0],
   ].map(([mx, my]) => ({ x: x + mx, y: y + my }));
 
+export const getNeighborsCoordinates = getUpRightLeftDownCoordinates;
+
 export const permutations = (s: any): any[] => {
   if (s.length < 2) {
     return [s];
