@@ -76,7 +76,7 @@ import(codeFile)
   .then(async ({ default: Puzzle }) => {
     const dayName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date(Number(year), 11, Number(day)).getDay()];
     const date = `${dayName} ${year}-12-${day}`;
-    console.log(`\n${date}\n`);
+    console.log(`\n${date} \t\t ${codeFile}\n`);
 
     console.log("+------------------------------------------------------+");
     console.log("|                        PART 1                        |");
