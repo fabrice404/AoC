@@ -1,4 +1,4 @@
-import { Graph, alg } from "graphlib";
+import { alg, Graph } from "@dagrejs/graphlib";
 
 import { getUpRightLeftDownCoordinates } from "../../helpers/array";
 import { pointToKey } from "../../helpers/helpers";
