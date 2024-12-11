@@ -127,4 +127,67 @@ export class BinaryHeap {
   }
 }
 
+export class Node {
+  public data: any;
+
+  public next: Node | null;
+
+  constructor(data: any) {
+    this.data = data;
+    this.next = null;
+  }
+}
+
+export class Queue {
+  public front: Node | null;
+
+  public rear: Node | null;
+
+  public size: number;
+
+  constructor() {
+    this.front = null;
+    this.rear = null;
+    this.size = 0;
+  }
+
+  public concat(queue: Queue) {
+    while (queue.size > 0) {
+      this.enqueue(queue.dequeue());
+    }
+  }
+
+  public dequeue(): any {
+    if (this.front == null) {
+      return null;
+    }
+    const removed = this.front;
+    this.front = this.front.next;
+    if (this.front == null) {
+      this.rear = null;
+    }
+    this.size -= 1;
+    return removed.data;
+  }
+
+  public enqueue(data: any) {
+    const newNode = new Node(data);
+    if (this.front == null) {
+      this.front = newNode;
+    } else {
+      this.rear!.next = newNode;
+    }
+    this.rear = newNode;
+    this.size += 1;
+  }
+
+  public isEmpty() {
+    return this.size === 0;
+  }
+
+  public peek() {
+    return this.front ? this.front.data : null;
+  }
+}
+
 export default { BinaryHeap };
