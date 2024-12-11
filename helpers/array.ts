@@ -106,3 +106,15 @@ export const permutations = (s: any): any[] => {
   }
   return result;
 };
+
+export const combinations = (s: any[], len: number): any[][] => {
+  if (len === 0) return [[]];
+  const result = [];
+  for (let i = 0; i <= s.length - len; i++) {
+    const sub_result = combinations(s.slice(i + 1), len - 1);
+    for (const combination of sub_result) {
+      result.push([s[i], ...combination]);
+    }
+  }
+  return result;
+};

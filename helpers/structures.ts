@@ -138,7 +138,7 @@ export class Node {
   }
 }
 
-export class Queue {
+export class Queue<T> {
   public front: Node | null;
 
   public rear: Node | null;
@@ -151,13 +151,13 @@ export class Queue {
     this.size = 0;
   }
 
-  public concat(queue: Queue) {
+  public concat(queue: Queue<T>) {
     while (queue.size > 0) {
-      this.enqueue(queue.dequeue());
+      this.enqueue(queue.dequeue()!);
     }
   }
 
-  public dequeue(): any {
+  public dequeue(): T | null {
     if (this.front == null) {
       return null;
     }
@@ -170,7 +170,7 @@ export class Queue {
     return removed.data;
   }
 
-  public enqueue(data: any) {
+  public enqueue(data: T) {
     const newNode = new Node(data);
     if (this.front == null) {
       this.front = newNode;
@@ -189,5 +189,3 @@ export class Queue {
     return this.front ? this.front.data : null;
   }
 }
-
-export default { BinaryHeap };
