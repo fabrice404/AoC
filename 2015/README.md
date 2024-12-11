@@ -17,3 +17,4 @@ Day | Part 1 | Part 1 | Part 2 | Part 2
 13 | 0.346ms <br/><sub><sup>330</sup></sub> | 38.662ms <br/><sub><sup>709</sup></sub> | 0.425ms <br/><sub><sup>286</sup></sub> | 341.714ms <br/><sub><sup>668</sup></sub> 
 14 | 0.081ms <br/><sub><sup>1120</sup></sub> | 0.107ms <br/><sub><sup>2696</sup></sub> | 0.814ms <br/><sub><sup>689</sup></sub> | 3.314ms <br/><sub><sup>1084</sup></sub> 
 15 | 0.978ms <br/><sub><sup>62842880</sup></sub> | 4.747ms <br/><sub><sup>21367368</sup></sub> | 0.024ms <br/><sub><sup>57600000</sup></sub> | 0.001ms <br/><sub><sup>1766400</sup></sub> 
+16 | 0.000ms <br/><sub><sup>skip</sup></sub> | 0.907ms <br/><sub><sup>40</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 0.115ms <br/><sub><sup>241</sup></sub> 
