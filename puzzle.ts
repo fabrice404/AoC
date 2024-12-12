@@ -90,9 +90,13 @@ export default abstract class AoCPuzzle {
     }
     console.log("");
   }
+
   public setInput(input: string) {
     this.input = input;
     this.lines = this.input.split(/\n/gi);
     this.grid = this.lines.map((line) => line.split(""));
+  }
+  public setValue(p: Point, v: any): void {
+    this.grid[p.y][p.x] = v;
   }
 }
