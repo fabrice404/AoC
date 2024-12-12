@@ -57,3 +57,5 @@ export const permutations = (s: string): string[] => {
 };
 
 export const isAscii = (num: number) => num > 0 && num <= 128;
+
+export const splice = (str: string, index: number, count: number, add: string): string => `${str.slice(0, index)}${add || ""}${str.slice(index + count)}`;
