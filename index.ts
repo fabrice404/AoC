@@ -125,6 +125,9 @@ import(codeFile)
 
     // part 2 - example
     example = readFile(p2ExampleFile);
+    if (!example) {
+      example = readFile(p1ExampleFile);
+    }
     expected = readFile(p2ExpectedFile);
 
     let part2ExampleResult = "skip";
