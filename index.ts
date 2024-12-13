@@ -92,7 +92,9 @@ import(codeFile)
     let part1ExampleResult = "skip";
     let part1ExampleTime = 0;
 
-    if (expected === "skip") {
+    if (example === "") {
+      resultMessage("Test case empty", "", part1ExampleTime);
+    } else if (expected === "skip") {
       resultMessage("Test case skipped", "", part1ExampleTime);
     } else {
       const part1ExampleStart = performance.now();
@@ -128,7 +130,9 @@ import(codeFile)
     let part2ExampleResult = "skip";
     let part2ExampleTime = 0;
 
-    if (expected === "skip") {
+    if (example === "") {
+      resultMessage("Test case empty", "", part2ExampleTime);
+    } else if (expected === "skip") {
       resultMessage("Test case skipped", "", part2ExampleTime);
     } else {
       const part2ExampleStart = performance.now();
