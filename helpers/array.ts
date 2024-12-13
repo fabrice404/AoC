@@ -100,7 +100,7 @@ export const getAllNeighborsCoordinates = ({ x, y }: Point): Point[] =>
     [+1, +1],
   ].map(([mx, my]) => ({ x: x + mx, y: y + my }));
 
-export const permutations = (s: any): any[] => {
+export const permutations = (s: any[]): any[] => {
   if (s.length < 2) {
     return [s];
   }
@@ -130,3 +130,7 @@ export const combinations = (s: any[], len: number): any[][] => {
   }
   return result;
 };
+
+export const sortAlpha = (a: string, b: string) => (a.localeCompare(b) ? 1 : -1);
+
+export const sortNumeric = (a: number, b: number) => (a > b ? 1 : -1);
