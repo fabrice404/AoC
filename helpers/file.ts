@@ -39,6 +39,10 @@ export const generateStatFile = (filepath: string): void => {
   writeFileSync(filepath, "{}", { encoding: "utf-8" });
 };
 
+export const generateExampleFile = (filepath: string): void => {
+  writeFileSync(filepath, "skip", { encoding: "utf-8" });
+};
+
 export const updateStatFile = (filepath: string, day: number, data: object): void => {
   const stats = JSON.parse(readFile(filepath));
   stats[day] = data;
