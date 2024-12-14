@@ -11,6 +11,10 @@ export enum ConsoleColor {
   White = 47,
 }
 
+/**
+ * Sychronous wait for a number of milliseconds, useful for debugging
+ * @param ms
+ */
 export const waitSync = (ms: number) => {
   const start = Date.now();
   let now = start;
@@ -19,6 +23,11 @@ export const waitSync = (ms: number) => {
   }
 };
 
+/**
+ * Converts a Point to a string key, useful for storing in a map.
+ * @param {Point} p - The point to convert.
+ * @returns {string} The string key representation of the point.
+ */
 export const pointToKey = (p: Point): string => {
   if (p.z != null) {
     return `${p.x},${p.y},${p.z}`;
@@ -26,6 +35,11 @@ export const pointToKey = (p: Point): string => {
   return `${p.x},${p.y}`;
 };
 
+/**
+ * Converts a string key to a Point.
+ * @param {string} key - The string key to convert.
+ * @returns {Point} The point representation of the string key.
+ */
 export const keyToPoint = (key: string): Point => {
   const [x, y, z] = key.split(",").map(Number);
   if (z != null) {
@@ -37,6 +51,12 @@ export const keyToPoint = (key: string): Point => {
 export const DIRECTIONS: Direction[] = ["U", "R", "D", "L"];
 export const CARDINAL_DIRECTIONS: CardinalDirection[] = ["N", "E", "S", "W"];
 
+/**
+ * Given a point and a direction, returns the new point after moving in that direction.
+ * @param {Point} p - The starting point.
+ * @param {Direction} d - The direction to move in.
+ * @returns {Point} The new point after moving in the specified direction.
+ */
 export const moveTo = (p: Point, d: Direction): Point =>
   ({
     U: ({ x, y }: Point) => ({ x, y: y - 1 }),
@@ -45,6 +65,12 @@ export const moveTo = (p: Point, d: Direction): Point =>
     R: ({ x, y }: Point) => ({ x: x + 1, y }),
   })[d](p);
 
+/**
+ * Given a point and a cardinal direction, returns the new point after moving in that direction.
+ * @param {Point} p - The starting point.
+ * @param {CardinalDirection} d - The cardinal direction to move in.
+ * @returns {Point} The new point after moving in the specified cardinal direction.
+ */
 export const moveToCardinal = (p: Point, d: CardinalDirection): Point =>
   ({
     N: ({ x, y }: Point) => ({ x, y: y - 1 }),
