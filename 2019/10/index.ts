@@ -71,7 +71,7 @@ export default class Puzzle extends AoCPuzzle {
       if (group.length > 0) {
         if (group.length > 1) {
           angles.push(angle!);
-          group.sort((a, b) => (manhattanDistance(laserPoint.x, laserPoint.y, a.x, a.y) > manhattanDistance(laserPoint.x, laserPoint.y, b.x, b.y) ? 1 : -1));
+          group.sort((a, b) => (manhattanDistance(laserPoint, a) > manhattanDistance(laserPoint, b) ? 1 : -1));
         }
         lastAsteroid = group.shift()!;
         i += 1;

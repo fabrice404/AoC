@@ -134,3 +134,5 @@ export const combinations = (s: any[], len: number): any[][] => {
 export const sortAlpha = (a: string, b: string) => (a.localeCompare(b) ? 1 : -1);
 
 export const sortNumeric = (a: number, b: number) => (a > b ? 1 : -1);
+
+export const arrayToPoint = (array: number[]): Point => (array.length === 3 ? { x: array[0], y: array[1], z: array[2] } : { x: array[0], y: array[1] });

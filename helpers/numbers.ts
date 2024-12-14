@@ -1,3 +1,5 @@
+import { Point } from "../types";
+
 export const gcd = (a: number, b: number): number => {
   if (b === 0) {
     return a;
@@ -15,7 +17,7 @@ export const decimalToBinary = (n: number, length?: number): string => {
 
 export const binaryToDecimal = (s: string): number => parseInt(s, 2);
 
-export const manhattanDistance = (x1: number, y1: number, x2: number, y2: number): number => Math.abs(x2 - x1) + Math.abs(y2 - y1);
+export const manhattanDistance = (a: Point, b: Point): number => Math.abs(a.x - b.x) + Math.abs(a.y - b.y) + Math.abs((a.z || 0) - (b.z || 0));
 
 export const sum = (a: number, b: number) => a + b;
 
