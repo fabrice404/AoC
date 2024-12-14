@@ -1,4 +1,5 @@
 import { getAllNeighborsCoordinates, multiply } from "../../helpers/array";
+import { absoluteModulo } from "../../helpers/numbers";
 import AoCPuzzle from "../../puzzle";
 import { Point } from "../../types";
 
@@ -9,6 +10,7 @@ interface Robot {
 
 export default class Puzzle extends AoCPuzzle {
   private robots: Robot[] = [];
+
   public async part1(): Promise<string | number> {
     const width = this.isExample ? 11 : 101;
     const height = this.isExample ? 7 : 103;
@@ -28,20 +30,8 @@ export default class Puzzle extends AoCPuzzle {
         velocity: { x: vx, y: vy },
       };
 
-      robot.position.x = x + 100 * vx;
-      while (robot.position.x < 0) {
-        robot.position.x += width;
-      }
-      while (robot.position.x >= width) {
-        robot.position.x -= width;
-      }
-      robot.position.y = y + 100 * vy;
-      while (robot.position.y < 0) {
-        robot.position.y += height;
-      }
-      while (robot.position.y >= height) {
-        robot.position.y -= height;
-      }
+      robot.position.x = absoluteModulo(x + 100 * vx, width);
+      robot.position.y = absoluteModulo(y + 100 * vy, height);
       this.robots.push(robot);
     }
 
@@ -82,20 +72,8 @@ export default class Puzzle extends AoCPuzzle {
 
     for (let second = 1; second < 10_000_000_000; second += 1) {
       for (const robot of this.robots) {
-        robot.position.x = robot.position.x + robot.velocity.x;
-        while (robot.position.x < 0) {
-          robot.position.x += width;
-        }
-        while (robot.position.x >= width) {
-          robot.position.x -= width;
-        }
-        robot.position.y = robot.position.y + robot.velocity.y;
-        while (robot.position.y < 0) {
-          robot.position.y += height;
-        }
-        while (robot.position.y >= height) {
-          robot.position.y -= height;
-        }
+        robot.position.x = absoluteModulo(robot.position.x + robot.velocity.x, width);
+        robot.position.y = absoluteModulo(robot.position.y + robot.velocity.y, height);
       }
 
       const group = this.robots.find((robot) =>

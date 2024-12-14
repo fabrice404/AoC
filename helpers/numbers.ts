@@ -22,3 +22,5 @@ export const sum = (a: number, b: number) => a + b;
 export const multiply = (a: number, b: number) => a * b;
 
 export const between = (n: number, a: number, b: number): boolean => a <= n && n <= b;
+
+export const absoluteModulo = (n: number, m: number): number => ((n % m) + m) % m;
