@@ -35,7 +35,7 @@ export default abstract class AoCPuzzle {
     }
 
     const b = Array.from({ length: this.grid[0].length }, () => ".");
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < size; i += 1) {
       this.grid.unshift([...b]);
       this.grid.push([...b]);
     }
