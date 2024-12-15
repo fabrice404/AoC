@@ -2,6 +2,8 @@ import { ConsoleColor, pointToKey } from "./helpers/helpers";
 import { Point } from "./types";
 
 export default abstract class AoCPuzzle {
+  private originalInput: any;
+
   protected grid: any[][] = [];
 
   protected highlights: Map<string, ConsoleColor>;
@@ -14,6 +16,7 @@ export default abstract class AoCPuzzle {
 
   constructor(input: string, isExample = false) {
     this.input = input;
+    this.originalInput = JSON.parse(JSON.stringify(input));
     this.lines = this.input.split(/\n/gi);
     this.grid = this.lines.map((line) => line.split(""));
     this.isExample = isExample;
@@ -89,6 +92,10 @@ export default abstract class AoCPuzzle {
       console.log(row.join(""));
     }
     console.log("");
+  }
+
+  public resetInput() {
+    this.setInput(this.originalInput);
   }
 
   public setInput(input: string) {
