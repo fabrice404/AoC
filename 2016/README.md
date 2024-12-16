@@ -19,6 +19,7 @@ Day | Part 1 | Part 1 | Part 2 | Part 2
 16 | 0.042ms <br/><sub><sup>01100</sup></sub> | 0.047ms <br/><sub><sup>11100110111101110</sup></sub> | 2712.794ms <br/><sub><sup>10111110011110111</sup></sub> | 2078.780ms <br/><sub><sup>10001101010000101</sup></sub> 
 18 | 0.758ms <br/><sub><sup>38</sup></sub> | 0.764ms <br/><sub><sup>1982</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 1620.947ms <br/><sub><sup>20005203</sup></sub> 
 19 | 0.018ms <br/><sub><sup>3</sup></sub> | 0.023ms <br/><sub><sup>1815603</sup></sub> | 0.028ms <br/><sub><sup>2</sup></sub> | 0.002ms <br/><sub><sup>1410630</sup></sub> 
+20 | 0.096ms <br/><sub><sup>3</sup></sub> | 173.827ms <br/><sub><sup>31053880</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 0.073ms <br/><sub><sup>117</sup></sub> 
 21 | 0.360ms <br/><sub><sup>decab</sup></sub> | 0.208ms <br/><sub><sup>ghfacdbe</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 0.354ms <br/><sub><sup>fhgcdaeb</sup></sub> 
 22 | 0.000ms <br/><sub><sup>skip</sup></sub> | 9.365ms <br/><sub><sup>903</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 7.819ms <br/><sub><sup>215</sup></sub> 
 23 | 0.062ms <br/><sub><sup>3</sup></sub> | 6.938ms <br/><sub><sup>12330</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 97429.446ms <br/><sub><sup>479008890</sup></sub> 
