@@ -26,3 +26,4 @@ Day | Part 1 | Part 1 | Part 2 | Part 2
 22 | 0.000ms <br/><sub><sup>skip</sup></sub> | 9.365ms <br/><sub><sup>903</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 7.819ms <br/><sub><sup>215</sup></sub> 
 23 | 0.062ms <br/><sub><sup>3</sup></sub> | 6.938ms <br/><sub><sup>12330</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 97429.446ms <br/><sub><sup>479008890</sup></sub> 
 24 | 1.490ms <br/><sub><sup>14</sup></sub> | 13171.951ms <br/><sub><sup>430</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 0.779ms <br/><sub><sup>700</sup></sub> 
+25 | 0.000ms <br/><sub><sup>skip</sup></sub> | 1496.313ms <br/><sub><sup>198</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 0.037ms <br/><sub><sup>Happy Xmas!</sup></sub> 
