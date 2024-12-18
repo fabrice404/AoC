@@ -68,7 +68,6 @@ export default abstract class AoCPuzzle {
       this.highlights.set(key, color);
     }
   }
-
   public isInGrid(p: Point): boolean {
     return p.y >= 0 && p.y < this.grid.length && p.x >= 0 && p.x < this.grid[p.y].length;
   }
@@ -79,7 +78,7 @@ export default abstract class AoCPuzzle {
 
   public printGrid() {
     console.log("");
-    for (let y = 0; y < Math.min(this.grid.length, 200); y += 1) {
+    for (let y = 0; y < this.grid.length; y += 1) {
       const row = [];
       for (let x = 0; x < Math.min(this.grid[y].length, 200); x += 1) {
         const key = pointToKey({ x, y });
@@ -92,6 +91,11 @@ export default abstract class AoCPuzzle {
       console.log(row.join(""));
     }
     console.log("");
+  }
+
+  public removeHighlight(p: Point): void {
+    const key = pointToKey(p);
+    this.highlights.delete(key);
   }
 
   public resetInput() {
