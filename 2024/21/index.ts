@@ -1,4 +1,5 @@
 import { permutations, sum } from "../../helpers/array";
+import { memoize } from "../../helpers/memoize";
 import AoCPuzzle from "../../puzzle";
 import { Point } from "../../types";
 import { DIRECTIONAL_KEYPAD, NUMERIC_KEYPAD } from "./keypads";
@@ -6,48 +7,14 @@ import { DIRECTIONAL_KEYPAD, NUMERIC_KEYPAD } from "./keypads";
 type NumericKeypadKey = "A" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
 type DirectionalKeyPadKey = "A" | "^" | "<" | "v" | ">";
 
-export default class Puzzle extends AoCPuzzle {
-  private codeToNumericKeypadMoves(code: string) {
-    let from: NumericKeypadKey = "A";
-    let routes: string[] = [""];
-    for (const to of code.split("") as NumericKeypadKey[]) {
-      const moves = NUMERIC_KEYPAD[from][to];
-      const perms = permutations(moves);
-      routes = routes.map((route) => perms.map((p) => `${route}${p.join("")}A`)).flat();
-      from = to;
-    }
-    return routes.filter((r) => this.isValidNumericKeypadRoute(r));
-  }
+interface Keypad {
+  [key: string]: { [key: string]: string[] | Point };
+}
 
-  private isValidDirectionalKeypadRoute(m: string) {
-    const position: Point = { x: 2, y: 0 };
-    for (const to of m.split("") as DirectionalKeyPadKey[]) {
-      switch (to) {
-        case "<":
-          position.x -= 1;
-          break;
-        case ">":
-          position.x += 1;
-          break;
-        case "^":
-          position.y -= 1;
-          break;
-        case "v":
-          position.y += 1;
-          break;
-      }
-      if (position.x < 0 || position.y < 0 || position.x > 2 || position.y > 1 || (position.x === 0 && position.y === 0)) {
-        // console.log(m, to, position);
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  private isValidNumericKeypadRoute(m: string) {
-    const position: Point = { x: 2, y: 3 };
-    for (const to of m.split("") as DirectionalKeyPadKey[]) {
+const isValidRoute = memoize((route: string[], from: string, isNumericKeypad: boolean): boolean => {
+  if (isNumericKeypad) {
+    const position = { ...NUMERIC_KEYPAD[from as NumericKeypadKey].position };
+    for (const to of route as DirectionalKeyPadKey[]) {
       switch (to) {
         case "<":
           position.x -= 1;
@@ -66,41 +33,57 @@ export default class Puzzle extends AoCPuzzle {
         return false;
       }
     }
-
-    return true;
-  }
-
-  private keypadMovesToKeypadMoves(m: string) {
-    let from: DirectionalKeyPadKey = "A";
-    let routes: string[] = [""];
-    for (const to of m.split("") as DirectionalKeyPadKey[]) {
-      const moves = DIRECTIONAL_KEYPAD[from][to];
-      const perms = permutations(moves);
-      routes = routes.map((route) => perms.map((p) => `${route}${p.join("")}A`)).flat();
-      from = to;
+  } else {
+    const position = { ...DIRECTIONAL_KEYPAD[from as DirectionalKeyPadKey].position };
+    for (const to of route as DirectionalKeyPadKey[]) {
+      switch (to) {
+        case "<":
+          position.x -= 1;
+          break;
+        case ">":
+          position.x += 1;
+          break;
+        case "^":
+          position.y -= 1;
+          break;
+        case "v":
+          position.y += 1;
+          break;
+      }
+      if (position.x < 0 || position.y < 0 || position.x > 2 || position.y > 1 || (position.x === 0 && position.y === 0)) {
+        return false;
+      }
     }
-    return routes.filter((r) => this.isValidDirectionalKeypadRoute(r));
   }
+  return true;
+});
 
+const getKeysCount = memoize((code: string, robot: number, pad: Keypad) => {
+  let from = "A";
+  let length = 0;
+  for (const to of code.split("")) {
+    const moves = permutations((pad[from][to] as string[]) || [])
+      .map((route) => [...route, "A"])
+      .filter((route) => isValidRoute(route, from, Object.keys(pad).length > 5));
+
+    if (robot === 0) {
+      length += moves[0].length;
+    } else {
+      const lengths = moves.map((route) => getKeysCount(route.join(""), robot - 1, DIRECTIONAL_KEYPAD));
+      length += Math.min(...lengths);
+    }
+    from = to;
+  }
+  return length;
+});
+
+export default class Puzzle extends AoCPuzzle {
   private solve(directionalRobots: number = 2) {
     const results: number[] = [];
     for (const line of this.lines) {
-      let routes = this.codeToNumericKeypadMoves(line);
-
-      for (let i = 0; i < directionalRobots; i += 1) {
-        const shortest = Math.min(...routes.map((r) => r.length));
-        routes = routes
-          .filter((r) => r.length === shortest)
-          .map((r) => this.keypadMovesToKeypadMoves(r))
-          .flat();
-      }
-
-      const shortestRoute = routes.sort((a, b) => (a.length > b.length ? 1 : -1))[0];
-
-      console.log(shortestRoute.length, +line.replace(/[^\d]+/gi, ""), shortestRoute);
-      results.push(shortestRoute.length * +line.replace(/[^\d]+/gi, ""));
+      const shortestRoute = getKeysCount(line, directionalRobots, NUMERIC_KEYPAD);
+      results.push(shortestRoute * +line.replace(/[^\d]+/gi, ""));
     }
-    console.log(results);
     return sum(results);
   }
 
@@ -109,7 +92,6 @@ export default class Puzzle extends AoCPuzzle {
   }
 
   public async part2(): Promise<string | number> {
-    // return this.solve(25);
-    return "<NOT YET IMPLEMENTED>";
+    return this.solve(25);
   }
 }

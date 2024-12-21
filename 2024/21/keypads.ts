@@ -17,6 +17,7 @@ const R = ">";
 
 export const NUMERIC_KEYPAD = {
   A: {
+    position: { x: 2, y: 3 },
     A: [],
     0: [L],
     1: [U, L, L],
@@ -30,6 +31,7 @@ export const NUMERIC_KEYPAD = {
     9: [U, U, U],
   },
   0: {
+    position: { x: 1, y: 3 },
     A: [R],
     0: [],
     1: [U, L],
@@ -43,6 +45,7 @@ export const NUMERIC_KEYPAD = {
     9: [U, U, U, R],
   },
   1: {
+    position: { x: 0, y: 2 },
     A: [R, R, D],
     0: [R, D],
     1: [],
@@ -56,6 +59,7 @@ export const NUMERIC_KEYPAD = {
     9: [U, U, R, R],
   },
   2: {
+    position: { x: 1, y: 2 },
     A: [R, D],
     0: [D],
     1: [L],
@@ -69,6 +73,7 @@ export const NUMERIC_KEYPAD = {
     9: [U, U, R],
   },
   3: {
+    position: { x: 2, y: 2 },
     A: [D],
     0: [L, D],
     1: [L, L],
@@ -82,6 +87,7 @@ export const NUMERIC_KEYPAD = {
     9: [U, U],
   },
   4: {
+    position: { x: 0, y: 1 },
     A: [R, R, D, D],
     0: [R, D, D],
     1: [D],
@@ -95,6 +101,7 @@ export const NUMERIC_KEYPAD = {
     9: [R, R, U],
   },
   5: {
+    position: { x: 1, y: 1 },
     A: [R, D, D],
     0: [D, D],
     1: [L, D],
@@ -108,6 +115,7 @@ export const NUMERIC_KEYPAD = {
     9: [U, R],
   },
   6: {
+    position: { x: 2, y: 1 },
     A: [D, D],
     0: [D, D, L],
     1: [L, L, D],
@@ -121,6 +129,7 @@ export const NUMERIC_KEYPAD = {
     9: [U],
   },
   7: {
+    position: { x: 0, y: 0 },
     A: [L, L, D, D, D],
     0: [L, D, D, D],
     1: [D, D],
@@ -134,6 +143,7 @@ export const NUMERIC_KEYPAD = {
     9: [R, R],
   },
   8: {
+    position: { x: 1, y: 0 },
     A: [R, D, D, D],
     0: [D, D, D],
     1: [L, D, D],
@@ -147,6 +157,7 @@ export const NUMERIC_KEYPAD = {
     9: [R],
   },
   9: {
+    position: { x: 2, y: 0 },
     A: [D, D, D],
     0: [L, D, D, D],
     1: [L, L, D, D],
@@ -170,6 +181,7 @@ export const NUMERIC_KEYPAD = {
 */
 export const DIRECTIONAL_KEYPAD = {
   A: {
+    position: { x: 2, y: 0 },
     A: [],
     "^": [L],
     "<": [D, L, L],
@@ -177,6 +189,7 @@ export const DIRECTIONAL_KEYPAD = {
     ">": [D],
   },
   "^": {
+    position: { x: 1, y: 0 },
     A: [R],
     "^": [],
     "<": [D, L],
@@ -184,6 +197,7 @@ export const DIRECTIONAL_KEYPAD = {
     ">": [D, R],
   },
   "<": {
+    position: { x: 0, y: 1 },
     A: [R, R, U],
     "^": [R, U],
     "<": [],
@@ -191,6 +205,7 @@ export const DIRECTIONAL_KEYPAD = {
     ">": [R, R],
   },
   v: {
+    position: { x: 1, y: 1 },
     A: [U, R],
     "^": [U],
     "<": [L],
@@ -198,6 +213,7 @@ export const DIRECTIONAL_KEYPAD = {
     ">": [R],
   },
   ">": {
+    position: { x: 2, y: 1 },
     A: [U],
     "^": [U, L],
     "<": [L, L],
