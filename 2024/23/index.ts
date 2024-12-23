@@ -62,7 +62,6 @@ export default class Puzzle extends AoCPuzzle {
       if (current.computers.length > maxLen) {
         longest = current.computers;
         maxLen = longest.length;
-        console.log(longest.join(","));
       }
 
       const candidate = current.candidates.shift()!;
