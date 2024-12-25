@@ -25,3 +25,5 @@ Day | Part 1 | Part 1 | Part 2 | Part 2
 21 | 0.754ms <br/><sub><sup>126384</sup></sub> | 0.635ms <br/><sub><sup>188398</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 6.404ms <br/><sub><sup>230049027535970</sup></sub> 
 22 | 0.767ms <br/><sub><sup>37327623</sup></sub> | 124.737ms <br/><sub><sup>19822877190</sup></sub> | 8.473ms <br/><sub><sup>23</sup></sub> | 2197.338ms <br/><sub><sup>2277</sup></sub> 
 23 | 0.372ms <br/><sub><sup>7</sup></sub> | 228.565ms <br/><sub><sup>1284</sup></sub> | 0.180ms <br/><sub><sup>co,de,ka,ta</sup></sub> | 36.488ms <br/><sub><sup>bv,cm,dk,em,gs,jv,ml,oy,qj,ri,uo,xk,yw</sup></sub> 
+24 | 0.381ms <br/><sub><sup>2024</sup></sub> | 278.339ms <br/><sub><sup>56939028423824</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 0.822ms <br/><sub><sup>frn,gmq,vtj,wnf,wtt,z05,z21,z39</sup></sub> 
+25 | 0.122ms <br/><sub><sup>3</sup></sub> | 3.573ms <br/><sub><sup>2586</sup></sub> | 0.000ms <br/><sub><sup>skip</sup></sub> | 0.016ms <br/><sub><sup>Happy Xmas!</sup></sub> 
