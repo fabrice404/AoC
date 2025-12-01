@@ -13,6 +13,10 @@ let day = today.getDate().toString();
 
 if (today.getMonth() < 11) {
   day = "1";
+} else if (+year >= 2025 && +day > 12) {
+  day = "12";
+} else if (+day > 25) {
+  day = "25";
 }
 
 if (process.argv.length > 2) {
