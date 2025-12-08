@@ -49,6 +49,19 @@ export const binaryToDecimal = (s: string): number => parseInt(s, 2);
 export const manhattanDistance = (a: Point, b: Point): number => Math.abs(a.x - b.x) + Math.abs(a.y - b.y) + Math.abs((a.z || 0) - (b.z || 0));
 
 /**
+ * Calculates the Euclidean distance between two points.
+ * @param {Point} a - The first point.
+ * @param {Point} b - The second point.
+ * @returns {number} The Euclidean distance between the two points.
+ */
+export const euclideanDistance = (a: Point, b: Point): number => {
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+  const dz = (a.z || 0) - (b.z || 0);
+  return Math.sqrt(dx * dx + dy * dy + dz * dz);
+};
+
+/**
  * Sums two numbers, useful in a reduce function.
  * @param {number} a - The first number.
  * @param {number} b - The second number.
